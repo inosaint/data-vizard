@@ -35,6 +35,12 @@ Use no more than five options. Include `D. Something else - describe the visual 
 
    For map-led artifacts, ask the user to choose or confirm the map theme before implementation. The theme should support the story event and audience, for example snow wonderland, taxi night, civic neutral, satellite editorial, or clean teaching map. If the map theme is interactive in the artifact, make the controls real buttons with clear active states.
 
+   For map-led narratives, also confirm the map reading level and focus behavior before building. Ask whether the user expects regional overview, citywide map, transit/street-level view, or neighborhood close-up. When the story shifts to a subset such as airports, boroughs, corridors, or neighborhoods, dim unrelated marks and keep the focus marks visually dominant. Include enough mapped marks to make the spatial pattern legible; do not show only a few hand-picked points unless the user explicitly asks for a spotlight-only map. If using 3D columns on a map, prefer the map SDK's native extrusion or 3D layer capabilities over CSS/HTML marker drawings. Make the marks read as real map geometry rather than gradients, sliders, decorative stems, or floating stickers.
+
+   Decide whether color means category, magnitude, or narrative focus. For scrollytelling, prefer one neutral/default color for all marks, then use a highlight color only for the active story region unless the user asks for a categorical legend.
+
+   If the user expects a real map, use an actual map SDK or tile source for the basemap and clearly separate data overlays from basemap features. Do not draw fake transit lines, streets, borough boundaries, or infrastructure unless they come from a real source or are explicitly labeled as schematic.
+
 2. Offer visual directions.
    Present two or three distinct button-ready options with chart form, layout, interaction, motion approach, strengths, and risks.
 
