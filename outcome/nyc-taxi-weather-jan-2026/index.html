@@ -19,6 +19,8 @@
   <style>
     :root {
       color-scheme: light;
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+      --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
       --canvas: oklch(0.97 0.006 230);
       --surface: oklch(0.99 0.003 230);
       --ink: oklch(0.18 0.018 250);
@@ -116,7 +118,7 @@
     .zone-detail {
       position: absolute;
       left: 20px;
-      bottom: 28px;
+      bottom: 120px;
       z-index: 5;
       width: min(310px, calc(100% - 40px));
       padding: 14px 16px;
@@ -147,6 +149,57 @@
       color: rgba(255, 255, 255, 0.78);
       font-size: 0.82rem;
       line-height: 1.35;
+    }
+
+    .map-legend {
+      position: absolute;
+      left: 20px;
+      bottom: 28px;
+      z-index: 4;
+      display: flex;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 8px 8px rgba(15, 23, 42, 0.12);
+      color: #111827;
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+
+    .map-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .map-legend i {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      background: var(--swatch);
+    }
+
+    body[data-map-state="snow"] .legend-loss i,
+    body[data-map-state="airports"] .legend-loss i {
+      animation: loss-swatch-pulse 360ms var(--ease-out);
+    }
+
+    @keyframes loss-swatch-pulse {
+      0% {
+        transform: scale(0.72);
+        box-shadow: 0 0 0 0 rgba(209, 59, 47, 0);
+      }
+      44% {
+        transform: scale(1.18);
+        box-shadow: 0 0 0 7px rgba(209, 59, 47, 0.18);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(209, 59, 47, 0);
+      }
     }
 
     .steps {
@@ -377,6 +430,11 @@
         bottom: 16px;
       }
 
+      .map-legend {
+        left: 16px;
+        bottom: 108px;
+      }
+
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -402,6 +460,10 @@
         <div class="map-brand">
           <h1>The Sunday Snow That Slowed NYC’s Yellow Taxis</h1>
           <span>One bad-weather day in a city that usually keeps moving</span>
+        </div>
+        <div class="map-legend" aria-label="Map column legend">
+          <span class="legend-actual"><i style="--swatch:#2fa36b"></i>Actual pickups</span>
+          <span class="legend-loss"><i style="--swatch:#d13b2f"></i>Lost vs normal Sunday</span>
         </div>
         <aside class="zone-detail" aria-live="polite" aria-label="Selected pickup zone details"></aside>
       </div>
@@ -470,7 +532,7 @@
         <li>Basemap uses OSM-derived CARTO Voyager tiles rendered through MapLibre GL JS.</li>
         <li>Zone drops compare January 25 against the average of the other January Sundays: January 4, 11, and 18.</li>
         <li>Flight disruption is summarized from BTS TranStats January 2026 on-time performance records for JFK and LaGuardia.</li>
-        <li>Map columns are MapLibre fill-extrusion layers built from approximate pickup-zone centroid footprints; the first map state shows other-January-Sunday pickup volume, then January 25 switches losses to red.</li>
+        <li>Map columns are MapLibre fill-extrusion layers built from approximate pickup-zone centroid footprints; green shows actual pickup volume, while red shows the missing volume between January 25 and a normal January Sunday.</li>
         <li>This shows association and spatial contrast, not proof that snow alone caused every change.</li>
       </ul>
     </div>
@@ -780,46 +842,114 @@
         if (mode === "airports") {
           return ["case", ["==", ["get", "kind"], "airport"], 0.92, 0.13];
         }
+        if (mode === "snow") {
+          return 0.86;
+        }
         return 0.78;
       };
 
-      const columnColor = mode => {
+      const actualColumnColor = () => {
         const base = "#2fa36b";
-        const loss = "#d13b2f";
-        const rise = "#d946ef";
         const selected = "#111827";
         const selectedCase = selectedZone ? [["==", ["get", "zone"], selectedZone], selected] : [];
-        if (mode === "snow") {
-          return [
-            "case",
-            ...selectedCase,
-            ["<", ["get", "change"], 0], loss,
-            [">", ["get", "change"], 0], rise,
-            base
-          ];
-        }
-        if (mode === "airports") {
-          return [
-            "case",
-            ...selectedCase,
-            ["==", ["get", "kind"], "airport"], loss,
-            ["<", ["get", "change"], 0], loss,
-            [">", ["get", "change"], 0], rise,
-            base
-          ];
-        }
         return selectedZone ? ["case", ...selectedCase, base] : base;
       };
 
-      const columnHeightExpression = mode => {
-        return mode === "baseline" ? ["get", "baselineHeight"] : ["get", "snowHeight"];
+      const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+      const smoothProgress = value => {
+        const t = clamp(value);
+        return t * t * (3 - 2 * t);
       };
 
-      const setColumnMode = mode => {
-        if (!map.getLayer("zone-columns")) return;
-        map.setPaintProperty("zone-columns", "fill-extrusion-opacity", columnOpacity(mode));
-        map.setPaintProperty("zone-columns", "fill-extrusion-color", columnColor(mode));
-        map.setPaintProperty("zone-columns", "fill-extrusion-height", columnHeightExpression(mode));
+      const actualColumnHeightExpression = progress => {
+        if (progress <= 0) {
+          return ["get", "baselineHeight"];
+        }
+        if (progress >= 1) {
+          return ["get", "snowHeight"];
+        }
+        return [
+          "+",
+          ["get", "baselineHeight"],
+          ["*", ["-", ["get", "snowHeight"], ["get", "baselineHeight"]], progress]
+        ];
+      };
+
+      const lossColumnBaseExpression = progress => {
+        if (progress <= 0) {
+          return ["get", "baselineHeight"];
+        }
+        if (progress >= 1) {
+          return [
+            "case",
+            ["<", ["get", "change"], 0],
+            ["get", "snowHeight"],
+            ["get", "baselineHeight"]
+          ];
+        }
+        return [
+          "case",
+          ["<", ["get", "change"], 0],
+          [
+            "+",
+            ["get", "baselineHeight"],
+            ["*", ["-", ["get", "snowHeight"], ["get", "baselineHeight"]], progress]
+          ],
+          ["get", "baselineHeight"]
+        ];
+      };
+
+      const lossColumnHeightExpression = () => {
+        return ["get", "baselineHeight"];
+      };
+
+      const lossColumnColor = () => {
+        const selected = "#111827";
+        const selectedCase = selectedZone ? [["==", ["get", "zone"], selectedZone], selected] : [];
+        return selectedZone ? ["case", ...selectedCase, "#d13b2f"] : "#d13b2f";
+      };
+
+      const lossColumnFilter = mode => {
+        const visibleLoss = ["<", ["get", "change"], 0];
+        if (mode === "airports") {
+          return ["all", visibleLoss, ["==", ["get", "kind"], "airport"]];
+        }
+        return visibleLoss;
+      };
+
+      const lossColumnOpacity = mode => {
+        if (mode === "airports") {
+          return 0.94;
+        }
+        if (mode === "baseline") {
+          return 0.18;
+        }
+        return 0.9;
+      };
+
+      const setColumnMode = (mode, progress = mode === "baseline" ? 0 : 1) => {
+        if (!map.getLayer("zone-actual-columns")) return;
+        document.body.dataset.mapState = mode;
+        currentMode = mode;
+        currentProgress = progress;
+        const transitionDuration = 0;
+        const easedProgress = smoothProgress(progress);
+        [
+          "zone-actual-columns",
+          "zone-loss-columns"
+        ].forEach(layerId => {
+          map.setPaintProperty(layerId, "fill-extrusion-height-transition", { duration: transitionDuration, delay: 0 });
+          map.setPaintProperty(layerId, "fill-extrusion-base-transition", { duration: transitionDuration, delay: 0 });
+          map.setPaintProperty(layerId, "fill-extrusion-opacity-transition", { duration: Math.min(transitionDuration, 280), delay: 0 });
+        });
+        map.setPaintProperty("zone-actual-columns", "fill-extrusion-opacity", columnOpacity(mode));
+        map.setPaintProperty("zone-actual-columns", "fill-extrusion-color", actualColumnColor());
+        map.setPaintProperty("zone-actual-columns", "fill-extrusion-height", actualColumnHeightExpression(easedProgress));
+        map.setFilter("zone-loss-columns", lossColumnFilter(mode));
+        map.setPaintProperty("zone-loss-columns", "fill-extrusion-color", lossColumnColor());
+        map.setPaintProperty("zone-loss-columns", "fill-extrusion-base", lossColumnBaseExpression(easedProgress));
+        map.setPaintProperty("zone-loss-columns", "fill-extrusion-height", lossColumnHeightExpression());
+        map.setPaintProperty("zone-loss-columns", "fill-extrusion-opacity", lossColumnOpacity(mode));
       };
 
       const showZoneDetail = feature => {
@@ -828,50 +958,76 @@
           selectedZone = null;
           zoneDetail.classList.remove("is-visible");
           zoneDetail.innerHTML = "";
-          setColumnMode(currentMode);
+          setColumnMode(currentMode, currentProgress);
           return;
         }
         selectedZone = p.zone;
         const change = Math.round(Number(p.change) * 100);
         zoneDetail.innerHTML = `<b>${p.zone}</b><span>${p.borough} · ${change}% vs other January Sundays</span><span>${formatNumber(p.snowTrips)} pickups on Jan 25 · ${formatNumber(p.baseline)} normal Sunday pickups</span>`;
         zoneDetail.classList.add("is-visible");
-        setColumnMode(currentMode);
+        setColumnMode(currentMode, currentProgress);
       };
 
       let currentMode = views.city.mode;
+      let currentProgress = 0;
+      document.body.dataset.mapState = currentMode;
 
       map.on("load", () => {
-        map.addSource("zone-columns", {
+        map.addSource("zone-actual-columns", {
+          type: "geojson",
+          data: buildColumnFeatures()
+        });
+        map.addSource("zone-loss-columns", {
           type: "geojson",
           data: buildColumnFeatures()
         });
         map.addLayer({
-          id: "zone-columns",
+          id: "zone-actual-columns",
           type: "fill-extrusion",
-          source: "zone-columns",
+          source: "zone-actual-columns",
           paint: {
-            "fill-extrusion-color": columnColor(views.city.mode),
-            "fill-extrusion-height": columnHeightExpression(views.city.mode),
+            "fill-extrusion-color": actualColumnColor(),
+            "fill-extrusion-height": actualColumnHeightExpression(0),
             "fill-extrusion-base": 0,
             "fill-extrusion-opacity": columnOpacity(views.city.mode),
-            "fill-extrusion-height-transition": { duration: 520, delay: 0 },
+            "fill-extrusion-height-transition": { duration: 420, delay: 0 },
             "fill-extrusion-color-transition": { duration: 260, delay: 0 },
             "fill-extrusion-vertical-gradient": true
           }
         });
-
-        map.on("click", "zone-columns", event => {
-          const feature = event.features && event.features[0];
-          if (feature) showZoneDetail(feature);
+        map.addLayer({
+          id: "zone-loss-columns",
+          type: "fill-extrusion",
+          source: "zone-loss-columns",
+          filter: lossColumnFilter(views.city.mode),
+          paint: {
+            "fill-extrusion-color": lossColumnColor(),
+            "fill-extrusion-height": lossColumnHeightExpression(),
+            "fill-extrusion-base": lossColumnBaseExpression(0),
+            "fill-extrusion-opacity": lossColumnOpacity(views.city.mode),
+            "fill-extrusion-height-transition": { duration: 420, delay: 0 },
+            "fill-extrusion-base-transition": { duration: 420, delay: 0 },
+            "fill-extrusion-opacity-transition": { duration: 260, delay: 0 },
+            "fill-extrusion-vertical-gradient": true
+          }
         });
 
-        map.on("mouseenter", "zone-columns", () => {
-          map.getCanvas().style.cursor = "pointer";
+        ["zone-loss-columns", "zone-actual-columns"].forEach(layerId => {
+          map.on("click", layerId, event => {
+            const feature = event.features && event.features[0];
+            if (feature) showZoneDetail(feature);
+          });
+
+          map.on("mouseenter", layerId, () => {
+            map.getCanvas().style.cursor = "pointer";
+          });
+
+          map.on("mouseleave", layerId, () => {
+            map.getCanvas().style.cursor = "";
+          });
         });
 
-        map.on("mouseleave", "zone-columns", () => {
-          map.getCanvas().style.cursor = "";
-        });
+        setColumnMode(currentMode);
       });
 
       let activeViewKey = null;
@@ -881,7 +1037,6 @@
         const view = views[key] || views.city;
         activeViewKey = key;
         currentMode = view.mode;
-        setColumnMode(view.mode);
         const shouldMoveCamera = key === "airports" || previousViewKey === "airports";
         if (shouldMoveCamera) {
           map.flyTo({
@@ -895,16 +1050,46 @@
         }
       };
 
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-          if (entry.intersectionRatio >= 0.96) {
-            setView(entry.target.closest(".step").dataset.view);
-          }
-        });
-      }, { threshold: [0, 0.96] });
+      const cardProgress = card => {
+        const rect = card.getBoundingClientRect();
+        const visibleHeight = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+        const visibleRatio = Math.max(0, visibleHeight) / Math.max(1, Math.min(rect.height, window.innerHeight));
+        if (rect.bottom < window.innerHeight * 0.32) {
+          return 1;
+        }
+        return clamp(visibleRatio / 0.92);
+      };
 
-      document.querySelectorAll(".step .card").forEach(card => observer.observe(card));
-      setColumnMode(views.city.mode);
+      const getCard = key => document.querySelector(`.step[data-view="${key}"] .card`);
+      const applyStoryScrollState = () => {
+        if (!map.getLayer("zone-actual-columns")) return;
+        const snowCard = getCard("snow");
+        const airportCard = getCard("airports");
+        const snowProgress = snowCard ? cardProgress(snowCard) : 0;
+        const airportProgress = airportCard ? cardProgress(airportCard) : 0;
+        if (airportProgress > 0.48) {
+          setView("airports");
+          setColumnMode("airports", 1);
+        } else if (snowProgress > 0.01) {
+          setView("snow");
+          setColumnMode("snow", snowProgress);
+        } else {
+          setView("city");
+          setColumnMode("baseline", 0);
+        }
+      };
+
+      let storyScrollFrame = null;
+      const requestStoryScrollState = () => {
+        if (storyScrollFrame) return;
+        storyScrollFrame = requestAnimationFrame(() => {
+          storyScrollFrame = null;
+          applyStoryScrollState();
+        });
+      };
+      window.addEventListener("scroll", requestStoryScrollState, { passive: true });
+      window.addEventListener("resize", requestStoryScrollState);
+      requestAnimationFrame(applyStoryScrollState);
     }
 
     drawDailyChart();
