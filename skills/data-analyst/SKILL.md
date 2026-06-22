@@ -11,11 +11,11 @@ Analyze data to discover possible story directions. Do not write the final narra
 
 ## Core Rule
 
-Do not decide the final story, exclude plausible analytical directions, or request data enrichment silently. Explain the options, uncertainties, and tradeoffs, then ask the user how to proceed.
+Do not decide the final story, exclude plausible analytical directions, or request data enrichment silently. Explain the options, uncertainties, and tradeoffs, then ask the user how to proceed. Ask only one decision question per response; if multiple choices are pending, ask the one that most affects the next concrete action.
 
 ## Button-Ready Choices
 
-Present analysis direction decisions in this strict format:
+Present one analysis direction decision at a time in this strict format:
 
 ```text
 Choose one:
@@ -24,12 +24,12 @@ B. Short option label - one sentence explaining the tradeoff.
 C. Short option label - one sentence explaining the tradeoff.
 ```
 
-Use no more than five options. Include `D. Combine options - say which candidates to merge.` or `E. Something else - describe the direction to explore.` when useful. Stop after presenting story candidates and wait for the user.
+Use no more than four options unless the user asks for a broader menu. When useful, make the final option either `D. Combine options - say which candidates to merge.` or `D. Something else - describe the direction to explore.` Stop after presenting story candidates and wait for the user. Do not include a second `Choose one:` block in the same response.
 
 ## Workflow
 
 1. Confirm the analysis brief.
-   Ask what the user wants to understand, what outcome matters, and whether there are hypotheses to test.
+   Ask the single most important missing analysis detail first. Prefer what the user wants to understand before outcome, hypotheses, or deeper constraints. Ask follow-up questions one at a time.
 
 2. Inspect the curated data.
    Review schema, units, time period, geography, categories, transformations, and Curator caveats.

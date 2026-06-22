@@ -11,11 +11,11 @@ Create the visual and interactive form of the data story. The default final outp
 
 ## Core Rule
 
-Do not choose the final chart type, style family, layout, color system, interaction model, or motion behavior without consulting the user. Offer options and ask the user to choose. If one version is clearly stronger, explain why and still request confirmation.
+Do not choose the final chart type, style family, layout, color system, interaction model, or motion behavior without consulting the user. Offer options and ask the user to choose. If one version is clearly stronger, explain why and still request confirmation. Ask only one design decision question per response; if multiple choices are pending, ask the one that most affects the next concrete action.
 
 ## Button-Ready Choices
 
-Present design decisions in this strict format:
+Present one design decision at a time in this strict format:
 
 ```text
 Choose one:
@@ -24,22 +24,24 @@ B. Short option label - one sentence explaining the tradeoff.
 C. Short option label - one sentence explaining the tradeoff.
 ```
 
-Use no more than five options. Include `D. Something else - describe the visual direction you want.` when the user may want a custom path. Stop after presenting visual directions, style families, chart forms, or motion choices and wait for the user.
+Use no more than four options unless the user asks for a broader menu. Include `D. Something else - describe the visual direction you want.` when the user may want a custom path. Stop after presenting visual directions, style families, chart forms, or motion choices and wait for the user. Do not include a second `Choose one:` block in the same response.
 
 ## Workflow
 
 1. Confirm inputs.
-   Ask for or review the curated dataset, Analyst story direction, Narrator story brief, audience, target device, and workshop constraints.
+   Ask for or review the curated dataset, Analyst story direction, Narrator story brief, audience, target device, and workshop constraints. If several inputs are missing, ask only for the one that blocks the next concrete design step.
 
-   Before proposing visual directions, ask for the intended viewer type and any visual references the user wants to add. If the user provides a screenshot, site, artwork, or prior visualization as a reference, inspect it and translate it into concrete design traits such as map-first, chart-first, editorial, cinematic, dense, restrained, dimensional, tactile, annotated, or exploratory. Do not copy a reference wholesale; use it to understand the desired interaction pattern and visual posture.
+   Before proposing visual directions, ask for either the intended viewer type or a visual reference only when it is the most important missing input. If the user provides a screenshot, site, artwork, or prior visualization as a reference, inspect it and translate it into concrete design traits such as map-first, chart-first, editorial, cinematic, dense, restrained, dimensional, tactile, annotated, or exploratory. Do not copy a reference wholesale; use it to understand the desired interaction pattern and visual posture.
 
    For map-led artifacts, ask the user to choose or confirm the map theme before implementation. The theme should support the story event and audience, for example snow wonderland, taxi night, civic neutral, satellite editorial, or clean teaching map. If the map theme is interactive in the artifact, make the controls real buttons with clear active states.
 
-   For map-led narratives, also confirm the map reading level and focus behavior before building. Ask whether the user expects regional overview, citywide map, transit/street-level view, or neighborhood close-up. When the story shifts to a subset such as airports, boroughs, corridors, or neighborhoods, dim unrelated marks and keep the focus marks visually dominant. Include enough mapped marks to make the spatial pattern legible; do not show only a few hand-picked points unless the user explicitly asks for a spotlight-only map. If using 3D columns on a map, prefer the map SDK's native extrusion or 3D layer capabilities over CSS/HTML marker drawings. Make the marks read as real map geometry rather than gradients, sliders, decorative stems, or floating stickers.
+   For map-led narratives, also confirm the map reading level and focus behavior before building, but do so as a separate one-question decision gate. Ask whether the user expects regional overview, citywide map, transit/street-level view, or neighborhood close-up. When the story shifts to a subset such as airports, boroughs, corridors, or neighborhoods, dim unrelated marks and keep the focus marks visually dominant. Include enough mapped marks to make the spatial pattern legible; do not show only a few hand-picked points unless the user explicitly asks for a spotlight-only map. If using 3D columns on a map, prefer the map SDK's native extrusion or 3D layer capabilities over CSS/HTML marker drawings. Make the marks read as real map geometry rather than gradients, sliders, decorative stems, or floating stickers.
 
    Decide whether color means category, magnitude, or narrative focus. For scrollytelling, prefer one neutral/default color for all marks, then use a highlight color only for the active story region unless the user asks for a categorical legend.
 
    If the user expects a real map, use an actual map SDK or tile source for the basemap and clearly separate data overlays from basemap features. Do not draw fake transit lines, streets, borough boundaries, or infrastructure unless they come from a real source or are explicitly labeled as schematic.
+
+   For country maps, use boundary sources and visual treatments that align with the country's official sovereignty position and avoid disputed-boundary surprises from generic global map providers. When mapping India, use India-aligned sovereign boundaries for the national outline and state/UT geography; do not rely on default global basemaps or boundary datasets that omit or visually diminish claimed territories. If a compliant boundary source is unavailable, use a clearly labeled schematic/cartogram instead of a political boundary map.
 
 2. Offer visual directions.
    Present two or three distinct button-ready options with chart form, layout, interaction, motion approach, strengths, and risks.

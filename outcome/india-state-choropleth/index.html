@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>India Literacy Rate Choropleth</title>
+  <meta name="description" content="An India state and union territory choropleth using NSO 2017-18 literacy estimates.">
+  <meta name="theme-color" content="#f6f7f2">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f7f2;
+      --ink: #17211b;
+      --muted: #536057;
+      --line: #d9ded3;
+      --map-line: #ffffff;
+      --accent: #1f6f5b;
+      --accent-dark: #0d3e34;
+      --low: #dcefe6;
+      --high: #0f5f50;
+      --panel: #ffffff;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    main {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 36px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 28px;
+      align-items: start;
+    }
+
+    footer {
+      grid-column: 1 / -1;
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    footer a {
+      color: var(--accent-dark);
+      font-weight: 700;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    header {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px 20px;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 18px;
+    }
+
+    header > div:first-child {
+      display: contents;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 4.2rem);
+      line-height: 0.96;
+      letter-spacing: -0.035em;
+      text-wrap: balance;
+      max-width: none;
+      width: 100%;
+      text-align: left;
+      grid-column: 1 / -1;
+    }
+
+    .lede {
+      margin: 0;
+      max-width: 760px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 1rem;
+      text-align: left;
+      grid-column: 1;
+      justify-self: start;
+    }
+
+    .badge {
+      grid-column: 2;
+      justify-self: start;
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #b8cbbf;
+      color: var(--accent-dark);
+      padding: 9px 12px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      background: #eef7f1;
+      text-decoration: none;
+    }
+
+    .badge:hover,
+    .badge:focus {
+      border-color: var(--accent-dark);
+      outline: none;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .map-wrap {
+      position: relative;
+      background: linear-gradient(180deg, #fbfcf8 0%, #eef4ed 100%);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      min-height: 720px;
+      overflow: hidden;
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      height: min(78vh, 800px);
+      min-height: 650px;
+      touch-action: manipulation;
+    }
+
+    .state {
+      stroke: var(--map-line);
+      stroke-width: 1.25;
+      vector-effect: non-scaling-stroke;
+      cursor: pointer;
+      transition: fill 160ms ease, opacity 160ms ease, stroke 160ms ease;
+    }
+
+    .state:hover,
+    .state:focus {
+      stroke: #10281f;
+      outline: none;
+    }
+
+    .state.is-active {
+      stroke: #10281f;
+      stroke-width: 2.2;
+      filter: drop-shadow(0 3px 6px rgb(12 44 35 / 0.22));
+    }
+
+    .tap-catcher {
+      fill: transparent;
+      stroke: transparent;
+      pointer-events: all;
+      cursor: pointer;
+    }
+
+    .small-anchor {
+      fill: #10281f;
+      stroke: #fff;
+      stroke-width: 1.5;
+      pointer-events: none;
+    }
+
+    .tooltip {
+      position: absolute;
+      transform: translate(-50%, calc(-100% - 14px));
+      background: #10281f;
+      color: #fff;
+      min-width: 174px;
+      padding: 12px 13px;
+      border-radius: 8px;
+      box-shadow: 0 8px 18px rgb(12 44 35 / 0.22);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 140ms ease, transform 140ms ease;
+      z-index: 3;
+    }
+
+    .tooltip.is-visible {
+      opacity: 1;
+      transform: translate(-50%, calc(-100% - 10px));
+    }
+
+    .tooltip::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -7px;
+      width: 14px;
+      height: 14px;
+      background: #10281f;
+      transform: translateX(-50%) rotate(45deg);
+    }
+
+    .tooltip strong {
+      display: block;
+      font-size: 0.96rem;
+      margin-bottom: 6px;
+    }
+
+    .tooltip span {
+      display: block;
+      color: #d8eee4;
+      font-size: 0.82rem;
+    }
+
+    aside {
+      position: sticky;
+      top: 20px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 18px;
+    }
+
+    h2 {
+      margin: 0 0 10px;
+      font-size: 1.05rem;
+    }
+
+    .metric {
+      font-size: 3rem;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      font-weight: 800;
+      color: var(--accent-dark);
+    }
+
+    .label {
+      margin-top: 8px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 0.92rem;
+    }
+
+    .legend {
+      display: grid;
+      gap: 8px;
+    }
+
+    .ramp {
+      height: 13px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--low), #8bc5a8, var(--high));
+      border: 1px solid #c4d2c8;
+    }
+
+    .legend-row {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: 700;
+    }
+
+    .note {
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 0.82rem;
+    }
+
+    .error {
+      max-width: 560px;
+      margin: 80px auto;
+      padding: 18px;
+      border: 1px solid #d8b6ad;
+      background: #fff5f2;
+      color: #59291f;
+      border-radius: 10px;
+      line-height: 1.5;
+    }
+
+      @media (max-width: 920px) {
+      main {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        grid-template-columns: 1fr;
+        align-items: start;
+      }
+
+      .lede,
+      .badge {
+        grid-column: 1;
+      }
+
+      aside {
+        position: static;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+
+      .map-wrap { min-height: 560px; }
+      svg {
+        height: 68vh;
+        min-height: 520px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .state,
+      .tooltip {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <div>
+        <h1>Where literacy rates stand across India</h1>
+        <p class="lede">The NSO 2017-18 education survey estimated literacy among people aged seven and older. The map shows how that measure varies across states and union territories.</p>
+      </div>
+      <a class="badge" href="https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_literacy_rate" rel="noreferrer">NSO 2017-18</a>
+    </header>
+
+    <section class="map-wrap" id="mapWrap" aria-label="Interactive India state choropleth">
+      <svg id="map" viewBox="0 0 760 820" role="img" aria-labelledby="mapTitle mapDesc">
+        <title id="mapTitle">India state and union territory choropleth</title>
+        <desc id="mapDesc">A choropleth where each region is colored by literacy rate from about 66 percent to 99 percent.</desc>
+      </svg>
+      <div class="tooltip" id="tooltip" role="status" aria-live="polite"></div>
+    </section>
+
+    <aside>
+      <section class="panel" aria-live="polite">
+        <h2 id="selectedName">Select a region</h2>
+        <div class="metric"><span id="selectedValue">--</span></div>
+        <p class="label" id="selectedText">Choose any state or union territory to see its estimated literacy rate.</p>
+      </section>
+
+      <section class="panel legend">
+        <h2>Literacy rate</h2>
+        <div class="ramp" aria-hidden="true"></div>
+        <div class="legend-row"><span>66%</span><span>99%</span></div>
+        <p class="note">Share of people aged seven and older reported as literate in the NSO 2017-18 household social consumption survey.</p>
+      </section>
+    </aside>
+
+    <footer>
+      Map source: <a href="https://www.highcharts.com/maps/demo/all-maps" rel="noreferrer">Highcharts Maps</a>. Data: <a href="https://en.wikipedia.org/wiki/List_of_Indian_states_and_union_territories_by_literacy_rate" rel="noreferrer">NSO 2017-18 literacy estimates</a>.
+    </footer>
+  </main>
+
+  <script src="india-all-disputed.topo.js"></script>
+  <script>
+    const DATA = {
+      "andaman and nicobar": 86.27,
+      "andhra pradesh": 66.4,
+      "arunanchal pradesh": 66.95,
+      "assam": 85.9,
+      "bihar": 70.9,
+      "chandigarh": 86.43,
+      "chhattisgarh": 77.3,
+      "dadara and nagar havelli": 77.65,
+      "daman and diu": 87.07,
+      "goa": 87.4,
+      "gujarat": 82.4,
+      "haryana": 80.4,
+      "himachal pradesh": 86.6,
+      "jammu and kashmir": 77.3,
+      "jharkhand": 74.3,
+      "karnataka": 77.2,
+      "kerala": 96.2,
+      "lakshadweep": 92.28,
+      "madhya pradesh": 73.7,
+      "maharashtra": 84.8,
+      "manipur": 79.85,
+      "meghalaya": 75.48,
+      "mizoram": 99.01,
+      "nagaland": 80.11,
+      "nct of delhi": 88.7,
+      "odisha": 77.3,
+      "puducherry": 86.55,
+      "punjab": 83.7,
+      "rajasthan": 69.7,
+      "sikkim": 82.2,
+      "tamil nadu": 82.9,
+      "telangana": 72.8,
+      "tripura": 87.75,
+      "uttarakhand": 87.6,
+      "uttar pradesh": 73.0,
+      "west bengal": 80.5
+    };
+
+    const SMALL_KEYS = new Set([
+      "chandigarh",
+      "dadara and nagar havelli",
+      "daman and diu",
+      "goa",
+      "lakshadweep",
+      "manipur",
+      "meghalaya",
+      "mizoram",
+      "nagaland",
+      "nct of delhi",
+      "puducherry",
+      "sikkim",
+      "tripura"
+    ]);
+
+    const svg = document.querySelector("#map");
+    const wrap = document.querySelector("#mapWrap");
+    const tooltip = document.querySelector("#tooltip");
+    const selectedName = document.querySelector("#selectedName");
+    const selectedValue = document.querySelector("#selectedValue");
+    const selectedText = document.querySelector("#selectedText");
+    const svgNS = "http://www.w3.org/2000/svg";
+    const width = 760;
+    const height = 820;
+    const pad = 28;
+    let projection;
+    let features = [];
+    let activePath = null;
+
+    function colorFor(value) {
+      const min = 66;
+      const max = 99;
+      const t = Math.max(0, Math.min(1, (value - min) / (max - min)));
+      const hue = 154;
+      const sat = 44 + t * 18;
+      const light = 90 - t * 62;
+      return `hsl(${hue} ${sat}% ${light}%)`;
+    }
+
+    function decodeArcs(topology) {
+      const { scale, translate } = topology.transform;
+      return topology.arcs.map((arc) => {
+        let x = 0;
+        let y = 0;
+        return arc.map(([dx, dy]) => {
+          x += dx;
+          y += dy;
+          return [x * scale[0] + translate[0], y * scale[1] + translate[1]];
+        });
+      });
+    }
+
+    function getArc(decoded, index) {
+      if (index >= 0) return decoded[index];
+      return decoded[~index].slice().reverse();
+    }
+
+    function stitchRing(decoded, ring) {
+      const coords = [];
+      ring.forEach((arcIndex, index) => {
+        const arc = getArc(decoded, arcIndex);
+        coords.push(...(index ? arc.slice(1) : arc));
+      });
+      return coords;
+    }
+
+    function geometryRings(decoded, geometry) {
+      if (geometry.type === "Polygon") {
+        return geometry.arcs.map((ring) => stitchRing(decoded, ring));
+      }
+      if (geometry.type === "MultiPolygon") {
+        return geometry.arcs.flatMap((polygon) => polygon.map((ring) => stitchRing(decoded, ring)));
+      }
+      return [];
+    }
+
+    function buildProjection(rings) {
+      const points = rings.flat();
+      const xs = points.map((point) => point[0]);
+      const ys = points.map((point) => point[1]);
+      const minX = Math.min(...xs);
+      const maxX = Math.max(...xs);
+      const minY = Math.min(...ys);
+      const maxY = Math.max(...ys);
+      const scale = Math.min((width - pad * 2) / (maxX - minX), (height - pad * 2) / (maxY - minY));
+      const offsetX = (width - (maxX - minX) * scale) / 2;
+      const offsetY = (height - (maxY - minY) * scale) / 2;
+      return ([lon, lat]) => [
+        offsetX + (lon - minX) * scale,
+        offsetY + (maxY - lat) * scale
+      ];
+    }
+
+    function pathFromRings(rings) {
+      return rings.map((ring) => {
+        const projected = ring.map(projection);
+        return projected.map(([x, y], index) => `${index ? "L" : "M"}${x.toFixed(2)} ${y.toFixed(2)}`).join(" ") + " Z";
+      }).join(" ");
+    }
+
+    function showRegion(feature, clientX, clientY, sourceElement) {
+      if (activePath) activePath.classList.remove("is-active");
+      activePath = sourceElement?.classList.contains("state") ? sourceElement : document.querySelector(`[data-key="${feature.key}"].state`);
+      if (activePath) activePath.classList.add("is-active");
+
+      const value = DATA[feature.key] ?? 0;
+      selectedName.textContent = feature.name;
+      selectedValue.textContent = `${value.toFixed(value % 1 ? 1 : 0)}%`;
+      selectedText.textContent = `${feature.name} has an estimated literacy rate of ${value.toFixed(1)}%.`;
+
+      const rect = wrap.getBoundingClientRect();
+      tooltip.style.left = `${clientX - rect.left}px`;
+      tooltip.style.top = `${clientY - rect.top}px`;
+      tooltip.innerHTML = `<strong>${feature.name}</strong><span>Literacy rate: ${value.toFixed(1)}%</span>`;
+      tooltip.classList.add("is-visible");
+    }
+
+    function addPath(feature) {
+      const value = DATA[feature.key] ?? 0;
+      const path = document.createElementNS(svgNS, "path");
+      path.setAttribute("d", feature.path);
+      path.setAttribute("fill", colorFor(value));
+      path.setAttribute("tabindex", "0");
+      path.setAttribute("role", "button");
+      path.setAttribute("aria-label", `${feature.name}, literacy rate ${value.toFixed(1)} percent`);
+      path.dataset.key = feature.key;
+      path.classList.add("state");
+      path.addEventListener("pointerdown", (event) => showRegion(feature, event.clientX, event.clientY, path));
+      path.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          const point = projection([feature.lon, feature.lat]);
+          const rect = svg.getBoundingClientRect();
+          showRegion(feature, rect.left + point[0] * rect.width / width, rect.top + point[1] * rect.height / height, path);
+        }
+      });
+      svg.appendChild(path);
+    }
+
+    function addSmallTarget(feature) {
+      if (!SMALL_KEYS.has(feature.key)) return;
+      const [x, y] = projection([feature.lon, feature.lat]);
+      const radius = feature.key === "nct of delhi" || feature.key === "chandigarh" ? 24 : 18;
+
+      const catcher = document.createElementNS(svgNS, "circle");
+      catcher.setAttribute("cx", x);
+      catcher.setAttribute("cy", y);
+      catcher.setAttribute("r", radius);
+      catcher.dataset.key = feature.key;
+      catcher.classList.add("tap-catcher");
+      catcher.addEventListener("pointerdown", (event) => showRegion(feature, event.clientX, event.clientY, catcher));
+      svg.appendChild(catcher);
+
+      const anchor = document.createElementNS(svgNS, "circle");
+      anchor.setAttribute("cx", x);
+      anchor.setAttribute("cy", y);
+      anchor.setAttribute("r", 3.2);
+      anchor.classList.add("small-anchor");
+      svg.appendChild(anchor);
+    }
+
+    function init() {
+      const topology = window.INDIA_TOPOLOGY;
+      if (!topology) {
+        wrap.innerHTML = `<div class="error"><strong>Map data could not be loaded.</strong><br>Make sure <code>india-all-disputed.topo.js</code> is next to this HTML file.</div>`;
+        return;
+      }
+
+      const object = topology.objects.default;
+      const decoded = decodeArcs(topology);
+      const allRings = object.geometries.flatMap((geometry) => geometryRings(decoded, geometry));
+      projection = buildProjection(allRings);
+
+      features = object.geometries.map((geometry) => {
+        const key = geometry.properties["hc-key"];
+        const rings = geometryRings(decoded, geometry);
+        return {
+          key,
+          name: geometry.properties.name,
+          lon: geometry.properties["hc-middle-lon"],
+          lat: geometry.properties["hc-middle-lat"],
+          path: pathFromRings(rings)
+        };
+      });
+
+      features.forEach(addPath);
+      features.forEach(addSmallTarget);
+
+    }
+
+    init();
+  </script>
+</body>
+</html>

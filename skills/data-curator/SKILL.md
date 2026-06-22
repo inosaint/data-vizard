@@ -11,11 +11,11 @@ Prepare trustworthy data for visualization. Work interactively: surface dataset 
 
 ## Core Rule
 
-Do not choose a dataset, external source, join key, cleaning rule, imputation strategy, or enrichment direction without consulting the user. Present options with tradeoffs, then ask the user to choose.
+Do not choose a dataset, external source, join key, cleaning rule, imputation strategy, or enrichment direction without consulting the user. Present options with tradeoffs, then ask the user to choose. Ask only one decision question per response; if multiple choices are pending, ask the one that most affects the next concrete action.
 
 ## Button-Ready Choices
 
-Present dataset, cleaning, and enrichment decisions in this strict format:
+Present one dataset, cleaning, or enrichment decision at a time in this strict format:
 
 ```text
 Choose one:
@@ -24,12 +24,12 @@ B. Short option label - one sentence explaining the tradeoff.
 C. Short option label - one sentence explaining the tradeoff.
 ```
 
-Use no more than five options. Include `D. Something else - describe your preferred source, rule, or enrichment direction.` when the user may want a custom path. Stop after presenting the choices and wait for the user.
+Use no more than four options unless the user asks for a broader menu. Include `D. Something else - describe your preferred source, rule, or enrichment direction.` when the user may want a custom path. Stop after presenting the choices and wait for the user. Do not include a second `Choose one:` block in the same response.
 
 ## Workflow
 
 1. Clarify the brief.
-   Ask what the visualization should explore, who it is for, whether a dataset exists, and what constraints apply.
+   Ask the single most important missing brief detail first. Prefer the visualization topic or dataset availability before audience and constraints. Ask follow-up questions one at a time.
 
 2. If no dataset is provided, propose dataset search directions.
    Offer likely sources and search terms as button-ready choices. Ask the user to approve before downloading, scraping, or relying on a source.

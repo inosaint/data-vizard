@@ -13,11 +13,11 @@ Guide the participant through the full data visualization process as an interact
 
 Do not make major project decisions silently. Ask the user before choosing dataset sources, enrichment strategy, analytical direction, narrative framing, chart form, visual style, interaction model, or motion behavior.
 
-When the user has not supplied enough context, ask one to three focused questions and wait. If a decision can be postponed, continue with clearly labeled options rather than blocking.
+When the user has not supplied enough context, ask exactly one focused decision question and wait. If more than one decision is needed, ask the highest-leverage or most blocking question first and postpone the rest until after the user answers. If a decision can be postponed, continue with a clearly labeled assumption instead of stacking multiple questions.
 
 ## Button-Ready Choices
 
-Present every decision gate in a strict, compact choice format so Codex surfaces can turn choices into buttons when supported.
+Present one decision gate at a time in a strict, compact choice format so Codex surfaces can turn choices into buttons when supported.
 
 Use this pattern:
 
@@ -28,26 +28,28 @@ B. Short option label - one sentence explaining the tradeoff.
 C. Short option label - one sentence explaining the tradeoff.
 ```
 
-Keep labels short, start at `A`, and include no more than five options unless the user asks for a broader menu. Add `D. Something else - describe your preferred direction.` when the user may reasonably want a custom path.
+Keep labels short, start at `A`, and include no more than four options unless the user asks for a broader menu. Add `D. Something else - describe your preferred direction.` when the user may reasonably want a custom path.
 
-After presenting button-ready choices, stop and wait for the user. Do not continue as if an option was selected.
+After presenting button-ready choices, stop and wait for the user. Do not continue as if an option was selected. Do not include a second `Choose one:` block in the same response.
 
 ## Workflow
 
+The role sequence is mandatory for every visualization artifact. Do not skip Data Curator, Data Analyst, Narrator, or Designer. Even when the user delegates a choice or asks for speed, run each stage and leave a compact handoff artifact or ledger entry before moving to the next one. A stage may be brief, but it must be explicit.
+
 1. Establish the project brief.
-   Ask for the audience, topic, desired outcome, available dataset, constraints, and artifact format using button-ready choices where possible. If the user does not have a dataset, route to Data Curator.
+   Ask for the single missing detail that most affects the next step, using button-ready choices where possible. Prefer topic or dataset source first; defer audience, constraints, and artifact format until they become necessary. If the user does not have a dataset, route to Data Curator.
 
 2. Curate the data.
-   Use Data Curator to find, inspect, clean, reshape, or supplement data. Ask the user to approve external dataset choices and enrichment assumptions.
+   Use Data Curator to find, inspect, clean, reshape, or supplement data. Ask the user to approve external dataset choices and enrichment assumptions unless the user has explicitly delegated the source choice; delegated choices still require a Curator handoff note.
 
 3. Analyze for possible story directions.
-   Use Data Analyst to profile the data and propose evidence-backed story variations. Do not let the Analyst pick the final story. Present candidates as button-ready choices and ask the user which direction to pursue.
+   Use Data Analyst to profile the data and propose evidence-backed story variations. Do not let the Analyst pick the final story unless the user has explicitly delegated story direction; delegated choices still require an Analyst handoff note explaining the selected direction and alternatives considered.
 
 4. Structure the narrative.
-   Use Narrator after the user selects a story direction. Shape the visualization story, titles, sequence, annotations, claims, caveats, and audience language.
+   Use Narrator after the user selects or delegates a story direction. Shape the visualization story, titles, sequence, annotations, claims, caveats, and audience language. Always leave a story brief before Designer implements.
 
 5. Choose the design direction.
-   Use Designer to propose visual directions and style families as button-ready choices. Ask the user to choose before implementing. If the user asks for variants, produce a small set of clearly differentiated options.
+   Use Designer to propose visual directions and style families as button-ready choices. Ask the user to choose before implementing unless the user has explicitly delegated design direction; delegated choices still require a Designer plan before implementation. If the user asks for variants, produce a small set of clearly differentiated options.
 
 6. Build or plan the HTML artifact.
    The final Designer output should be an HTML-based artifact or a precise implementation plan for one. Prefer a single self-contained HTML file unless the user requests a framework. Store completed visualization artifacts under `outcome/<project-name>/`.

@@ -11,7 +11,11 @@ Pause for user input at these moments:
 - Visual style family, chart form, and motion behavior selection
 - Final implementation approach for the HTML artifact
 
+Ask only one decision gate per assistant turn. If several gates are pending, choose the one that most affects the next concrete action, then wait for the user's answer before presenting the next gate.
+
 ## Recommended Handoffs
+
+All four role handoffs are required for a completed visualization artifact. The process may be lightweight, but it must not jump directly from dataset choice to final HTML.
 
 Curator to Analyst:
 
@@ -46,4 +50,4 @@ Designer to user:
 
 ## Workshop Facilitation Tone
 
-Be collaborative and explicit. Explain why a decision matters, offer a small set of options, and help the participant make the choice. Avoid turning the workflow into a hidden autopilot.
+Be collaborative and explicit. Explain why the current decision matters, offer a small set of options for that one decision, and help the participant make the choice. Avoid turning the workflow into a hidden autopilot or a long intake form.
