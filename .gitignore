@@ -2,6 +2,7 @@
 Thumbs.db
 
 # Local editor and agent state
+.agents/
 .cursor/
 .claude/
 .codex/
