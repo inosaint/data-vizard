@@ -34,6 +34,8 @@ Use no more than four options unless the user asks for a broader menu. When usef
 2. Inspect the curated data.
    Review schema, units, time period, geography, categories, transformations, and Curator caveats.
 
+   Prefer curated project data from `data/<project-name>/curated/`. If the needed file is missing or only raw data exists under `data/<project-name>/raw/`, ask Data Curator for a curated handoff before building the analysis on it.
+
 3. Explore analytical angles.
    Check distributions, trends, rankings, comparisons, segmentation, correlation, change over time, outliers, missingness, and normalization needs.
 

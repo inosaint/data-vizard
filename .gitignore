@@ -32,6 +32,6 @@ dist/
 build/
 
 # Large raw data can be regenerated or reacquired.
-outputs/**/raw/*.parquet
-outputs/**/raw/*.zip
-outputs/**/raw/*.gz
+data/**/raw/*.parquet
+data/**/raw/*.zip
+data/**/raw/*.gz

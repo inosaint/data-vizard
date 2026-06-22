@@ -39,6 +39,8 @@ The role sequence is mandatory for every visualization artifact. Do not skip Dat
 1. Establish the project brief.
    Ask for the single missing detail that most affects the next step, using button-ready choices where possible. Prefer topic or dataset source first; defer audience, constraints, and artifact format until they become necessary. If the user does not have a dataset, route to Data Curator.
 
+   Store project-specific product context in `outcome/<project-name>/PRODUCT.md`, not in the repository root. This file should capture the audience, purpose, personality, anti-references, design principles, and accessibility goals for that one visualization project.
+
 2. Curate the data.
    Use Data Curator to find, inspect, clean, reshape, or supplement data. Ask the user to approve external dataset choices and enrichment assumptions unless the user has explicitly delegated the source choice; delegated choices still require a Curator handoff note.
 
@@ -67,12 +69,12 @@ Skills are the primary packaging model. Subagents are optional execution helpers
 
 Use subagents only when parallel exploration would help, such as asking Analyst to explore story candidates while Designer explores possible visual styles from the same brief. When using subagents, keep the user-facing workflow intact: summarize options, explain tradeoffs, and ask the user to choose.
 
-## Token Tracking
+## Project Ledger
 
-For every visualization project, maintain a repo-accessible token and effort ledger at:
+For every visualization project, maintain a repo-accessible progress ledger at:
 
 ```text
-token-usage/<project-name>.md
+project-ledgers/<project-name>.md
 ```
 
 Normalize `<project-name>` to lowercase hyphen-case, such as `nyc-taxi-weather-jan-2026.md`. Create the file when the workflow starts if it does not already exist.
@@ -85,16 +87,28 @@ Update the ledger whenever a stage is completed:
 - Narrator produces or revises the approved story brief
 - Designer produces, revises, or verifies the HTML artifact
 
-Record each skill boundary, files or references loaded, tool calls, user decision gates, and outputs produced. If exact token telemetry is available from the host, record exact input, output, and total tokens per skill. If exact telemetry is not available, say so and keep an approximate effort ledger instead of inventing numbers.
+Record each skill boundary, files or references loaded, user decision gates, evidence notes, and outputs produced. Keep the ledger focused on progress, handoffs, decisions, caveats, and artifacts rather than token accounting.
 
 Use this compact table shape:
 
 ```markdown
-| Stage | Skill | Status | Exact Tokens | Evidence / Effort Notes | Outputs |
-| --- | --- | --- | --- | --- | --- |
+| Stage | Skill | Status | Decisions / Evidence | Outputs |
+| --- | --- | --- | --- | --- |
 ```
 
-## Outcome Storage
+## Project Storage
+
+Use these repo paths consistently for each project:
+
+```text
+data/<project-name>/raw/
+data/<project-name>/curated/
+outcome/<project-name>/PRODUCT.md
+outcome/<project-name>/<artifact-name>.html
+project-ledgers/<project-name>.md
+```
+
+Store source snapshots, raw files, cleaned tables, joins, and data handoff notes under `data/<project-name>/`. Store public-facing HTML artifacts, story briefs, product context, design briefs, favicons, and presentation-specific assets under `outcome/<project-name>/`.
 
 Store the final visualization outcome in a predictable repo path:
 
@@ -102,20 +116,21 @@ Store the final visualization outcome in a predictable repo path:
 outcome/<project-name>/<artifact-name>.html
 ```
 
-Normalize `<project-name>` to lowercase hyphen-case, matching the token ledger project name when possible. For example:
+Normalize `<project-name>` to lowercase hyphen-case, matching the project ledger name when possible. For example:
 
 ```text
 outcome/nyc-taxi-weather-jan-2026/index.html
 ```
 
-When Designer creates supporting files, keep them inside the same project outcome folder:
+When Designer creates presentation-specific supporting files, keep them inside the same project outcome folder:
 
 ```text
 outcome/<project-name>/assets/
-outcome/<project-name>/data/
 ```
 
-For the default workshop path, prefer a single self-contained HTML file named `index.html`. After Designer verifies the artifact, update `token-usage/<project-name>.md` with the final outcome path and verification notes.
+Do not store source snapshots, raw datasets, or reusable curated tables in `outcome/`; those belong under `data/<project-name>/`.
+
+For the default workshop path, prefer a single self-contained HTML file named `index.html`. After Designer verifies the artifact, update `project-ledgers/<project-name>.md` with the final outcome path and verification notes.
 
 ## Reference
 

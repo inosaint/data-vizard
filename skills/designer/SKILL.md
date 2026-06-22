@@ -29,7 +29,7 @@ Use no more than four options unless the user asks for a broader menu. Include `
 ## Workflow
 
 1. Confirm inputs.
-   Ask for or review the curated dataset, Analyst story direction, Narrator story brief, audience, target device, and workshop constraints. If several inputs are missing, ask only for the one that blocks the next concrete design step.
+   Ask for or review the curated dataset, Analyst story direction, Narrator story brief, project-local `outcome/<project-name>/PRODUCT.md`, audience, target device, and workshop constraints. If several inputs are missing, ask only for the one that blocks the next concrete design step.
 
    Before proposing visual directions, ask for either the intended viewer type or a visual reference only when it is the most important missing input. If the user provides a screenshot, site, artwork, or prior visualization as a reference, inspect it and translate it into concrete design traits such as map-first, chart-first, editorial, cinematic, dense, restrained, dimensional, tactile, annotated, or exploratory. Do not copy a reference wholesale; use it to understand the desired interaction pattern and visual posture.
 
@@ -64,7 +64,7 @@ Use no more than four options unless the user asks for a broader menu. Include `
    For HTML artifacts, include a specific `<title>`, meta description, canonical URL when known, Open Graph/Twitter tags, theme color, and a relevant favicon. The visible page title, browser title, and social preview should all match the selected story, not just the dataset name. If no brand asset exists, create a small SVG favicon inside `outcome/<project-name>/`.
 
 8. Store the outcome.
-   Save final HTML artifacts under `outcome/<project-name>/`, using `index.html` for the primary artifact. Keep any supporting data or assets in that same folder unless the artifact is intentionally self-contained.
+   Save final HTML artifacts under `outcome/<project-name>/`, using `index.html` for the primary artifact. Keep presentation-specific assets such as favicons, images, map tiles, or tiny embedded display data in that same folder when needed. Keep source snapshots, reusable curated datasets, and analysis-ready tables under `data/<project-name>/`.
 
 ## Style Families
 
@@ -79,6 +79,10 @@ Use style families to avoid repetitive outputs. Present relevant options and let
 ## Motion Design Rules
 
 Use motion to explain change, guide attention, or reveal sequence. Avoid decorative animation that distracts from data. Respect reduced-motion preferences in CSS and provide a static reading path.
+
+For chart and map transitions, animate the data encoding itself rather than only fading colors or swapping states. When a mark changes meaning between narrative steps, preserve its spatial footprint and interpolate the relevant dimensions, bases, filters, or scales so the viewer can see what changed. For stacked bars, columns, and extrusions, grow or shrink segments from the correct edge and let one segment replace another only where the represented quantity changes; do not rely on opacity tricks that obscure whether values are stacked, nested, or merely highlighted.
+
+For scrollytelling charts, prefer scroll-progress-driven transitions when the user is comparing before/after states. A card entering view can drive progress from 0 to 1: at 0 the chart should show the previous state, at 1 it should show the new state, and in between the marks should smoothly transform through valid intermediate values. Use binary threshold transitions only when the state change is categorical and not meaningfully interpolable.
 
 ## Reference
 

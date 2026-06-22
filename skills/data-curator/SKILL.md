@@ -49,6 +49,15 @@ Use no more than four options unless the user asks for a broader menu. Include `
 7. Produce handoff notes.
    Give Data Analyst a concise data dictionary, transformation log, caveats, and recommended analytical questions.
 
+## Data Storage
+
+Store project datasets under `data/<project-name>/`, not under `outcome/` and not under a root-level `outputs/` folder.
+
+- Put source snapshots, downloads, and reacquirable raw files in `data/<project-name>/raw/`.
+- Put cleaned, joined, aggregated, or analysis-ready files in `data/<project-name>/curated/`.
+- Put data dictionaries, transformation logs, and curator handoff notes beside the relevant curated files.
+- Keep public-facing HTML, story briefs, product context, and design artifacts in `outcome/<project-name>/`.
+
 ## Analyst Callback
 
 When Data Analyst asks for better data, investigate the gap and return options. Examples: finer geography, longer time range, population denominators, category mappings, inflation adjustment, or benchmark datasets.

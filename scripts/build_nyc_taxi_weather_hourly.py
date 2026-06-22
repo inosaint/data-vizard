@@ -10,7 +10,7 @@ import pandas as pd
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "outputs" / "nyc-taxi-weather-jan-2026"
+OUT = ROOT / "data" / "nyc-taxi-weather-jan-2026"
 RAW = OUT / "raw"
 CURATED = OUT / "curated"
 

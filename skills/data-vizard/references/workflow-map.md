@@ -19,7 +19,7 @@ All four role handoffs are required for a completed visualization artifact. The 
 
 Curator to Analyst:
 
-- Dataset location and format
+- Dataset location and format, using `data/<project-name>/raw/` or `data/<project-name>/curated/`
 - Data dictionary
 - Transformation log
 - Known caveats
@@ -47,6 +47,13 @@ Designer to user:
 - Selected implementation plan
 - HTML artifact path
 - Verification notes
+
+## Project Files
+
+- Store project-specific product context at `outcome/<project-name>/PRODUCT.md`.
+- Store raw and curated datasets under `data/<project-name>/`.
+- Store final HTML and public-facing supporting assets under `outcome/<project-name>/`.
+- Store progress and handoff ledgers under `project-ledgers/<project-name>.md`.
 
 ## Workshop Facilitation Tone
 
