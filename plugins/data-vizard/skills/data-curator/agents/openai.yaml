@@ -1,0 +1,4 @@
+interface:
+  display_name: "Data Curator"
+  short_description: "Find, clean, and enrich datasets"
+  default_prompt: "Use $data-curator to help me find, clean, profile, or supplement a dataset for visualization."

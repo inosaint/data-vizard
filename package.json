@@ -1,0 +1,37 @@
+{
+  "name": "data-vizard",
+  "version": "0.1.0",
+  "description": "Installer for the Data Vizard agent workflow plugin.",
+  "license": "MIT",
+  "author": {
+    "name": "Trine"
+  },
+  "homepage": "https://github.com/inosaint/data-vizard#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inosaint/data-vizard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/inosaint/data-vizard/issues"
+  },
+  "keywords": [
+    "agent-skills",
+    "claude-code",
+    "codex",
+    "data-visualization",
+    "plugin"
+  ],
+  "bin": {
+    "data-vizard": "bin/data-vizard.js"
+  },
+  "files": [
+    "bin/",
+    "plugins/data-vizard/",
+    ".agents/plugins/marketplace.json",
+    ".claude-plugin/marketplace.json",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=18"
+  }
+}

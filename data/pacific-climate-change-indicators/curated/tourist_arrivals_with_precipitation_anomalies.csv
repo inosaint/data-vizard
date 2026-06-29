@@ -1,0 +1,230 @@
+geo_code,country_territory,year,arrivals,precipitation_anomaly_mm,standard_error_mm,arrivals_indicator,precipitation_indicator
+AS,American Samoa,2010,40300,1.6,1.1,Tourism Arrivals,Precipitation anomalies
+AS,American Samoa,2011,41300,-11.2,1.6,Tourism Arrivals,Precipitation anomalies
+AS,American Samoa,2012,50200,-7.9,0.9,Tourism Arrivals,Precipitation anomalies
+AS,American Samoa,2013,49300,4.9,1.2,Tourism Arrivals,Precipitation anomalies
+AS,American Samoa,2014,51600,1.0,1.1,Tourism Arrivals,Precipitation anomalies
+AS,American Samoa,2015,47100,5.7,1.0,Tourism Arrivals,Precipitation anomalies
+AS,American Samoa,2016,38300,5.2,1.2,Tourism Arrivals,Precipitation anomalies
+AS,American Samoa,2017,42300,8.2,1.0,Tourism Arrivals,Precipitation anomalies
+AS,American Samoa,2018,51800,0.8,1.2,Tourism Arrivals,Precipitation anomalies
+AS,American Samoa,2019,58600,21.2,0.9,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,1995,476000,-10.9,1.0,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,1996,534000,10.3,1.0,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,1997,547000,8.9,1.5,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,1998,499000,-24.2,0.8,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,1999,544000,19.6,1.2,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2000,434000,21.7,1.0,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2001,446000,-1.8,0.8,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2002,461000,-0.1,0.9,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2003,451000,-17.8,0.7,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2004,513000,-10.0,0.9,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2005,547000,-5.1,0.7,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2007,542000,10.9,1.1,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2008,627000,5.4,1.2,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2009,605000,14.4,1.7,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2010,692000,0.2,1.1,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2011,734000,10.5,0.7,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2012,741000,23.9,1.2,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2013,769000,8.1,0.9,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2014,781000,-14.4,0.9,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2015,869000,-21.0,0.8,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2016,963000,-0.7,1.3,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2017,1027000,-2.1,1.2,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2018,1058000,1.8,1.1,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2019,969000,19.9,1.0,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2020,168200,2.1,1.2,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2021,32000,8.1,1.2,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2022,652200,12.7,1.4,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2023,929740,-3.3,0.9,Tourism Arrivals,Precipitation anomalies
+FJ,Fiji,2024,928938,16.6,1.5,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,1995,186000,7.8,0.8,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,1996,184000,-5.2,0.4,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,1997,201000,2.3,0.6,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,1998,211000,20.0,1.1,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,1999,236000,-9.3,0.4,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,2007,243000,3.1,0.7,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,2008,227000,-14.6,0.4,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,2009,190000,-5.2,0.4,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,2010,179000,1.9,0.9,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,2011,196000,-20.4,0.3,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,2012,210000,-1.5,0.8,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,2013,214000,1.5,0.8,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,2014,228000,8.5,0.7,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,2015,239000,-7.2,0.6,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,2016,241000,9.7,0.9,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,2017,254000,1.1,0.6,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,2018,260000,-5.2,0.8,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,2019,282000,14.6,0.6,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,2020,89000,-6.5,0.4,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,2021,95000,-14.9,0.3,Tourism Arrivals,Precipitation anomalies
+PF,French Polynesia,2022,261400,-9.6,0.8,Tourism Arrivals,Precipitation anomalies
+GU,Guam,2020,328173,-12.4,0.8,Tourism Arrivals,Precipitation anomalies
+GU,Guam,2021,79389,-5.4,0.9,Tourism Arrivals,Precipitation anomalies
+GU,Guam,2022,326878,-1.3,0.9,Tourism Arrivals,Precipitation anomalies
+GU,Guam,2023,656518,15.2,0.9,Tourism Arrivals,Precipitation anomalies
+GU,Guam,2024,739146,-8.3,1.0,Tourism Arrivals,Precipitation anomalies
+KI,Kiribati,1999,20300,-29.7,0.2,Tourism Arrivals,Precipitation anomalies
+KI,Kiribati,2000,13400,-26.1,0.1,Tourism Arrivals,Precipitation anomalies
+KI,Kiribati,2001,14500,-12.9,0.3,Tourism Arrivals,Precipitation anomalies
+KI,Kiribati,2002,119500,25.4,0.7,Tourism Arrivals,Precipitation anomalies
+KI,Kiribati,2003,130100,5.0,0.9,Tourism Arrivals,Precipitation anomalies
+KI,Kiribati,2004,63900,-1.5,0.4,Tourism Arrivals,Precipitation anomalies
+KI,Kiribati,2005,50200,-2.6,0.5,Tourism Arrivals,Precipitation anomalies
+KI,Kiribati,2006,10800,-0.3,0.6,Tourism Arrivals,Precipitation anomalies
+KI,Kiribati,2007,32300,-6.8,0.7,Tourism Arrivals,Precipitation anomalies
+KI,Kiribati,2014,8300,4.9,0.7,Tourism Arrivals,Precipitation anomalies
+KI,Kiribati,2015,8200,50.3,1.0,Tourism Arrivals,Precipitation anomalies
+KI,Kiribati,2016,7600,13.0,1.6,Tourism Arrivals,Precipitation anomalies
+KI,Kiribati,2017,7500,-24.0,0.3,Tourism Arrivals,Precipitation anomalies
+KI,Kiribati,2018,9000,-20.1,0.4,Tourism Arrivals,Precipitation anomalies
+KI,Kiribati,2019,12000,27.3,0.8,Tourism Arrivals,Precipitation anomalies
+MH,Marshall Islands,2016,6500,-6.5,0.8,Tourism Arrivals,Precipitation anomalies
+MH,Marshall Islands,2017,7900,-3.2,0.5,Tourism Arrivals,Precipitation anomalies
+MH,Marshall Islands,2020,2000,8.0,0.5,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,1995,122000,-0.5,1.1,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,1996,138000,23.4,1.3,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,1997,139000,-0.9,0.8,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,1998,127000,11.3,0.6,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,1999,151000,34.2,1.3,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2000,161000,9.9,1.0,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2001,152000,2.0,0.9,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2002,158000,8.4,1.1,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2003,166000,0.7,0.6,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2004,177000,-4.0,0.9,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2005,182000,1.1,0.9,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2006,219000,1.8,0.9,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2007,227000,5.3,0.7,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2008,256000,32.4,1.6,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2009,230000,9.7,1.3,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2010,282000,-10.8,0.5,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2011,348000,3.1,0.9,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2012,390000,-4.1,0.5,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2013,494000,-6.1,0.5,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2014,529000,-12.8,0.5,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2015,558000,-12.3,0.6,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2016,625000,-16.0,0.6,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2017,626000,-18.5,0.5,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2018,576000,-9.6,0.7,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2019,474000,-15.3,0.6,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2020,80136,-8.3,0.7,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2021,13825,3.5,1.0,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2022,138748,14.5,0.8,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2023,125097,-8.5,0.7,Tourism Arrivals,Precipitation anomalies
+NC,New Caledonia,2024,59399,-9.3,0.6,Tourism Arrivals,Precipitation anomalies
+NU,Niue,2017,11600,13.6,1.4,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,1995,676000,-6.8,0.9,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,1996,736000,5.5,1.1,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,1997,695000,3.6,1.1,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,1998,490000,-27.0,0.5,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,1999,502000,-11.3,0.6,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2000,529000,-13.2,0.6,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2001,444000,-2.1,1.1,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2002,476000,11.9,1.1,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2003,459000,3.6,0.8,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2004,536000,25.3,1.8,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2005,507000,6.1,1.2,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2006,436000,8.3,1.3,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2007,389000,2.5,0.9,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2008,397000,-18.6,0.6,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2009,354000,6.2,1.1,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2010,379000,-14.8,0.7,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2011,341000,6.1,1.2,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2012,401000,-3.8,1.0,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2013,439000,-7.9,1.4,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2014,460000,14.9,1.2,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2015,479000,17.1,1.0,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2016,531000,-4.2,1.2,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2017,660000,-7.5,0.7,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2018,518000,15.3,1.3,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2019,487000,3.4,1.1,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2020,89000,-12.4,0.7,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2021,12700,-8.9,0.8,Tourism Arrivals,Precipitation anomalies
+MP,Northern Mariana Islands,2022,96600,-2.5,0.9,Tourism Arrivals,Precipitation anomalies
+PG,Papua New Guinea,2008,120000,9.6,0.6,Tourism Arrivals,Precipitation anomalies
+PG,Papua New Guinea,2009,126000,5.3,0.8,Tourism Arrivals,Precipitation anomalies
+PG,Papua New Guinea,2010,146000,10.1,0.4,Tourism Arrivals,Precipitation anomalies
+PG,Papua New Guinea,2011,165000,5.2,0.6,Tourism Arrivals,Precipitation anomalies
+PG,Papua New Guinea,2012,175000,7.6,0.6,Tourism Arrivals,Precipitation anomalies
+PG,Papua New Guinea,2013,182000,6.8,0.7,Tourism Arrivals,Precipitation anomalies
+PG,Papua New Guinea,2014,191000,-2.1,0.6,Tourism Arrivals,Precipitation anomalies
+PG,Papua New Guinea,2015,199000,-20.2,0.8,Tourism Arrivals,Precipitation anomalies
+PG,Papua New Guinea,2016,198000,1.2,0.6,Tourism Arrivals,Precipitation anomalies
+PG,Papua New Guinea,2017,182000,7.0,0.5,Tourism Arrivals,Precipitation anomalies
+PG,Papua New Guinea,2018,195000,-3.4,0.5,Tourism Arrivals,Precipitation anomalies
+PG,Papua New Guinea,2019,211000,22.0,0.6,Tourism Arrivals,Precipitation anomalies
+PG,Papua New Guinea,2020,39000,-2.4,0.6,Tourism Arrivals,Precipitation anomalies
+PG,Papua New Guinea,2021,17000,3.2,0.5,Tourism Arrivals,Precipitation anomalies
+PG,Papua New Guinea,2022,69400,-6.4,0.4,Tourism Arrivals,Precipitation anomalies
+WS,Samoa,2006,116000,14.9,1.8,Tourism Arrivals,Precipitation anomalies
+WS,Samoa,2007,122000,6.3,0.9,Tourism Arrivals,Precipitation anomalies
+WS,Samoa,2008,122000,-11.1,0.9,Tourism Arrivals,Precipitation anomalies
+WS,Samoa,2009,129000,-9.4,0.8,Tourism Arrivals,Precipitation anomalies
+WS,Samoa,2010,130000,-1.9,0.9,Tourism Arrivals,Precipitation anomalies
+WS,Samoa,2011,128000,-11.1,1.7,Tourism Arrivals,Precipitation anomalies
+WS,Samoa,2012,135000,-6.9,1.0,Tourism Arrivals,Precipitation anomalies
+WS,Samoa,2013,125000,7.6,1.1,Tourism Arrivals,Precipitation anomalies
+WS,Samoa,2014,132000,0.0,1.0,Tourism Arrivals,Precipitation anomalies
+WS,Samoa,2015,139000,0.7,0.9,Tourism Arrivals,Precipitation anomalies
+WS,Samoa,2016,146000,0.3,1.3,Tourism Arrivals,Precipitation anomalies
+WS,Samoa,2017,158000,12.6,1.2,Tourism Arrivals,Precipitation anomalies
+WS,Samoa,2018,172000,1.3,1.0,Tourism Arrivals,Precipitation anomalies
+WS,Samoa,2019,181000,20.4,1.0,Tourism Arrivals,Precipitation anomalies
+WS,Samoa,2020,23900,27.3,1.5,Tourism Arrivals,Precipitation anomalies
+WS,Samoa,2021,2600,-18.1,1.0,Tourism Arrivals,Precipitation anomalies
+WS,Samoa,2022,50600,-20.7,0.8,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,1995,33000,-3.2,0.7,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,1996,31000,-4.2,1.2,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,1997,29000,-3.4,1.1,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,1998,35000,-21.8,1.1,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,1999,44000,12.7,1.0,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2000,43000,3.9,0.7,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2001,38000,-8.0,0.7,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2002,45000,-5.3,1.0,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2003,51000,-17.0,0.9,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2004,51000,-3.5,0.8,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2005,60000,4.9,1.1,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2006,54000,3.5,1.4,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2007,65000,7.6,0.7,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2008,65000,3.5,1.4,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2009,74700,1.3,1.2,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2010,65000,-2.8,1.1,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2011,68400,5.3,1.1,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2012,57200,8.1,1.2,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2013,59700,8.5,1.0,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2014,65800,1.1,1.1,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2015,72600,-21.5,0.7,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2016,86700,-4.3,1.2,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2017,86600,16.9,1.5,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2018,77300,7.8,1.2,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2019,94000,37.0,1.2,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2020,11500,7.3,0.9,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2021,200,3.2,1.4,Tourism Arrivals,Precipitation anomalies
+TO,Tonga,2022,22300,1.4,1.1,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,1995,82000,-18.3,0.5,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,1996,103000,4.5,1.2,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,1997,81000,-16.9,0.7,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,1998,78000,0.9,1.0,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,1999,96000,22.6,1.1,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2000,106000,23.6,0.9,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2001,106000,1.8,0.9,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2002,99000,8.6,0.8,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2003,102000,-7.6,0.7,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2004,99000,-13.6,0.6,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2005,126000,-3.5,1.0,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2006,154000,-7.3,0.5,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2007,167000,7.2,0.6,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2008,196600,7.4,0.9,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2009,225500,5.9,0.8,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2010,237700,1.1,1.0,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2011,248900,17.7,1.0,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2012,321000,17.7,1.0,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2013,357000,9.0,0.9,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2014,329000,0.4,1.0,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2015,287000,-3.4,0.9,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2016,351600,-13.3,0.8,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2017,332700,1.7,1.2,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2018,350200,-0.3,0.9,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2019,256000,-2.4,0.7,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2020,82400,14.1,1.0,Tourism Arrivals,Precipitation anomalies
+VU,Vanuatu,2022,65000,33.7,1.1,Tourism Arrivals,Precipitation anomalies

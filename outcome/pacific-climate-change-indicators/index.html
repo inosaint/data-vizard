@@ -1,0 +1,1028 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pacific Tourism, Seen Beside Rainfall</title>
+  <meta name="description" content="A comparative dashboard pairing annual tourist arrivals with precipitation anomalies for Pacific countries and territories.">
+  <meta property="og:title" content="Pacific Tourism, Seen Beside Rainfall">
+  <meta property="og:description" content="Compare tourist-arrival trends and rainfall anomaly context across Pacific destinations.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Pacific Tourism, Seen Beside Rainfall">
+  <meta name="twitter:description" content="A matrix explorer for tourist arrivals and precipitation anomalies in the Pacific.">
+  <meta name="theme-color" content="#f4f7f8">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f7f8;
+      --ink: #162025;
+      --muted: #5c6971;
+      --soft: #eef2f3;
+      --panel: #ffffff;
+      --line: #d7e0e5;
+      --line-strong: #b9c6cd;
+      --blue: #226fa8;
+      --blue-dark: #174d76;
+      --teal: #138579;
+      --teal-soft: #d7eeeb;
+      --coral: #c84f3f;
+      --coral-soft: #f4ddd8;
+      --gold: #a97410;
+      --green: #3f7f4b;
+      --shadow: 0 3px 8px rgba(27, 42, 50, 0.08);
+      --radius: 8px;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 16px/1.5 var(--font, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+      letter-spacing: 0;
+    }
+
+    main {
+      width: min(1440px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 36px;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr);
+      gap: 24px;
+      align-items: end;
+      padding: 10px 0 24px;
+    }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--blue-dark);
+      font-size: .76rem;
+      font-weight: 760;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 880px;
+      font-size: 4.6rem;
+      line-height: .98;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+
+    .subtitle {
+      margin: 18px 0 0;
+      max-width: 820px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      line-height: 1.55;
+    }
+
+    .hero-note {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .72);
+      border-radius: var(--radius);
+      padding: 14px 15px;
+      color: var(--muted);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-note strong {
+      display: block;
+      color: var(--ink);
+      font-size: .92rem;
+      margin-bottom: 4px;
+    }
+
+    .hero-note p {
+      margin: 0;
+      font-size: .9rem;
+      line-height: 1.45;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 0 0 18px;
+    }
+
+    .stat {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      padding: 13px 14px;
+      min-height: 92px;
+    }
+
+    .stat span {
+      display: block;
+      color: var(--muted);
+      font-size: .76rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    .stat strong {
+      display: block;
+      margin-top: 8px;
+      color: var(--ink);
+      font-size: 1.75rem;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .stat em {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: .82rem;
+      font-style: normal;
+      line-height: 1.35;
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(760px, 1fr) minmax(340px, 420px);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .matrix-panel { overflow: hidden; }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(240px, 1fr) auto auto;
+      gap: 12px;
+      align-items: end;
+      padding: 14px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfc;
+    }
+
+    label {
+      display: grid;
+      gap: 5px;
+      color: var(--muted);
+      font-size: .78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    input[type="search"], select {
+      width: 100%;
+      min-height: 38px;
+      border: 1px solid var(--line-strong);
+      border-radius: 6px;
+      background: var(--panel);
+      color: var(--ink);
+      padding: 8px 10px;
+      font: inherit;
+      font-size: .9rem;
+      letter-spacing: 0;
+    }
+
+    .segments {
+      display: inline-flex;
+      border: 1px solid var(--line-strong);
+      border-radius: 7px;
+      background: var(--panel);
+      overflow: hidden;
+      min-height: 38px;
+    }
+
+    .segments button {
+      border: 0;
+      border-right: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      padding: 8px 10px;
+      font: inherit;
+      font-size: .84rem;
+      font-weight: 720;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .segments button:last-child { border-right: 0; }
+
+    .segments button[aria-pressed="true"] {
+      background: var(--blue-dark);
+      color: #fff;
+    }
+
+    .matrix-head, .country-row {
+      display: grid;
+      grid-template-columns: minmax(170px, .9fr) minmax(86px, .42fr) minmax(92px, .42fr) minmax(82px, .36fr) minmax(210px, .95fr) minmax(230px, 1fr);
+      gap: 12px;
+      align-items: center;
+    }
+
+    .matrix-head {
+      min-height: 42px;
+      padding: 0 14px;
+      border-bottom: 1px solid var(--line);
+      background: var(--soft);
+      color: var(--muted);
+      font-size: .76rem;
+      font-weight: 760;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .matrix-list {
+      display: grid;
+      min-height: 480px;
+      background: #fff;
+    }
+
+    .country-row {
+      width: 100%;
+      min-height: 98px;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      background: var(--panel);
+      padding: 11px 14px;
+      color: inherit;
+      text-align: left;
+      font: inherit;
+      cursor: pointer;
+      transition: background-color .18s ease, box-shadow .18s ease;
+    }
+
+    .country-row:hover { background: #f9fbfb; }
+
+    .country-row[aria-pressed="true"] {
+      background: #eef6f7;
+      box-shadow: inset 4px 0 0 var(--blue);
+    }
+
+    .country-name {
+      display: block;
+      color: var(--ink);
+      font-size: .98rem;
+      font-weight: 790;
+      line-height: 1.16;
+    }
+
+    .country-meta {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: .78rem;
+      line-height: 1.25;
+    }
+
+    .metric { min-width: 0; }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: .72rem;
+      font-weight: 720;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 3px;
+      color: var(--ink);
+      font-size: .95rem;
+      line-height: 1.15;
+      white-space: nowrap;
+    }
+
+    .metric .drop { color: var(--coral); }
+    .metric .muted-value { color: var(--muted); }
+
+    .mini-chart {
+      display: grid;
+      gap: 3px;
+      align-self: center;
+      min-width: 0;
+    }
+
+    .spark svg, .detail-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+    .mini-axis {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      color: #6f7c84;
+      font-size: .66rem;
+      font-weight: 650;
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .mini-axis span:nth-child(1) { text-align: left; }
+    .mini-axis span:nth-child(2),
+    .mini-axis span:nth-child(3) { text-align: center; }
+    .mini-axis span:nth-child(4) { text-align: right; }
+
+    .hover-target {
+      cursor: crosshair;
+      pointer-events: all;
+      transition: opacity .16s ease, stroke-width .16s ease, filter .16s ease;
+    }
+
+    .hover-target:hover {
+      filter: drop-shadow(0 2px 4px rgba(22, 32, 37, .2));
+      stroke-width: 2.4px;
+    }
+
+    .spark-hit {
+      fill: transparent;
+      stroke: transparent;
+    }
+
+    .spark-hit:hover {
+      fill: rgba(34, 111, 168, .16);
+      stroke: #174d76;
+    }
+
+    .chart-point {
+      transition: r .16s ease, stroke-width .16s ease;
+    }
+
+    .chart-point:hover {
+      r: 5.8px;
+      stroke-width: 2px;
+    }
+
+    .rain-bar:hover {
+      stroke: #162025;
+      stroke-width: 1.8px;
+    }
+
+    .rain-strip {
+      display: grid;
+      grid-template-columns: repeat(30, minmax(4px, 1fr));
+      gap: 2px;
+      align-items: stretch;
+      height: 40px;
+    }
+
+    .rain-cell {
+      border-radius: 2px;
+      border: 1px solid rgba(22, 32, 37, .08);
+      min-width: 0;
+      cursor: crosshair;
+      transition: opacity .16s ease, transform .16s ease, border-color .16s ease, box-shadow .16s ease;
+    }
+
+    .rain-cell:hover {
+      border-color: rgba(22, 32, 37, .55);
+      box-shadow: 0 0 0 2px rgba(22, 32, 37, .08);
+      transform: translateY(-1px);
+    }
+
+    .detail-panel {
+      position: sticky;
+      top: 16px;
+      overflow: hidden;
+    }
+
+    .detail-head {
+      padding: 17px 18px 14px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfc;
+    }
+
+    .detail-head h2 {
+      margin: 0;
+      font-size: 1.35rem;
+      line-height: 1.1;
+      letter-spacing: 0;
+    }
+
+    .detail-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: .9rem;
+      line-height: 1.42;
+    }
+
+    .detail-body {
+      display: grid;
+      gap: 16px;
+      padding: 16px 18px 18px;
+    }
+
+    .detail-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .detail-metric {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 10px;
+      background: #fff;
+      min-height: 76px;
+    }
+
+    .detail-metric span {
+      display: block;
+      color: var(--muted);
+      font-size: .72rem;
+      font-weight: 760;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .detail-metric strong {
+      display: block;
+      margin-top: 6px;
+      font-size: 1.05rem;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .detail-chart {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 10px;
+      background: #fff;
+    }
+
+    .chart-title {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: .76rem;
+      font-weight: 760;
+      text-transform: uppercase;
+      letter-spacing: .05em;
+    }
+
+    .chart-title span:last-child {
+      text-transform: none;
+      letter-spacing: 0;
+      font-weight: 650;
+    }
+
+    .callout {
+      border: 1px solid #e2c36c;
+      border-radius: 6px;
+      background: #fff8e7;
+      padding: 11px 12px;
+      color: #5c4519;
+      font-size: .88rem;
+      line-height: 1.42;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 12px;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .key {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .swatch {
+      width: 18px;
+      height: 4px;
+      border-radius: 999px;
+      background: var(--blue);
+    }
+
+    .swatch.teal { background: var(--teal); }
+    .swatch.coral { background: var(--coral); }
+    .swatch.gold { background: var(--gold); }
+
+    .empty {
+      min-height: 300px;
+      display: grid;
+      place-items: center;
+      padding: 32px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .source {
+      margin: 16px 0 0;
+      color: var(--muted);
+      font-size: .8rem;
+      line-height: 1.45;
+    }
+
+    .chart-tooltip {
+      position: fixed;
+      z-index: 20;
+      max-width: min(300px, calc(100vw - 24px));
+      padding: 9px 10px;
+      border: 1px solid rgba(22, 32, 37, .18);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, .96);
+      color: var(--ink);
+      box-shadow: 0 4px 12px rgba(22, 32, 37, .16);
+      font-size: .82rem;
+      line-height: 1.35;
+      pointer-events: none;
+      opacity: 0;
+      transform: translate3d(-999px, -999px, 0);
+      transition: opacity .12s ease;
+    }
+
+    .chart-tooltip[data-visible="true"] {
+      opacity: 1;
+    }
+
+    svg text { font-family: inherit; letter-spacing: 0; }
+
+    button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 3px solid rgba(34, 111, 168, .32);
+      outline-offset: 2px;
+    }
+
+    @media (max-width: 1180px) {
+      .hero, .workspace { grid-template-columns: 1fr; }
+      .detail-panel { position: static; }
+      .toolbar { grid-template-columns: 1fr; }
+      .segments { width: 100%; display: grid; grid-template-columns: repeat(4, 1fr); }
+      .segments button { border-bottom: 1px solid var(--line); border-right: 1px solid var(--line); }
+      .segments button:nth-child(4) { border-right: 0; }
+    }
+
+    @media (max-width: 920px) {
+      main { width: min(100% - 24px, 720px); padding-top: 18px; }
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .matrix-panel { overflow-x: auto; }
+      .matrix-head, .country-row { min-width: 900px; }
+      .hero-note { box-shadow: none; }
+    }
+
+    @media (max-width: 560px) {
+      main { width: min(100% - 18px, 520px); }
+      h1 { font-size: 2.55rem; }
+      .stats { grid-template-columns: 1fr; }
+      .detail-metrics { grid-template-columns: 1fr; }
+      .segments { grid-template-columns: 1fr 1fr; }
+      .segments button:nth-child(2) { border-right: 0; }
+      .segments button:nth-child(3), .segments button:nth-child(4) { border-bottom: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Pacific climate indicators</p>
+        <h1>Pacific Tourism, Seen Beside Rainfall</h1>
+        <p class="subtitle">Annual tourist arrivals are paired with precipitation anomalies for 13 Pacific countries and territories. The rainfall layer adds climate context, not a causal explanation.</p>
+      </div>
+      <aside class="hero-note" aria-label="Interpretation caveat">
+        <strong>Read rainfall as context.</strong>
+        <p>Annual precipitation anomalies do not prove why tourist arrivals rose or fell. The dashboard keeps both signals visible so comparison stays honest.</p>
+      </aside>
+    </header>
+
+    <section class="stats" aria-label="Dataset summary">
+      <div class="stat"><span>Tourist observations</span><strong id="statRows">229</strong><em>Country-year rows joined to rainfall anomalies</em></div>
+      <div class="stat"><span>Destinations</span><strong id="statCountries">13</strong><em>Pacific countries and territories</em></div>
+      <div class="stat"><span>Tourism shock</span><strong id="statShock">-88% to -68%</strong><em>2019-2020 drop where both years exist</em></div>
+      <div class="stat"><span>Rainfall link</span><strong id="statCorr">-0.013</strong><em>Overall arrivals/rainfall correlation in joined rows</em></div>
+    </section>
+
+    <section class="workspace" aria-label="Matrix explorer">
+      <div class="panel matrix-panel">
+        <div class="toolbar" aria-label="Matrix controls">
+          <label>Search
+            <input id="searchInput" type="search" placeholder="Country or territory" autocomplete="off">
+          </label>
+          <label>Filter
+            <span class="segments" role="group" aria-label="Country filters">
+              <button type="button" data-filter="all" aria-pressed="true">All</button>
+              <button type="button" data-filter="long" aria-pressed="false">Long series</button>
+              <button type="button" data-filter="shock" aria-pressed="false">2019-20</button>
+              <button type="button" data-filter="recent" aria-pressed="false">2024 data</button>
+            </span>
+          </label>
+          <label>Sort
+            <select id="sortSelect">
+              <option value="peak">Peak arrivals</option>
+              <option value="latest">Latest arrivals</option>
+              <option value="coverage">Coverage</option>
+              <option value="shock">2020 drop</option>
+              <option value="country">Country name</option>
+            </select>
+          </label>
+        </div>
+        <div class="matrix-head" aria-hidden="true">
+          <div>Country</div>
+          <div>Peak</div>
+          <div>Latest</div>
+          <div>2019-20</div>
+          <div>Tourist arrivals</div>
+          <div>Rainfall anomaly</div>
+        </div>
+        <div id="matrixList" class="matrix-list" aria-live="polite"></div>
+      </div>
+
+      <aside class="panel detail-panel" aria-live="polite" aria-label="Selected country detail">
+        <div class="detail-head">
+          <h2 id="detailTitle">Fiji</h2>
+          <p id="detailSubtitle">Tourism and rainfall context by year.</p>
+        </div>
+        <div class="detail-body">
+          <div class="detail-metrics" id="detailMetrics"></div>
+          <div class="detail-chart">
+            <div class="chart-title"><span>Tourist arrivals</span><span>Observed years only</span></div>
+            <div id="arrivalChart"></div>
+          </div>
+          <div class="detail-chart">
+            <div class="chart-title"><span>Precipitation anomaly</span><span>Millimetres, 1995-2024</span></div>
+            <div id="rainChart"></div>
+          </div>
+          <div class="callout" id="detailCallout">Annual precipitation anomalies are shown as climate context. They do not prove why tourist arrivals rose or fell.</div>
+        </div>
+      </aside>
+    </section>
+
+    <p class="source">Source snapshots: SPC Climate Change indicators CSV exports supplied locally by the user. Tourist-arrival gaps are missing observations, not zero arrivals. Sparkline scales are normalized within each country row; detail charts show the selected country's scale.</p>
+  </main>
+
+  <div class="chart-tooltip" id="chartTooltip" role="tooltip" aria-hidden="true"></div>
+
+  <script>
+    const DATA = {"years":[1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"countries":[{"country":"American Samoa","geo":"AS","tourism":[{"year":2010,"arrivals":40300},{"year":2011,"arrivals":41300},{"year":2012,"arrivals":50200},{"year":2013,"arrivals":49300},{"year":2014,"arrivals":51600},{"year":2015,"arrivals":47100},{"year":2016,"arrivals":38300},{"year":2017,"arrivals":42300},{"year":2018,"arrivals":51800},{"year":2019,"arrivals":58600}],"rain":[{"year":1995,"rain":8.6,"se":0.7},{"year":1996,"rain":-5.2,"se":1.1},{"year":1997,"rain":0.8,"se":1.3},{"year":1998,"rain":-18.9,"se":1.0},{"year":1999,"rain":-4.6,"se":1.0},{"year":2000,"rain":-8.3,"se":0.7},{"year":2001,"rain":0.6,"se":0.8},{"year":2002,"rain":-6.9,"se":0.6},{"year":2003,"rain":2.5,"se":0.7},{"year":2004,"rain":-7.0,"se":0.8},{"year":2005,"rain":-0.3,"se":0.9},{"year":2006,"rain":11.3,"se":1.6},{"year":2007,"rain":10.7,"se":1.1},{"year":2008,"rain":-10.9,"se":0.9},{"year":2009,"rain":-11.1,"se":0.7},{"year":2010,"rain":1.6,"se":1.1},{"year":2011,"rain":-11.2,"se":1.6},{"year":2012,"rain":-7.9,"se":0.9},{"year":2013,"rain":4.9,"se":1.2},{"year":2014,"rain":1.0,"se":1.1},{"year":2015,"rain":5.7,"se":1.0},{"year":2016,"rain":5.2,"se":1.2},{"year":2017,"rain":8.2,"se":1.0},{"year":2018,"rain":0.8,"se":1.2},{"year":2019,"rain":21.2,"se":0.9},{"year":2020,"rain":20.8,"se":1.6},{"year":2021,"rain":-24.7,"se":0.7},{"year":2022,"rain":-22.5,"se":1.0},{"year":2023,"rain":-3.2,"se":1.1},{"year":2024,"rain":2.9,"se":1.0}],"summary":{"coverage":10,"firstYear":2010,"lastYear":2019,"latestYear":2019,"latestArrivals":58600,"peakYear":2019,"peakArrivals":58600,"shockPct":null,"wettestYear":2019,"wettestRain":21.2,"driestYear":2021,"driestRain":-24.7,"has2024":false,"longSeries":false}},{"country":"Fiji","geo":"FJ","tourism":[{"year":1995,"arrivals":476000},{"year":1996,"arrivals":534000},{"year":1997,"arrivals":547000},{"year":1998,"arrivals":499000},{"year":1999,"arrivals":544000},{"year":2000,"arrivals":434000},{"year":2001,"arrivals":446000},{"year":2002,"arrivals":461000},{"year":2003,"arrivals":451000},{"year":2004,"arrivals":513000},{"year":2005,"arrivals":547000},{"year":2007,"arrivals":542000},{"year":2008,"arrivals":627000},{"year":2009,"arrivals":605000},{"year":2010,"arrivals":692000},{"year":2011,"arrivals":734000},{"year":2012,"arrivals":741000},{"year":2013,"arrivals":769000},{"year":2014,"arrivals":781000},{"year":2015,"arrivals":869000},{"year":2016,"arrivals":963000},{"year":2017,"arrivals":1027000},{"year":2018,"arrivals":1058000},{"year":2019,"arrivals":969000},{"year":2020,"arrivals":168200},{"year":2021,"arrivals":32000},{"year":2022,"arrivals":652200},{"year":2023,"arrivals":929740},{"year":2024,"arrivals":928938}],"rain":[{"year":1995,"rain":-10.9,"se":1.0},{"year":1996,"rain":10.3,"se":1.0},{"year":1997,"rain":8.9,"se":1.5},{"year":1998,"rain":-24.2,"se":0.8},{"year":1999,"rain":19.6,"se":1.2},{"year":2000,"rain":21.7,"se":1.0},{"year":2001,"rain":-1.8,"se":0.8},{"year":2002,"rain":-0.1,"se":0.9},{"year":2003,"rain":-17.8,"se":0.7},{"year":2004,"rain":-10.0,"se":0.9},{"year":2005,"rain":-5.1,"se":0.7},{"year":2006,"rain":-10.9,"se":0.6},{"year":2007,"rain":10.9,"se":1.1},{"year":2008,"rain":5.4,"se":1.2},{"year":2009,"rain":14.4,"se":1.7},{"year":2010,"rain":0.2,"se":1.1},{"year":2011,"rain":10.5,"se":0.7},{"year":2012,"rain":23.9,"se":1.2},{"year":2013,"rain":8.1,"se":0.9},{"year":2014,"rain":-14.4,"se":0.9},{"year":2015,"rain":-21.0,"se":0.8},{"year":2016,"rain":-0.7,"se":1.3},{"year":2017,"rain":-2.1,"se":1.2},{"year":2018,"rain":1.8,"se":1.1},{"year":2019,"rain":19.9,"se":1.0},{"year":2020,"rain":2.1,"se":1.2},{"year":2021,"rain":8.1,"se":1.2},{"year":2022,"rain":12.7,"se":1.4},{"year":2023,"rain":-3.3,"se":0.9},{"year":2024,"rain":16.6,"se":1.5}],"summary":{"coverage":29,"firstYear":1995,"lastYear":2024,"latestYear":2024,"latestArrivals":928938,"peakYear":2018,"peakArrivals":1058000,"shockPct":-82.6,"wettestYear":2012,"wettestRain":23.9,"driestYear":1998,"driestRain":-24.2,"has2024":true,"longSeries":true}},{"country":"French Polynesia","geo":"PF","tourism":[{"year":1995,"arrivals":186000},{"year":1996,"arrivals":184000},{"year":1997,"arrivals":201000},{"year":1998,"arrivals":211000},{"year":1999,"arrivals":236000},{"year":2007,"arrivals":243000},{"year":2008,"arrivals":227000},{"year":2009,"arrivals":190000},{"year":2010,"arrivals":179000},{"year":2011,"arrivals":196000},{"year":2012,"arrivals":210000},{"year":2013,"arrivals":214000},{"year":2014,"arrivals":228000},{"year":2015,"arrivals":239000},{"year":2016,"arrivals":241000},{"year":2017,"arrivals":254000},{"year":2018,"arrivals":260000},{"year":2019,"arrivals":282000},{"year":2020,"arrivals":89000},{"year":2021,"arrivals":95000},{"year":2022,"arrivals":261400}],"rain":[{"year":1995,"rain":7.8,"se":0.8},{"year":1996,"rain":-5.2,"se":0.4},{"year":1997,"rain":2.3,"se":0.6},{"year":1998,"rain":20.0,"se":1.1},{"year":1999,"rain":-9.3,"se":0.4},{"year":2000,"rain":-2.0,"se":0.7},{"year":2001,"rain":4.3,"se":0.7},{"year":2002,"rain":-7.0,"se":0.5},{"year":2003,"rain":6.8,"se":0.6},{"year":2004,"rain":5.4,"se":0.8},{"year":2005,"rain":-2.9,"se":0.8},{"year":2006,"rain":-2.3,"se":0.5},{"year":2007,"rain":3.1,"se":0.7},{"year":2008,"rain":-14.6,"se":0.4},{"year":2009,"rain":-5.2,"se":0.4},{"year":2010,"rain":1.9,"se":0.9},{"year":2011,"rain":-20.4,"se":0.3},{"year":2012,"rain":-1.5,"se":0.8},{"year":2013,"rain":1.5,"se":0.8},{"year":2014,"rain":8.5,"se":0.7},{"year":2015,"rain":-7.2,"se":0.6},{"year":2016,"rain":9.7,"se":0.9},{"year":2017,"rain":1.1,"se":0.6},{"year":2018,"rain":-5.2,"se":0.8},{"year":2019,"rain":14.6,"se":0.6},{"year":2020,"rain":-6.5,"se":0.4},{"year":2021,"rain":-14.9,"se":0.3},{"year":2022,"rain":-9.6,"se":0.8},{"year":2023,"rain":-1.3,"se":0.5},{"year":2024,"rain":-0.4,"se":0.7}],"summary":{"coverage":21,"firstYear":1995,"lastYear":2022,"latestYear":2022,"latestArrivals":261400,"peakYear":2019,"peakArrivals":282000,"shockPct":-68.4,"wettestYear":1998,"wettestRain":20.0,"driestYear":2011,"driestRain":-20.4,"has2024":false,"longSeries":true}},{"country":"Guam","geo":"GU","tourism":[{"year":2020,"arrivals":328173},{"year":2021,"arrivals":79389},{"year":2022,"arrivals":326878},{"year":2023,"arrivals":656518},{"year":2024,"arrivals":739146}],"rain":[{"year":1995,"rain":-8.1,"se":0.8},{"year":1996,"rain":3.7,"se":1.0},{"year":1997,"rain":16.1,"se":1.4},{"year":1998,"rain":-27.0,"se":0.6},{"year":1999,"rain":-8.6,"se":0.7},{"year":2000,"rain":-8.2,"se":0.8},{"year":2001,"rain":-3.9,"se":1.2},{"year":2002,"rain":8.9,"se":1.3},{"year":2003,"rain":4.6,"se":0.9},{"year":2004,"rain":18.3,"se":1.7},{"year":2005,"rain":4.1,"se":1.0},{"year":2006,"rain":8.8,"se":1.5},{"year":2007,"rain":2.5,"se":1.0},{"year":2008,"rain":-15.5,"se":0.7},{"year":2009,"rain":11.2,"se":1.1},{"year":2010,"rain":-13.6,"se":0.9},{"year":2011,"rain":6.6,"se":1.2},{"year":2012,"rain":4.8,"se":1.4},{"year":2013,"rain":-5.5,"se":1.4},{"year":2014,"rain":5.0,"se":1.4},{"year":2015,"rain":15.2,"se":1.2},{"year":2016,"rain":-8.2,"se":1.2},{"year":2017,"rain":-0.7,"se":0.8},{"year":2018,"rain":8.5,"se":1.3},{"year":2019,"rain":6.2,"se":1.1},{"year":2020,"rain":-12.4,"se":0.8},{"year":2021,"rain":-5.4,"se":0.9},{"year":2022,"rain":-1.3,"se":0.9},{"year":2023,"rain":15.2,"se":0.9},{"year":2024,"rain":-8.3,"se":1.0}],"summary":{"coverage":5,"firstYear":2020,"lastYear":2024,"latestYear":2024,"latestArrivals":739146,"peakYear":2024,"peakArrivals":739146,"shockPct":null,"wettestYear":2004,"wettestRain":18.3,"driestYear":1998,"driestRain":-27.0,"has2024":true,"longSeries":false}},{"country":"Kiribati","geo":"KI","tourism":[{"year":1999,"arrivals":20300},{"year":2000,"arrivals":13400},{"year":2001,"arrivals":14500},{"year":2002,"arrivals":119500},{"year":2003,"arrivals":130100},{"year":2004,"arrivals":63900},{"year":2005,"arrivals":50200},{"year":2006,"arrivals":10800},{"year":2007,"arrivals":32300},{"year":2014,"arrivals":8300},{"year":2015,"arrivals":8200},{"year":2016,"arrivals":7600},{"year":2017,"arrivals":7500},{"year":2018,"arrivals":9000},{"year":2019,"arrivals":12000}],"rain":[{"year":1995,"rain":-18.4,"se":0.6},{"year":1996,"rain":-25.2,"se":0.3},{"year":1997,"rain":40.4,"se":1.0},{"year":1998,"rain":-16.9,"se":0.7},{"year":1999,"rain":-29.7,"se":0.2},{"year":2000,"rain":-26.1,"se":0.1},{"year":2001,"rain":-12.9,"se":0.3},{"year":2002,"rain":25.4,"se":0.7},{"year":2003,"rain":5.0,"se":0.9},{"year":2004,"rain":-1.5,"se":0.4},{"year":2005,"rain":-2.6,"se":0.5},{"year":2006,"rain":-0.3,"se":0.6},{"year":2007,"rain":-6.8,"se":0.7},{"year":2008,"rain":-22.2,"se":0.3},{"year":2009,"rain":2.9,"se":0.7},{"year":2010,"rain":18.5,"se":1.7},{"year":2011,"rain":-20.2,"se":0.4},{"year":2012,"rain":-8.7,"se":0.3},{"year":2013,"rain":-15.0,"se":0.4},{"year":2014,"rain":4.9,"se":0.7},{"year":2015,"rain":50.3,"se":1.0},{"year":2016,"rain":13.0,"se":1.6},{"year":2017,"rain":-24.0,"se":0.3},{"year":2018,"rain":-20.1,"se":0.4},{"year":2019,"rain":27.3,"se":0.8},{"year":2020,"rain":-10.9,"se":0.7},{"year":2021,"rain":-20.9,"se":0.4},{"year":2022,"rain":-28.0,"se":0.2},{"year":2023,"rain":16.7,"se":0.7},{"year":2024,"rain":-4.6,"se":0.8}],"summary":{"coverage":15,"firstYear":1999,"lastYear":2019,"latestYear":2019,"latestArrivals":12000,"peakYear":2003,"peakArrivals":130100,"shockPct":null,"wettestYear":2015,"wettestRain":50.3,"driestYear":1999,"driestRain":-29.7,"has2024":false,"longSeries":false}},{"country":"Marshall Islands","geo":"MH","tourism":[{"year":2016,"arrivals":6500},{"year":2017,"arrivals":7900},{"year":2020,"arrivals":2000}],"rain":[{"year":1995,"rain":3.7,"se":0.7},{"year":1996,"rain":3.2,"se":0.4},{"year":1997,"rain":20.7,"se":0.9},{"year":1998,"rain":-20.2,"se":0.8},{"year":1999,"rain":-10.9,"se":0.6},{"year":2000,"rain":-1.7,"se":0.5},{"year":2001,"rain":-7.3,"se":0.5},{"year":2002,"rain":13.5,"se":0.6},{"year":2003,"rain":3.7,"se":0.6},{"year":2004,"rain":9.1,"se":0.6},{"year":2005,"rain":-6.5,"se":0.4},{"year":2006,"rain":-1.7,"se":0.5},{"year":2007,"rain":-8.0,"se":0.5},{"year":2008,"rain":-16.4,"se":0.3},{"year":2009,"rain":-6.4,"se":0.6},{"year":2010,"rain":-6.4,"se":0.6},{"year":2011,"rain":2.8,"se":0.5},{"year":2012,"rain":-15.3,"se":0.4},{"year":2013,"rain":-5.2,"se":0.5},{"year":2014,"rain":2.2,"se":0.5},{"year":2015,"rain":17.9,"se":0.8},{"year":2016,"rain":-6.5,"se":0.8},{"year":2017,"rain":-3.2,"se":0.5},{"year":2018,"rain":17.2,"se":0.5},{"year":2019,"rain":7.0,"se":0.4},{"year":2020,"rain":8.0,"se":0.5},{"year":2021,"rain":-2.1,"se":0.6},{"year":2022,"rain":8.1,"se":0.7},{"year":2023,"rain":8.9,"se":0.4},{"year":2024,"rain":3.0,"se":0.6}],"summary":{"coverage":3,"firstYear":2016,"lastYear":2020,"latestYear":2020,"latestArrivals":2000,"peakYear":2017,"peakArrivals":7900,"shockPct":null,"wettestYear":1997,"wettestRain":20.7,"driestYear":1998,"driestRain":-20.2,"has2024":false,"longSeries":false}},{"country":"New Caledonia","geo":"NC","tourism":[{"year":1995,"arrivals":122000},{"year":1996,"arrivals":138000},{"year":1997,"arrivals":139000},{"year":1998,"arrivals":127000},{"year":1999,"arrivals":151000},{"year":2000,"arrivals":161000},{"year":2001,"arrivals":152000},{"year":2002,"arrivals":158000},{"year":2003,"arrivals":166000},{"year":2004,"arrivals":177000},{"year":2005,"arrivals":182000},{"year":2006,"arrivals":219000},{"year":2007,"arrivals":227000},{"year":2008,"arrivals":256000},{"year":2009,"arrivals":230000},{"year":2010,"arrivals":282000},{"year":2011,"arrivals":348000},{"year":2012,"arrivals":390000},{"year":2013,"arrivals":494000},{"year":2014,"arrivals":529000},{"year":2015,"arrivals":558000},{"year":2016,"arrivals":625000},{"year":2017,"arrivals":626000},{"year":2018,"arrivals":576000},{"year":2019,"arrivals":474000},{"year":2020,"arrivals":80136},{"year":2021,"arrivals":13825},{"year":2022,"arrivals":138748},{"year":2023,"arrivals":125097},{"year":2024,"arrivals":59399}],"rain":[{"year":1995,"rain":-0.5,"se":1.1},{"year":1996,"rain":23.4,"se":1.3},{"year":1997,"rain":-0.9,"se":0.8},{"year":1998,"rain":11.3,"se":0.6},{"year":1999,"rain":34.2,"se":1.3},{"year":2000,"rain":9.9,"se":1.0},{"year":2001,"rain":2.0,"se":0.9},{"year":2002,"rain":8.4,"se":1.1},{"year":2003,"rain":0.7,"se":0.6},{"year":2004,"rain":-4.0,"se":0.9},{"year":2005,"rain":1.1,"se":0.9},{"year":2006,"rain":1.8,"se":0.9},{"year":2007,"rain":5.3,"se":0.7},{"year":2008,"rain":32.4,"se":1.6},{"year":2009,"rain":9.7,"se":1.3},{"year":2010,"rain":-10.8,"se":0.5},{"year":2011,"rain":3.1,"se":0.9},{"year":2012,"rain":-4.1,"se":0.5},{"year":2013,"rain":-6.1,"se":0.5},{"year":2014,"rain":-12.8,"se":0.5},{"year":2015,"rain":-12.3,"se":0.6},{"year":2016,"rain":-16.0,"se":0.6},{"year":2017,"rain":-18.5,"se":0.5},{"year":2018,"rain":-9.6,"se":0.7},{"year":2019,"rain":-15.3,"se":0.6},{"year":2020,"rain":-8.3,"se":0.7},{"year":2021,"rain":3.5,"se":1.0},{"year":2022,"rain":14.5,"se":0.8},{"year":2023,"rain":-8.5,"se":0.7},{"year":2024,"rain":-9.3,"se":0.6}],"summary":{"coverage":30,"firstYear":1995,"lastYear":2024,"latestYear":2024,"latestArrivals":59399,"peakYear":2017,"peakArrivals":626000,"shockPct":-83.1,"wettestYear":1999,"wettestRain":34.2,"driestYear":2017,"driestRain":-18.5,"has2024":true,"longSeries":true}},{"country":"Niue","geo":"NU","tourism":[{"year":2017,"arrivals":11600}],"rain":[{"year":1995,"rain":-3.0,"se":0.7},{"year":1996,"rain":5.3,"se":1.3},{"year":1997,"rain":-23.0,"se":0.6},{"year":1998,"rain":-23.5,"se":0.6},{"year":1999,"rain":5.5,"se":0.9},{"year":2000,"rain":0.8,"se":0.8},{"year":2001,"rain":-7.9,"se":0.6},{"year":2002,"rain":-18.7,"se":0.6},{"year":2003,"rain":-6.6,"se":0.6},{"year":2004,"rain":-5.4,"se":0.5},{"year":2005,"rain":14.8,"se":1.0},{"year":2006,"rain":16.5,"se":1.6},{"year":2007,"rain":18.5,"se":1.3},{"year":2008,"rain":19.7,"se":1.2},{"year":2009,"rain":-1.6,"se":0.8},{"year":2010,"rain":4.1,"se":0.9},{"year":2011,"rain":-0.7,"se":0.8},{"year":2012,"rain":6.7,"se":1.8},{"year":2013,"rain":-1.0,"se":0.8},{"year":2014,"rain":-11.0,"se":0.7},{"year":2015,"rain":-10.4,"se":0.7},{"year":2016,"rain":2.0,"se":0.9},{"year":2017,"rain":13.6,"se":1.4},{"year":2018,"rain":7.2,"se":1.0},{"year":2019,"rain":20.7,"se":0.6},{"year":2020,"rain":12.7,"se":1.0},{"year":2021,"rain":-5.1,"se":0.9},{"year":2022,"rain":-1.8,"se":0.8},{"year":2023,"rain":5.0,"se":1.0},{"year":2024,"rain":1.8,"se":0.9}],"summary":{"coverage":1,"firstYear":2017,"lastYear":2017,"latestYear":2017,"latestArrivals":11600,"peakYear":2017,"peakArrivals":11600,"shockPct":null,"wettestYear":2019,"wettestRain":20.7,"driestYear":1998,"driestRain":-23.5,"has2024":false,"longSeries":false}},{"country":"Northern Mariana Islands","geo":"MP","tourism":[{"year":1995,"arrivals":676000},{"year":1996,"arrivals":736000},{"year":1997,"arrivals":695000},{"year":1998,"arrivals":490000},{"year":1999,"arrivals":502000},{"year":2000,"arrivals":529000},{"year":2001,"arrivals":444000},{"year":2002,"arrivals":476000},{"year":2003,"arrivals":459000},{"year":2004,"arrivals":536000},{"year":2005,"arrivals":507000},{"year":2006,"arrivals":436000},{"year":2007,"arrivals":389000},{"year":2008,"arrivals":397000},{"year":2009,"arrivals":354000},{"year":2010,"arrivals":379000},{"year":2011,"arrivals":341000},{"year":2012,"arrivals":401000},{"year":2013,"arrivals":439000},{"year":2014,"arrivals":460000},{"year":2015,"arrivals":479000},{"year":2016,"arrivals":531000},{"year":2017,"arrivals":660000},{"year":2018,"arrivals":518000},{"year":2019,"arrivals":487000},{"year":2020,"arrivals":89000},{"year":2021,"arrivals":12700},{"year":2022,"arrivals":96600}],"rain":[{"year":1995,"rain":-6.8,"se":0.9},{"year":1996,"rain":5.5,"se":1.1},{"year":1997,"rain":3.6,"se":1.1},{"year":1998,"rain":-27.0,"se":0.5},{"year":1999,"rain":-11.3,"se":0.6},{"year":2000,"rain":-13.2,"se":0.6},{"year":2001,"rain":-2.1,"se":1.1},{"year":2002,"rain":11.9,"se":1.1},{"year":2003,"rain":3.6,"se":0.8},{"year":2004,"rain":25.3,"se":1.8},{"year":2005,"rain":6.1,"se":1.2},{"year":2006,"rain":8.3,"se":1.3},{"year":2007,"rain":2.5,"se":0.9},{"year":2008,"rain":-18.6,"se":0.6},{"year":2009,"rain":6.2,"se":1.1},{"year":2010,"rain":-14.8,"se":0.7},{"year":2011,"rain":6.1,"se":1.2},{"year":2012,"rain":-3.8,"se":1.0},{"year":2013,"rain":-7.9,"se":1.4},{"year":2014,"rain":14.9,"se":1.2},{"year":2015,"rain":17.1,"se":1.0},{"year":2016,"rain":-4.2,"se":1.2},{"year":2017,"rain":-7.5,"se":0.7},{"year":2018,"rain":15.3,"se":1.3},{"year":2019,"rain":3.4,"se":1.1},{"year":2020,"rain":-12.4,"se":0.7},{"year":2021,"rain":-8.9,"se":0.8},{"year":2022,"rain":-2.5,"se":0.9},{"year":2023,"rain":14.0,"se":0.9},{"year":2024,"rain":0.2,"se":1.3}],"summary":{"coverage":28,"firstYear":1995,"lastYear":2022,"latestYear":2022,"latestArrivals":96600,"peakYear":1996,"peakArrivals":736000,"shockPct":-81.7,"wettestYear":2004,"wettestRain":25.3,"driestYear":1998,"driestRain":-27.0,"has2024":false,"longSeries":true}},{"country":"Papua New Guinea","geo":"PG","tourism":[{"year":2008,"arrivals":120000},{"year":2009,"arrivals":126000},{"year":2010,"arrivals":146000},{"year":2011,"arrivals":165000},{"year":2012,"arrivals":175000},{"year":2013,"arrivals":182000},{"year":2014,"arrivals":191000},{"year":2015,"arrivals":199000},{"year":2016,"arrivals":198000},{"year":2017,"arrivals":182000},{"year":2018,"arrivals":195000},{"year":2019,"arrivals":211000},{"year":2020,"arrivals":39000},{"year":2021,"arrivals":17000},{"year":2022,"arrivals":69400}],"rain":[{"year":1995,"rain":5.0,"se":0.7},{"year":1996,"rain":-2.8,"se":0.6},{"year":1997,"rain":-26.7,"se":0.9},{"year":1998,"rain":12.3,"se":0.6},{"year":1999,"rain":7.4,"se":0.6},{"year":2000,"rain":5.5,"se":0.6},{"year":2001,"rain":6.0,"se":0.9},{"year":2002,"rain":-5.4,"se":0.8},{"year":2003,"rain":1.2,"se":0.7},{"year":2004,"rain":-9.2,"se":0.8},{"year":2005,"rain":5.2,"se":0.8},{"year":2006,"rain":1.3,"se":0.9},{"year":2007,"rain":4.9,"se":0.6},{"year":2008,"rain":9.6,"se":0.6},{"year":2009,"rain":5.3,"se":0.8},{"year":2010,"rain":10.1,"se":0.4},{"year":2011,"rain":5.2,"se":0.6},{"year":2012,"rain":7.6,"se":0.6},{"year":2013,"rain":6.8,"se":0.7},{"year":2014,"rain":-2.1,"se":0.6},{"year":2015,"rain":-20.2,"se":0.8},{"year":2016,"rain":1.2,"se":0.6},{"year":2017,"rain":7.0,"se":0.5},{"year":2018,"rain":-3.4,"se":0.5},{"year":2019,"rain":22.0,"se":0.6},{"year":2020,"rain":-2.4,"se":0.6},{"year":2021,"rain":3.2,"se":0.5},{"year":2022,"rain":-6.4,"se":0.4},{"year":2023,"rain":0.2,"se":0.6},{"year":2024,"rain":2.8,"se":0.6}],"summary":{"coverage":15,"firstYear":2008,"lastYear":2022,"latestYear":2022,"latestArrivals":69400,"peakYear":2019,"peakArrivals":211000,"shockPct":-81.5,"wettestYear":2019,"wettestRain":22.0,"driestYear":1997,"driestRain":-26.7,"has2024":false,"longSeries":false}},{"country":"Samoa","geo":"WS","tourism":[{"year":2006,"arrivals":116000},{"year":2007,"arrivals":122000},{"year":2008,"arrivals":122000},{"year":2009,"arrivals":129000},{"year":2010,"arrivals":130000},{"year":2011,"arrivals":128000},{"year":2012,"arrivals":135000},{"year":2013,"arrivals":125000},{"year":2014,"arrivals":132000},{"year":2015,"arrivals":139000},{"year":2016,"arrivals":146000},{"year":2017,"arrivals":158000},{"year":2018,"arrivals":172000},{"year":2019,"arrivals":181000},{"year":2020,"arrivals":23900},{"year":2021,"arrivals":2600},{"year":2022,"arrivals":50600}],"rain":[{"year":1995,"rain":3.0,"se":0.7},{"year":1996,"rain":-6.7,"se":1.0},{"year":1997,"rain":1.1,"se":1.2},{"year":1998,"rain":-21.2,"se":1.1},{"year":1999,"rain":0.0,"se":1.1},{"year":2000,"rain":-2.8,"se":0.7},{"year":2001,"rain":1.2,"se":0.8},{"year":2002,"rain":-2.4,"se":0.6},{"year":2003,"rain":-5.6,"se":0.7},{"year":2004,"rain":-7.0,"se":0.6},{"year":2005,"rain":-5.1,"se":0.7},{"year":2006,"rain":14.9,"se":1.8},{"year":2007,"rain":6.3,"se":0.9},{"year":2008,"rain":-11.1,"se":0.9},{"year":2009,"rain":-9.4,"se":0.8},{"year":2010,"rain":-1.9,"se":0.9},{"year":2011,"rain":-11.1,"se":1.7},{"year":2012,"rain":-6.9,"se":1.0},{"year":2013,"rain":7.6,"se":1.1},{"year":2014,"rain":0.0,"se":1.0},{"year":2015,"rain":0.7,"se":0.9},{"year":2016,"rain":0.3,"se":1.3},{"year":2017,"rain":12.6,"se":1.2},{"year":2018,"rain":1.3,"se":1.0},{"year":2019,"rain":20.4,"se":1.0},{"year":2020,"rain":27.3,"se":1.5},{"year":2021,"rain":-18.1,"se":1.0},{"year":2022,"rain":-20.7,"se":0.8},{"year":2023,"rain":-3.2,"se":0.9},{"year":2024,"rain":-1.8,"se":0.9}],"summary":{"coverage":17,"firstYear":2006,"lastYear":2022,"latestYear":2022,"latestArrivals":50600,"peakYear":2019,"peakArrivals":181000,"shockPct":-86.8,"wettestYear":2020,"wettestRain":27.3,"driestYear":1998,"driestRain":-21.2,"has2024":false,"longSeries":false}},{"country":"Tonga","geo":"TO","tourism":[{"year":1995,"arrivals":33000},{"year":1996,"arrivals":31000},{"year":1997,"arrivals":29000},{"year":1998,"arrivals":35000},{"year":1999,"arrivals":44000},{"year":2000,"arrivals":43000},{"year":2001,"arrivals":38000},{"year":2002,"arrivals":45000},{"year":2003,"arrivals":51000},{"year":2004,"arrivals":51000},{"year":2005,"arrivals":60000},{"year":2006,"arrivals":54000},{"year":2007,"arrivals":65000},{"year":2008,"arrivals":65000},{"year":2009,"arrivals":74700},{"year":2010,"arrivals":65000},{"year":2011,"arrivals":68400},{"year":2012,"arrivals":57200},{"year":2013,"arrivals":59700},{"year":2014,"arrivals":65800},{"year":2015,"arrivals":72600},{"year":2016,"arrivals":86700},{"year":2017,"arrivals":86600},{"year":2018,"arrivals":77300},{"year":2019,"arrivals":94000},{"year":2020,"arrivals":11500},{"year":2021,"arrivals":200},{"year":2022,"arrivals":22300}],"rain":[{"year":1995,"rain":-3.2,"se":0.7},{"year":1996,"rain":-4.2,"se":1.2},{"year":1997,"rain":-3.4,"se":1.1},{"year":1998,"rain":-21.8,"se":1.1},{"year":1999,"rain":12.7,"se":1.0},{"year":2000,"rain":3.9,"se":0.7},{"year":2001,"rain":-8.0,"se":0.7},{"year":2002,"rain":-5.3,"se":1.0},{"year":2003,"rain":-17.0,"se":0.9},{"year":2004,"rain":-3.5,"se":0.8},{"year":2005,"rain":4.9,"se":1.1},{"year":2006,"rain":3.5,"se":1.4},{"year":2007,"rain":7.6,"se":0.7},{"year":2008,"rain":3.5,"se":1.4},{"year":2009,"rain":1.3,"se":1.2},{"year":2010,"rain":-2.8,"se":1.1},{"year":2011,"rain":5.3,"se":1.1},{"year":2012,"rain":8.1,"se":1.2},{"year":2013,"rain":8.5,"se":1.0},{"year":2014,"rain":1.1,"se":1.1},{"year":2015,"rain":-21.5,"se":0.7},{"year":2016,"rain":-4.3,"se":1.2},{"year":2017,"rain":16.9,"se":1.5},{"year":2018,"rain":7.8,"se":1.2},{"year":2019,"rain":37.0,"se":1.2},{"year":2020,"rain":7.3,"se":0.9},{"year":2021,"rain":3.2,"se":1.4},{"year":2022,"rain":1.4,"se":1.1},{"year":2023,"rain":-10.9,"se":0.8},{"year":2024,"rain":-2.0,"se":0.8}],"summary":{"coverage":28,"firstYear":1995,"lastYear":2022,"latestYear":2022,"latestArrivals":22300,"peakYear":2019,"peakArrivals":94000,"shockPct":-87.8,"wettestYear":2019,"wettestRain":37.0,"driestYear":1998,"driestRain":-21.8,"has2024":false,"longSeries":true}},{"country":"Vanuatu","geo":"VU","tourism":[{"year":1995,"arrivals":82000},{"year":1996,"arrivals":103000},{"year":1997,"arrivals":81000},{"year":1998,"arrivals":78000},{"year":1999,"arrivals":96000},{"year":2000,"arrivals":106000},{"year":2001,"arrivals":106000},{"year":2002,"arrivals":99000},{"year":2003,"arrivals":102000},{"year":2004,"arrivals":99000},{"year":2005,"arrivals":126000},{"year":2006,"arrivals":154000},{"year":2007,"arrivals":167000},{"year":2008,"arrivals":196600},{"year":2009,"arrivals":225500},{"year":2010,"arrivals":237700},{"year":2011,"arrivals":248900},{"year":2012,"arrivals":321000},{"year":2013,"arrivals":357000},{"year":2014,"arrivals":329000},{"year":2015,"arrivals":287000},{"year":2016,"arrivals":351600},{"year":2017,"arrivals":332700},{"year":2018,"arrivals":350200},{"year":2019,"arrivals":256000},{"year":2020,"arrivals":82400},{"year":2022,"arrivals":65000}],"rain":[{"year":1995,"rain":-18.3,"se":0.5},{"year":1996,"rain":4.5,"se":1.2},{"year":1997,"rain":-16.9,"se":0.7},{"year":1998,"rain":0.9,"se":1.0},{"year":1999,"rain":22.6,"se":1.1},{"year":2000,"rain":23.6,"se":0.9},{"year":2001,"rain":1.8,"se":0.9},{"year":2002,"rain":8.6,"se":0.8},{"year":2003,"rain":-7.6,"se":0.7},{"year":2004,"rain":-13.6,"se":0.6},{"year":2005,"rain":-3.5,"se":1.0},{"year":2006,"rain":-7.3,"se":0.5},{"year":2007,"rain":7.2,"se":0.6},{"year":2008,"rain":7.4,"se":0.9},{"year":2009,"rain":5.9,"se":0.8},{"year":2010,"rain":1.1,"se":1.0},{"year":2011,"rain":17.7,"se":1.0},{"year":2012,"rain":17.7,"se":1.0},{"year":2013,"rain":9.0,"se":0.9},{"year":2014,"rain":0.4,"se":1.0},{"year":2015,"rain":-3.4,"se":0.9},{"year":2016,"rain":-13.3,"se":0.8},{"year":2017,"rain":1.7,"se":1.2},{"year":2018,"rain":-0.3,"se":0.9},{"year":2019,"rain":-2.4,"se":0.7},{"year":2020,"rain":14.1,"se":1.0},{"year":2021,"rain":11.9,"se":1.1},{"year":2022,"rain":33.7,"se":1.1},{"year":2023,"rain":8.7,"se":1.1},{"year":2024,"rain":8.0,"se":1.4}],"summary":{"coverage":27,"firstYear":1995,"lastYear":2022,"latestYear":2022,"latestArrivals":65000,"peakYear":2013,"peakArrivals":357000,"shockPct":-67.8,"wettestYear":2022,"wettestRain":33.7,"driestYear":1995,"driestRain":-18.3,"has2024":false,"longSeries":true}}],"stats":{"tourismRows":229,"rainRows":390,"tourismCountries":13,"yearStart":1995,"yearEnd":2024,"maxArrivals":1058000,"minRain":-29.7,"maxRain":50.3,"shockMin":-87.8,"shockMax":-67.8,"correlation":-0.013}};
+
+    const state = {
+      filter: "all",
+      sort: "peak",
+      search: "",
+      selected: "Fiji"
+    };
+
+    const matrixList = document.querySelector("#matrixList");
+    const searchInput = document.querySelector("#searchInput");
+    const sortSelect = document.querySelector("#sortSelect");
+    const filterButtons = [...document.querySelectorAll("[data-filter]")];
+    const chartTooltip = document.querySelector("#chartTooltip");
+    let activeTooltipTarget = null;
+
+    document.querySelector("#statRows").textContent = formatNumber(DATA.stats.tourismRows);
+    document.querySelector("#statCountries").textContent = formatNumber(DATA.stats.tourismCountries);
+    document.querySelector("#statShock").textContent = `${Math.round(DATA.stats.shockMin)}% to ${Math.round(DATA.stats.shockMax)}%`;
+    document.querySelector("#statCorr").textContent = DATA.stats.correlation.toFixed(3);
+
+    filterButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        state.filter = button.dataset.filter;
+        filterButtons.forEach(item => item.setAttribute("aria-pressed", String(item === button)));
+        renderMatrix();
+      });
+    });
+
+    searchInput.addEventListener("input", event => {
+      state.search = event.target.value.trim().toLowerCase();
+      renderMatrix();
+    });
+
+    sortSelect.addEventListener("change", event => {
+      state.sort = event.target.value;
+      renderMatrix();
+    });
+
+    document.addEventListener("pointerover", event => {
+      const target = event.target.closest?.("[data-tooltip]");
+      if (!target) return;
+      activeTooltipTarget = target;
+      showTooltip(target.dataset.tooltip, event.clientX, event.clientY);
+    });
+
+    document.addEventListener("pointermove", event => {
+      if (!activeTooltipTarget) return;
+      moveTooltip(event.clientX, event.clientY);
+    });
+
+    document.addEventListener("pointerout", event => {
+      if (!activeTooltipTarget) return;
+      const nextTarget = event.relatedTarget;
+      if (nextTarget && activeTooltipTarget.contains?.(nextTarget)) return;
+      hideTooltip();
+    });
+
+    document.addEventListener("scroll", hideTooltip, { passive: true });
+
+    function formatNumber(value) {
+      return new Intl.NumberFormat("en-US").format(value);
+    }
+
+    function formatCompact(value) {
+      if (value >= 1000000) return `${(value / 1000000).toFixed(value >= 10000000 ? 0 : 2).replace(/\.00$/, "")}M`;
+      if (value >= 1000) return `${(value / 1000).toFixed(value >= 100000 ? 0 : 1).replace(/\.0$/, "")}K`;
+      return formatNumber(value);
+    }
+
+    function formatPct(value) {
+      if (value === null || Number.isNaN(value)) return "No pair";
+      return `${value.toFixed(1)}%`;
+    }
+
+    function formatRain(value) {
+      return `${value > 0 ? "+" : ""}${value.toFixed(1)} mm`;
+    }
+
+    function arrivalTooltip(country, year, arrivals) {
+      return `${country}: ${year} · ${formatNumber(arrivals)} tourist arrivals`;
+    }
+
+    function rainTooltip(country, year, rain, se, hasArrival = true) {
+      const arrivalNote = hasArrival ? "" : " · tourist arrivals missing";
+      return `${country}: ${year} · ${formatRain(rain)} precipitation anomaly · SE ${se.toFixed(1)} mm${arrivalNote}`;
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[char]));
+    }
+
+    function tooltipAttr(value) {
+      return `data-tooltip="${escapeHtml(value)}"`;
+    }
+
+    function showTooltip(text, x, y) {
+      if (!text) return;
+      chartTooltip.textContent = text;
+      chartTooltip.dataset.visible = "true";
+      chartTooltip.setAttribute("aria-hidden", "false");
+      moveTooltip(x, y);
+    }
+
+    function moveTooltip(x, y) {
+      const pad = 12;
+      const rect = chartTooltip.getBoundingClientRect();
+      const nextX = Math.min(x + 14, window.innerWidth - rect.width - pad);
+      const nextY = Math.min(y + 14, window.innerHeight - rect.height - pad);
+      chartTooltip.style.transform = `translate3d(${Math.max(pad, nextX)}px, ${Math.max(pad, nextY)}px, 0)`;
+    }
+
+    function hideTooltip() {
+      activeTooltipTarget = null;
+      chartTooltip.dataset.visible = "false";
+      chartTooltip.setAttribute("aria-hidden", "true");
+    }
+
+    function mix(hexA, hexB, t) {
+      const a = hexA.match(/\w\w/g).map(v => parseInt(v, 16));
+      const b = hexB.match(/\w\w/g).map(v => parseInt(v, 16));
+      const out = a.map((v, i) => Math.round(v + (b[i] - v) * t));
+      return `#${out.map(v => v.toString(16).padStart(2, "0")).join("")}`;
+    }
+
+    function rainColor(value) {
+      const t = Math.min(Math.abs(value) / 45, 1);
+      if (value > 1.5) return mix("e8eff0", "138579", t);
+      if (value < -1.5) return mix("eef0f1", "c84f3f", t);
+      return "#e8eef0";
+    }
+
+    function filteredCountries() {
+      const search = state.search;
+      let rows = DATA.countries.filter(country => {
+        if (search && !country.country.toLowerCase().includes(search)) return false;
+        if (state.filter === "long" && !country.summary.longSeries) return false;
+        if (state.filter === "shock" && country.summary.shockPct === null) return false;
+        if (state.filter === "recent" && !country.summary.has2024) return false;
+        return true;
+      });
+
+      rows = rows.slice().sort((a, b) => {
+        if (state.sort === "country") return a.country.localeCompare(b.country);
+        if (state.sort === "latest") return b.summary.latestArrivals - a.summary.latestArrivals;
+        if (state.sort === "coverage") return b.summary.coverage - a.summary.coverage || a.country.localeCompare(b.country);
+        if (state.sort === "shock") {
+          const av = a.summary.shockPct === null ? 999 : a.summary.shockPct;
+          const bv = b.summary.shockPct === null ? 999 : b.summary.shockPct;
+          return av - bv;
+        }
+        return b.summary.peakArrivals - a.summary.peakArrivals;
+      });
+      return rows;
+    }
+
+    function renderMatrix() {
+      const rows = filteredCountries();
+      if (!rows.length) {
+        matrixList.innerHTML = `<div class="empty">No countries match the current controls.</div>`;
+        return;
+      }
+      if (!rows.some(row => row.country === state.selected)) {
+        state.selected = rows[0].country;
+      }
+      matrixList.innerHTML = rows.map(country => countryRow(country)).join("");
+      matrixList.querySelectorAll(".country-row").forEach(row => {
+        row.addEventListener("click", () => {
+          state.selected = row.dataset.country;
+          renderMatrix();
+          updateDetail(getCountry(state.selected));
+        });
+      });
+      updateDetail(getCountry(state.selected));
+    }
+
+    function countryRow(country) {
+      const selected = country.country === state.selected;
+      const shock = country.summary.shockPct;
+      const rowLabel = `${country.country}, ${country.summary.coverage} tourist-arrival years from ${country.summary.firstYear} to ${country.summary.lastYear}. Peak ${formatNumber(country.summary.peakArrivals)} arrivals in ${country.summary.peakYear}.`;
+      return `
+        <button class="country-row" type="button" data-country="${escapeHtml(country.country)}" aria-pressed="${selected}" aria-label="${escapeHtml(rowLabel)}">
+          <div>
+            <span class="country-name">${escapeHtml(country.country)}</span>
+            <span class="country-meta">${country.summary.coverage} years observed · ${country.summary.firstYear}-${country.summary.lastYear}</span>
+          </div>
+          <div class="metric"><span>Peak</span><strong>${formatCompact(country.summary.peakArrivals)}</strong></div>
+          <div class="metric"><span>Latest</span><strong>${formatCompact(country.summary.latestArrivals)} <span class="muted-value">${country.summary.latestYear}</span></strong></div>
+          <div class="metric"><span>Drop</span><strong class="${shock === null ? "muted-value" : "drop"}">${formatPct(shock)}</strong></div>
+          <div class="mini-chart">
+            <div class="spark">${sparkline(country)}</div>
+            ${miniAxis()}
+          </div>
+          <div class="mini-chart">
+            <div class="rain-strip">${rainCells(country)}</div>
+            ${miniAxis()}
+          </div>
+        </button>`;
+    }
+
+    function getCountry(name) {
+      return DATA.countries.find(country => country.country === name) || DATA.countries[0];
+    }
+
+    function miniAxis() {
+      return `<div class="mini-axis" aria-hidden="true"><span>1995</span><span>2005</span><span>2015</span><span>2024</span></div>`;
+    }
+
+    function sparkline(country) {
+      const w = 260, h = 62, pad = 7;
+      const years = DATA.years;
+      const byYear = new Map(country.tourism.map(d => [d.year, d.arrivals]));
+      const values = country.tourism.map(d => d.arrivals);
+      const min = Math.min(...values);
+      const max = Math.max(...values);
+      const span = Math.max(max - min, 1);
+      const x = year => pad + (year - years[0]) / (years[years.length - 1] - years[0]) * (w - pad * 2);
+      const y = value => h - pad - (value - min) / span * (h - pad * 2);
+      const segments = [];
+      let current = [];
+      years.forEach(year => {
+        if (byYear.has(year)) {
+          current.push([x(year), y(byYear.get(year))]);
+        } else if (current.length) {
+          segments.push(current);
+          current = [];
+        }
+      });
+      if (current.length) segments.push(current);
+      const paths = segments.map(points => {
+        if (points.length === 1) {
+          const [px, py] = points[0];
+          return `<circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="3" fill="#226fa8"/>`;
+        }
+        const d = points.map((point, i) => `${i ? "L" : "M"}${point[0].toFixed(1)} ${point[1].toFixed(1)}`).join(" ");
+        return `<path d="${d}" fill="none" stroke="#226fa8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
+      }).join("");
+      const marker2020 = byYear.has(2020) ? `<circle cx="${x(2020).toFixed(1)}" cy="${y(byYear.get(2020)).toFixed(1)}" r="3.5" fill="#c84f3f" stroke="#fff" stroke-width="1.5"/>` : "";
+      const hitPoints = country.tourism.map(d => `<circle class="spark-hit hover-target" ${tooltipAttr(arrivalTooltip(country.country, d.year, d.arrivals))} cx="${x(d.year).toFixed(1)}" cy="${y(d.arrivals).toFixed(1)}" r="7"/>`).join("");
+      return `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Tourist-arrival sparkline for ${escapeHtml(country.country)}"><line x1="${x(2020).toFixed(1)}" y1="6" x2="${x(2020).toFixed(1)}" y2="56" stroke="#d7e0e5" stroke-width="1"/><line x1="${pad}" y1="${h-pad}" x2="${w-pad}" y2="${h-pad}" stroke="#d7e0e5"/>${paths}${marker2020}${hitPoints}</svg>`;
+    }
+
+    function rainCells(country) {
+      const byYear = new Map(country.rain.map(d => [d.year, d]));
+      const arrivalYears = new Set(country.tourism.map(d => d.year));
+      return DATA.years.map(year => {
+        const rain = byYear.get(year);
+        const hasArrival = arrivalYears.has(year);
+        const color = rain ? rainColor(rain.rain) : "#f2f4f5";
+        const opacity = hasArrival ? "1" : ".38";
+        const title = rain ? rainTooltip(country.country, year, rain.rain, rain.se, hasArrival) : `${country.country}: ${year} · no rainfall data`;
+        return `<span class="rain-cell" ${tooltipAttr(title)} style="background:${color};opacity:${opacity}"></span>`;
+      }).join("");
+    }
+
+    function updateDetail(country) {
+      document.querySelector("#detailTitle").textContent = country.country;
+      const shockText = country.summary.shockPct === null ? "No 2019-2020 arrival pair is available." : `Arrivals changed ${country.summary.shockPct.toFixed(1)}% from 2019 to 2020.`;
+      document.querySelector("#detailSubtitle").textContent = `${country.summary.coverage} tourist-arrival years; rainfall anomaly context covers 1995-2024. ${shockText}`;
+      document.querySelector("#detailMetrics").innerHTML = detailMetricMarkup(country);
+      document.querySelector("#arrivalChart").innerHTML = arrivalChart(country);
+      document.querySelector("#rainChart").innerHTML = rainChart(country);
+      document.querySelector("#detailCallout").textContent = calloutText(country);
+      matrixList.querySelectorAll(".country-row").forEach(row => {
+        row.setAttribute("aria-pressed", String(row.dataset.country === country.country));
+      });
+    }
+
+    function detailMetricMarkup(country) {
+      const summary = country.summary;
+      return `
+        <div class="detail-metric"><span>Peak arrivals</span><strong>${formatNumber(summary.peakArrivals)} in ${summary.peakYear}</strong></div>
+        <div class="detail-metric"><span>Latest arrivals</span><strong>${formatNumber(summary.latestArrivals)} in ${summary.latestYear}</strong></div>
+        <div class="detail-metric"><span>Wettest year</span><strong>${summary.wettestYear}: ${formatRain(summary.wettestRain)}</strong></div>
+        <div class="detail-metric"><span>Driest year</span><strong>${summary.driestYear}: ${formatRain(summary.driestRain)}</strong></div>`;
+    }
+
+    function arrivalChart(country) {
+      const w = 640, h = 260, left = 58, right = 18, top = 18, bottom = 38;
+      const years = DATA.years;
+      const values = country.tourism.map(d => d.arrivals);
+      const max = Math.max(...values) * 1.08;
+      const byYear = new Map(country.tourism.map(d => [d.year, d.arrivals]));
+      const x = year => left + (year - years[0]) / (years[years.length - 1] - years[0]) * (w - left - right);
+      const y = value => h - bottom - value / max * (h - top - bottom);
+      const tickVals = [0, max / 2, max];
+      const grid = tickVals.map(value => `<g><line x1="${left}" x2="${w-right}" y1="${y(value).toFixed(1)}" y2="${y(value).toFixed(1)}" stroke="#d7e0e5"/><text x="${left-8}" y="${(y(value)+4).toFixed(1)}" text-anchor="end" font-size="12" fill="#5c6971">${formatCompact(value)}</text></g>`).join("");
+      const yearTicks = [1995, 2000, 2005, 2010, 2015, 2020, 2024].map(year => `<text x="${x(year).toFixed(1)}" y="${h-12}" text-anchor="middle" font-size="12" fill="#5c6971">${year}</text>`).join("");
+      const segments = [];
+      let current = [];
+      years.forEach(year => {
+        if (byYear.has(year)) current.push([x(year), y(byYear.get(year)), year, byYear.get(year)]);
+        else if (current.length) { segments.push(current); current = []; }
+      });
+      if (current.length) segments.push(current);
+      const paths = segments.map(points => {
+        if (points.length === 1) {
+          const p = points[0];
+          return `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="4" fill="#226fa8"><title>${p[2]}: ${formatNumber(p[3])} arrivals</title></circle>`;
+        }
+        const d = points.map((p, i) => `${i ? "L" : "M"}${p[0].toFixed(1)} ${p[1].toFixed(1)}`).join(" ");
+        return `<path d="${d}" fill="none" stroke="#226fa8" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>`;
+      }).join("");
+      const points = country.tourism.map(d => `<circle class="chart-point hover-target" ${tooltipAttr(arrivalTooltip(country.country, d.year, d.arrivals))} cx="${x(d.year).toFixed(1)}" cy="${y(d.arrivals).toFixed(1)}" r="3.4" fill="${d.year === 2020 ? "#c84f3f" : "#226fa8"}" stroke="#fff" stroke-width="1.3"/>`).join("");
+      return `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Tourist arrivals in ${escapeHtml(country.country)} from ${country.summary.firstYear} to ${country.summary.lastYear}">${grid}<line x1="${x(2020).toFixed(1)}" x2="${x(2020).toFixed(1)}" y1="${top}" y2="${h-bottom}" stroke="#c84f3f" stroke-dasharray="4 4"/><text x="${(x(2020)+5).toFixed(1)}" y="${top+12}" font-size="12" fill="#8f3b30">2020</text><line x1="${left}" x2="${w-right}" y1="${h-bottom}" y2="${h-bottom}" stroke="#9eabb2"/>${paths}${points}${yearTicks}</svg>`;
+    }
+
+    function rainChart(country) {
+      const w = 640, h = 220, left = 48, right = 18, top = 16, bottom = 34;
+      const years = DATA.years;
+      const byYear = new Map(country.rain.map(d => [d.year, d]));
+      const maxAbs = Math.max(...country.rain.map(d => Math.abs(d.rain)), 10) * 1.15;
+      const x = year => left + (year - years[0]) / (years[years.length - 1] - years[0]) * (w - left - right);
+      const band = (w - left - right) / years.length;
+      const y = value => top + (maxAbs - value) / (maxAbs * 2) * (h - top - bottom);
+      const zero = y(0);
+      const grid = [-maxAbs, 0, maxAbs].map(value => `<g><line x1="${left}" x2="${w-right}" y1="${y(value).toFixed(1)}" y2="${y(value).toFixed(1)}" stroke="${value === 0 ? "#7e8b94" : "#d7e0e5"}"/><text x="${left-8}" y="${(y(value)+4).toFixed(1)}" text-anchor="end" font-size="12" fill="#5c6971">${value === 0 ? "0" : formatRain(value).replace(" mm", "")}</text></g>`).join("");
+      const bars = years.map(year => {
+        const d = byYear.get(year);
+        if (!d) return "";
+        const y0 = y(Math.max(0, d.rain));
+        const y1 = y(Math.min(0, d.rain));
+        const height = Math.max(Math.abs(y1 - y0), 1.5);
+        return `<rect class="rain-bar hover-target" ${tooltipAttr(rainTooltip(country.country, year, d.rain, d.se))} x="${(x(year)-band*.38).toFixed(1)}" y="${Math.min(y0, zero).toFixed(1)}" width="${Math.max(band*.72, 3).toFixed(1)}" height="${height.toFixed(1)}" rx="2" fill="${rainColor(d.rain)}"/>`;
+      }).join("");
+      const yearTicks = [1995, 2000, 2005, 2010, 2015, 2020, 2024].map(year => `<text x="${x(year).toFixed(1)}" y="${h-10}" text-anchor="middle" font-size="12" fill="#5c6971">${year}</text>`).join("");
+      return `<svg viewBox="0 0 ${w} ${h}" role="img" aria-label="Precipitation anomalies in ${escapeHtml(country.country)} from 1995 to 2024">${grid}${bars}${yearTicks}</svg>`;
+    }
+
+    function calloutText(country) {
+      const shock = country.summary.shockPct;
+      if (shock === null) {
+        return `${country.country} has no complete 2019-2020 tourist-arrivals pair in this file. Rainfall still provides environmental context for the years shown.`;
+      }
+      return `${country.country} recorded a ${Math.abs(shock).toFixed(1)}% arrivals drop from 2019 to 2020. The rainfall bar for the same years is context, not proof of cause.`;
+    }
+
+    renderMatrix();
+  </script>
+</body>
+</html>

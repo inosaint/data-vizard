@@ -1,0 +1,30 @@
+{
+  "name": "data-vizard",
+  "owner": {
+    "name": "Trine"
+  },
+  "description": "Data Vizard agent workflow plugins.",
+  "version": "0.1.0",
+  "plugins": [
+    {
+      "name": "data-vizard",
+      "source": "./plugins/data-vizard",
+      "displayName": "Data Vizard",
+      "description": "Guide data visualization projects from dataset intake to analysis, narrative, design, and HTML story output.",
+      "version": "0.1.0",
+      "author": {
+        "name": "Trine"
+      },
+      "repository": "https://github.com/inosaint/data-vizard",
+      "license": "MIT",
+      "keywords": [
+        "data-visualization",
+        "storytelling",
+        "csv",
+        "analysis",
+        "html"
+      ],
+      "category": "Productivity"
+    }
+  ]
+}

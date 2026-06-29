@@ -1,0 +1,1100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Sunday Snow That Slowed NYC’s Yellow Taxis</title>
+  <meta name="description" content="A map-led data story showing how the January 25, 2026 snow day cut into New York City yellow taxi pickups, from neighborhoods to airport zones.">
+  <meta name="theme-color" content="#f3c623">
+  <meta name="robots" content="index, follow">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="The Sunday Snow That Slowed NYC’s Yellow Taxis">
+  <meta property="og:description" content="A map-led data story showing how one snow day cut into NYC yellow taxi pickups, from neighborhoods to airport disruption.">
+  <meta property="og:image" content="favicon.svg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="The Sunday Snow That Slowed NYC’s Yellow Taxis">
+  <meta name="twitter:description" content="A map-led data story showing how one snow day cut into NYC yellow taxi pickups.">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.9.0/dist/maplibre-gl.css">
+  <style>
+    :root {
+      color-scheme: light;
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+      --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+      --canvas: oklch(0.97 0.006 230);
+      --surface: oklch(0.99 0.003 230);
+      --ink: oklch(0.18 0.018 250);
+      --muted: oklch(0.38 0.025 250);
+      --line: oklch(0.84 0.014 238);
+      --taxi: oklch(0.82 0.16 88);
+      --snow: oklch(0.91 0.055 250);
+      --blue: oklch(0.48 0.19 260);
+      --deep: oklch(0.18 0.045 255);
+      --panel: rgba(255, 252, 245, 0.92);
+      --danger: oklch(0.48 0.17 28);
+      --good: oklch(0.49 0.12 165);
+      --rise: oklch(0.61 0.22 335);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--canvas);
+      color: var(--ink);
+      font: 16px/1.5 Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      text-rendering: optimizeLegibility;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.5rem, 2.4vw, 2.4rem);
+      line-height: 1;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+
+    .story-shell {
+      display: block;
+      position: relative;
+      background: #edf0ed;
+      min-height: 210vh;
+    }
+
+    .map-stage {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      background: #111827;
+      overflow: hidden;
+    }
+
+    #map {
+      position: absolute;
+      inset: 0;
+    }
+
+    #map::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 240ms ease;
+    }
+
+    #map .maplibregl-canvas {
+      filter: saturate(0.9) brightness(1.04) contrast(0.98);
+    }
+
+    .map-brand {
+      position: absolute;
+      top: 18px;
+      left: 20px;
+      z-index: 3;
+      color: #101010;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.65);
+    }
+
+    .map-brand span {
+      display: block;
+      margin-top: 8px;
+      color: #343a40;
+      font-size: 0.95rem;
+    }
+
+    .zone-detail {
+      position: absolute;
+      left: 20px;
+      bottom: 120px;
+      z-index: 5;
+      width: min(310px, calc(100% - 40px));
+      padding: 14px 16px;
+      border-radius: 8px;
+      background: rgba(15, 23, 42, 0.86);
+      color: #fff;
+      box-shadow: 0 8px 8px rgba(15, 23, 42, 0.18);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .zone-detail.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .zone-detail b {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 1.1rem;
+      line-height: 1.1;
+    }
+
+    .zone-detail span {
+      display: block;
+      color: rgba(255, 255, 255, 0.78);
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+
+    .map-legend {
+      position: absolute;
+      left: 20px;
+      bottom: 28px;
+      z-index: 4;
+      display: flex;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 8px 8px rgba(15, 23, 42, 0.12);
+      color: #111827;
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+
+    .map-legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .map-legend i {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+      background: var(--swatch);
+    }
+
+    body[data-map-state="snow"] .legend-loss i,
+    body[data-map-state="airports"] .legend-loss i {
+      animation: loss-swatch-pulse 360ms var(--ease-out);
+    }
+
+    @keyframes loss-swatch-pulse {
+      0% {
+        transform: scale(0.72);
+        box-shadow: 0 0 0 0 rgba(209, 59, 47, 0);
+      }
+      44% {
+        transform: scale(1.18);
+        box-shadow: 0 0 0 7px rgba(209, 59, 47, 0.18);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(209, 59, 47, 0);
+      }
+    }
+
+    .steps {
+      position: relative;
+      z-index: 4;
+      width: min(430px, calc(100% - 32px));
+      margin-top: -100vh;
+      margin-left: auto;
+      margin-right: clamp(16px, 4vw, 56px);
+      padding: clamp(96px, 14vh, 140px) 0 20vh;
+      pointer-events: none;
+    }
+
+    .step {
+      min-height: 86vh;
+      display: grid;
+      align-items: start;
+      pointer-events: none;
+    }
+
+    .card {
+      width: min(620px, 100%);
+      background: rgba(255, 255, 255, 0.92);
+      border-radius: 8px;
+      box-shadow: 0 8px 8px rgba(15, 23, 42, 0.16);
+      padding: clamp(22px, 4vw, 34px);
+      pointer-events: auto;
+    }
+
+    .card h2 {
+      margin: 0 0 12px;
+      font-size: clamp(1.75rem, 3.8vw, 3.2rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+      text-wrap: pretty;
+    }
+
+    .callout {
+      margin-top: 22px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .callout div {
+      border: 1px solid #e7dfcf;
+      background: #fff;
+      padding: 12px;
+      border-radius: 6px;
+    }
+
+    .callout b {
+      display: block;
+      font-size: 1.5rem;
+    }
+
+    .chart-section {
+      padding: 72px min(6vw, 80px);
+      background: var(--canvas);
+    }
+
+    .section-head {
+      max-width: 840px;
+      margin-bottom: 28px;
+    }
+
+    .section-head h2 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4.5vw, 4.5rem);
+      line-height: 0.98;
+      letter-spacing: 0;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.06rem;
+    }
+
+    .viz-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .viz-panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: clamp(16px, 2vw, 24px);
+      min-height: 360px;
+    }
+
+    .viz-panel h3 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      overflow: visible;
+    }
+
+    .axis-label {
+      fill: var(--muted);
+      font-size: 12px;
+    }
+
+    .spark-line {
+      fill: none;
+      stroke: var(--ink);
+      stroke-width: 3;
+      stroke-linejoin: round;
+      stroke-linecap: round;
+    }
+
+    .snow-column {
+      fill: var(--snow);
+    }
+
+    .snow-day-dot {
+      fill: var(--blue);
+      stroke: var(--surface);
+      stroke-width: 4;
+    }
+
+    .evidence-note {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .rank-row {
+      display: grid;
+      grid-template-columns: minmax(126px, 1fr) 2fr 56px;
+      gap: 10px;
+      align-items: center;
+      margin: 12px 0;
+      font-size: 0.9rem;
+    }
+
+    .rank-track {
+      height: 12px;
+      background: #eee6d5;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .rank-fill {
+      height: 100%;
+      background: var(--danger);
+      border-radius: 999px;
+    }
+
+    .rank-fill.up {
+      background: var(--good);
+    }
+
+    .methods {
+      padding: 20px min(6vw, 80px) 24px;
+      background: var(--deep);
+      color: #f8fafc;
+    }
+
+    .methods-inner {
+      display: block;
+      max-width: 980px;
+    }
+
+    .methods h2 {
+      margin: 0 0 6px;
+      font-size: 0.78rem;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .methods ul {
+      margin: 0;
+      padding-left: 15px;
+      color: rgba(248, 250, 252, 0.78);
+      font-size: 0.72rem;
+      line-height: 1.45;
+    }
+
+    @media (max-width: 900px) {
+      .story-shell,
+      .viz-grid,
+      .methods-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .map-stage {
+        position: sticky;
+        height: 100vh;
+      }
+
+      .steps {
+        padding: 42vh 18px 40px;
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+      }
+
+      .step {
+        min-height: auto;
+        margin-bottom: 22px;
+      }
+
+      .callout {
+        grid-template-columns: 1fr;
+      }
+
+      .map-brand {
+        right: 16px;
+      }
+
+      .zone-detail {
+        left: 16px;
+        bottom: 16px;
+      }
+
+      .map-legend {
+        left: 16px;
+        bottom: 108px;
+      }
+
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="story-shell" aria-label="3D map scrollytelling">
+      <div class="map-stage">
+        <div id="map" aria-label="Pitched map of New York City taxi disruption"></div>
+        <div class="map-brand">
+          <h1>The Sunday Snow That Slowed NYC’s Yellow Taxis</h1>
+          <span>One bad-weather day in a city that usually keeps moving</span>
+        </div>
+        <div class="map-legend" aria-label="Map column legend">
+          <span class="legend-actual"><i style="--swatch:#2fa36b"></i>Actual pickups</span>
+          <span class="legend-loss"><i style="--swatch:#d13b2f"></i>Lost vs normal Sunday</span>
+        </div>
+        <aside class="zone-detail" aria-live="polite" aria-label="Selected pickup zone details"></aside>
+      </div>
+
+      <div class="steps">
+        <article class="step" data-view="city">
+          <div class="card">
+            <h2>Yellow taxis are part of New York’s daily machinery.</h2>
+            <p>In January 2026, they carried about 116,000 valid trips a day. The average ride ran 3.4 miles and lasted 17 minutes.</p>
+            <div class="callout">
+              <div><b>3.6M</b><span>valid yellow taxi trips in January</span></div>
+              <div><b>3.4 mi</b><span>average valid trip distance</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="step" data-view="snow">
+          <div class="card">
+            <h2>January 25 was one of the bad days.</h2>
+            <p>Open-Meteo modeled 7.44 inches of snowfall. Yellow taxis logged 43,563 valid trips, about 59% below the other January Sundays.</p>
+            <div class="callout">
+              <div><b>86/88</b><span>high-volume zones were down</span></div>
+              <div><b>-53%</b><span>median high-volume zone change</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="step" data-view="airports">
+          <div class="card">
+            <h2>Even the airport taxi stream went quiet.</h2>
+            <p>Flights nearly stopped. JFK cancelled 89% of departures and 96% of arrivals; LaGuardia cancelled 91% and 99%. In a city that never sleeps, the taxi map finally looked tired.</p>
+            <div class="callout">
+              <div><b>-97%</b><span>LaGuardia vs other January Sundays</span></div>
+              <div><b>-86%</b><span>JFK vs other January Sundays</span></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="chart-section">
+      <div class="section-head">
+        <h2>The snow day was the month’s demand cliff.</h2>
+        <p>Most January days followed a familiar taxi rhythm. January 25 sits apart: the snowiest day in the file and the lowest pickup count of the month.</p>
+      </div>
+      <div class="viz-grid">
+        <div class="viz-panel">
+          <h3>Daily demand cliff</h3>
+          <svg id="dailyChart" viewBox="0 0 900 420" role="img" aria-label="Line chart of daily valid taxi trips and snowfall in January 2026"></svg>
+          <p class="evidence-note">Blue columns show snowfall. The dark line shows valid yellow taxi trips.</p>
+        </div>
+        <div class="viz-panel">
+          <h3>Snow Sunday pickup-zone change</h3>
+          <div id="rankChart" aria-label="Ranked list of selected pickup zone changes"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <section class="methods">
+    <div class="methods-inner">
+      <h2>How to read this</h2>
+      <ul>
+        <li>Taxi data is NYC TLC Yellow Taxi trip records for January 2026.</li>
+        <li>Weather is Open-Meteo modeled historical weather for NYC coordinates.</li>
+        <li>Basemap uses OSM-derived CARTO Voyager tiles rendered through MapLibre GL JS.</li>
+        <li>Zone drops compare January 25 against the average of the other January Sundays: January 4, 11, and 18.</li>
+        <li>Flight disruption is summarized from BTS TranStats January 2026 on-time performance records for JFK and LaGuardia.</li>
+        <li>Map columns are MapLibre fill-extrusion layers built from approximate pickup-zone centroid footprints; green shows actual pickup volume, while red shows the missing volume between January 25 and a normal January Sunday.</li>
+        <li>This shows association and spatial contrast, not proof that snow alone caused every change.</li>
+      </ul>
+    </div>
+  </section>
+
+  <script src="https://unpkg.com/maplibre-gl@5.9.0/dist/maplibre-gl.js"></script>
+  <script>
+    const dailyData = [{"date":"2026-01-01","trips":110274,"snow":0.304,"precip":0.044,"temp":25.8,"is_snow_day":false},{"date":"2026-01-02","trips":96346,"snow":0.084,"precip":0.012,"temp":24.1,"is_snow_day":false},{"date":"2026-01-03","trips":104466,"snow":0,"precip":0,"temp":25.7,"is_snow_day":false},{"date":"2026-01-04","trips":89840,"snow":0.084,"precip":0.012,"temp":28,"is_snow_day":false},{"date":"2026-01-05","trips":93721,"snow":0.221,"precip":0.032,"temp":28.8,"is_snow_day":false},{"date":"2026-01-06","trips":104083,"snow":0.055,"precip":0.024,"temp":33.8,"is_snow_day":false},{"date":"2026-01-07","trips":109416,"snow":0,"precip":0.012,"temp":40.7,"is_snow_day":false},{"date":"2026-01-08","trips":115628,"snow":0,"precip":0,"temp":41.2,"is_snow_day":false},{"date":"2026-01-09","trips":120023,"snow":0,"precip":0.142,"temp":41.7,"is_snow_day":false},{"date":"2026-01-10","trips":140882,"snow":0,"precip":0.531,"temp":42.8,"is_snow_day":false},{"date":"2026-01-11","trips":111894,"snow":0,"precip":0.012,"temp":41.4,"is_snow_day":false},{"date":"2026-01-12","trips":109032,"snow":0,"precip":0,"temp":34.4,"is_snow_day":false},{"date":"2026-01-13","trips":119439,"snow":0,"precip":0,"temp":36.8,"is_snow_day":false},{"date":"2026-01-14","trips":125853,"snow":0,"precip":0.004,"temp":43.6,"is_snow_day":false},{"date":"2026-01-15","trips":136913,"snow":0,"precip":0.004,"temp":36.3,"is_snow_day":false},{"date":"2026-01-16","trips":130278,"snow":0,"precip":0,"temp":26.8,"is_snow_day":false},{"date":"2026-01-17","trips":123994,"snow":1.295,"precip":0.186,"temp":31.5,"is_snow_day":false},{"date":"2026-01-18","trips":115286,"snow":2.536,"precip":0.364,"temp":29.4,"is_snow_day":false},{"date":"2026-01-19","trips":96764,"snow":0,"precip":0,"temp":25.4,"is_snow_day":false},{"date":"2026-01-20","trips":126280,"snow":0,"precip":0,"temp":16.1,"is_snow_day":false},{"date":"2026-01-21","trips":125840,"snow":0,"precip":0,"temp":18.3,"is_snow_day":false},{"date":"2026-01-22","trips":131838,"snow":0.056,"precip":0.008,"temp":37.5,"is_snow_day":false},{"date":"2026-01-23","trips":139154,"snow":0,"precip":0,"temp":30.2,"is_snow_day":false},{"date":"2026-01-24","trips":140915,"snow":0,"precip":0,"temp":13.7,"is_snow_day":false},{"date":"2026-01-25","trips":43563,"snow":7.441,"precip":1.304,"temp":14.5,"is_snow_day":true},{"date":"2026-01-26","trips":66757,"snow":0.083,"precip":0.016,"temp":21.1,"is_snow_day":false},{"date":"2026-01-27","trips":118389,"snow":0.028,"precip":0.004,"temp":13.7,"is_snow_day":false},{"date":"2026-01-28","trips":128309,"snow":0,"precip":0,"temp":13.3,"is_snow_day":false},{"date":"2026-01-29","trips":139587,"snow":0,"precip":0,"temp":10.8,"is_snow_day":false},{"date":"2026-01-30","trips":148568,"snow":0,"precip":0,"temp":9.4,"is_snow_day":false},{"date":"2026-01-31","trips":140442,"snow":0,"precip":0,"temp":8,"is_snow_day":false}];
+    const zoneData = [
+      { pickup_borough: "Queens", pickup_zone: "LaGuardia Airport", baseline_avg_daily_trips: 2962, snow_day_trips: 100, pct_change_vs_baseline: -0.966, lng: -73.873, lat: 40.776, kind: "airport", priority: true },
+      { pickup_borough: "Queens", pickup_zone: "JFK Airport", baseline_avg_daily_trips: 5432, snow_day_trips: 781, pct_change_vs_baseline: -0.856, lng: -73.778, lat: 40.641, kind: "airport", priority: true },
+      { pickup_borough: "Queens", pickup_zone: "East Elmhurst", baseline_avg_daily_trips: 258, snow_day_trips: 25, pct_change_vs_baseline: -0.903, lng: -73.88, lat: 40.764, kind: "drop" },
+      { pickup_borough: "Manhattan", pickup_zone: "Battery Park City", baseline_avg_daily_trips: 389, snow_day_trips: 89, pct_change_vs_baseline: -0.771, lng: -74.016, lat: 40.711, kind: "drop" },
+      { pickup_borough: "Manhattan", pickup_zone: "World Trade Center", baseline_avg_daily_trips: 494, snow_day_trips: 68, pct_change_vs_baseline: -0.862, lng: -74.011, lat: 40.713, kind: "drop" },
+      { pickup_borough: "Manhattan", pickup_zone: "Midtown Center", baseline_avg_daily_trips: 2864, snow_day_trips: 744, pct_change_vs_baseline: -0.74, lng: -73.982, lat: 40.759, kind: "core", priority: true },
+      { pickup_borough: "Manhattan", pickup_zone: "Upper East Side North", baseline_avg_daily_trips: 3123, snow_day_trips: 809, pct_change_vs_baseline: -0.741, lng: -73.956, lat: 40.779, kind: "core" },
+      { pickup_borough: "Manhattan", pickup_zone: "Midtown East", baseline_avg_daily_trips: 2027, snow_day_trips: 596, pct_change_vs_baseline: -0.706, lng: -73.972, lat: 40.756, kind: "core" },
+      { pickup_borough: "Manhattan", pickup_zone: "Upper East Side South", baseline_avg_daily_trips: 3089, snow_day_trips: 901, pct_change_vs_baseline: -0.708, lng: -73.962, lat: 40.768, kind: "core" },
+      { pickup_borough: "Manhattan", pickup_zone: "Lincoln Square East", baseline_avg_daily_trips: 2936, snow_day_trips: 696, pct_change_vs_baseline: -0.763, lng: -73.982, lat: 40.772, kind: "core" },
+      { pickup_borough: "Manhattan", pickup_zone: "Manhattan Valley", baseline_avg_daily_trips: 884, snow_day_trips: 212, pct_change_vs_baseline: -0.76, lng: -73.966, lat: 40.799, kind: "drop" },
+      { pickup_borough: "Manhattan", pickup_zone: "Yorkville East", baseline_avg_daily_trips: 1288, snow_day_trips: 376, pct_change_vs_baseline: -0.708, lng: -73.945, lat: 40.776, kind: "drop" },
+      { pickup_borough: "Manhattan", pickup_zone: "Upper West Side North", baseline_avg_daily_trips: 1822, snow_day_trips: 510, pct_change_vs_baseline: -0.72, lng: -73.972, lat: 40.791, kind: "drop" },
+      { pickup_borough: "Manhattan", pickup_zone: "Lenox Hill East", baseline_avg_daily_trips: 1449, snow_day_trips: 555, pct_change_vs_baseline: -0.617, lng: -73.955, lat: 40.765, kind: "drop" },
+      { pickup_borough: "Manhattan", pickup_zone: "Lincoln Square West", baseline_avg_daily_trips: 1049, snow_day_trips: 325, pct_change_vs_baseline: -0.69, lng: -73.991, lat: 40.775, kind: "drop" },
+      { pickup_borough: "Manhattan", pickup_zone: "Upper West Side South", baseline_avg_daily_trips: 2808, snow_day_trips: 762, pct_change_vs_baseline: -0.729, lng: -73.98, lat: 40.783, kind: "drop" },
+      { pickup_borough: "Manhattan", pickup_zone: "Murray Hill", baseline_avg_daily_trips: 2093, snow_day_trips: 778, pct_change_vs_baseline: -0.628, lng: -73.977, lat: 40.747, kind: "drop" },
+      { pickup_borough: "Brooklyn", pickup_zone: "DUMBO/Vinegar Hill", baseline_avg_daily_trips: 156, snow_day_trips: 27, pct_change_vs_baseline: -0.827, lng: -73.989, lat: 40.703, kind: "brooklyn" },
+      { pickup_borough: "Brooklyn", pickup_zone: "Brooklyn Heights", baseline_avg_daily_trips: 131, snow_day_trips: 37, pct_change_vs_baseline: -0.718, lng: -73.995, lat: 40.696, kind: "brooklyn" },
+      { pickup_borough: "Brooklyn", pickup_zone: "Park Slope", baseline_avg_daily_trips: 158, snow_day_trips: 75, pct_change_vs_baseline: -0.524, lng: -73.981, lat: 40.672, kind: "brooklyn" },
+      { pickup_borough: "Brooklyn", pickup_zone: "Downtown Brooklyn", baseline_avg_daily_trips: 131, snow_day_trips: 63, pct_change_vs_baseline: -0.52, lng: -73.986, lat: 40.691, kind: "brooklyn" },
+      { pickup_borough: "Brooklyn", pickup_zone: "Fort Greene", baseline_avg_daily_trips: 169, snow_day_trips: 106, pct_change_vs_baseline: -0.373, lng: -73.974, lat: 40.689, kind: "brooklyn" },
+      { pickup_borough: "Brooklyn", pickup_zone: "Williamsburg North", baseline_avg_daily_trips: 512, snow_day_trips: 357, pct_change_vs_baseline: -0.303, lng: -73.958, lat: 40.718, kind: "brooklyn-stable", priority: true },
+      { pickup_borough: "Brooklyn", pickup_zone: "Bushwick South", baseline_avg_daily_trips: 320, snow_day_trips: 281, pct_change_vs_baseline: -0.121, lng: -73.921, lat: 40.696, kind: "brooklyn-stable", priority: true },
+      { pickup_borough: "Brooklyn", pickup_zone: "South Williamsburg", baseline_avg_daily_trips: 21, snow_day_trips: 29, pct_change_vs_baseline: 0.403, lng: -73.957, lat: 40.705, kind: "brooklyn-stable" },
+      { pickup_borough: "Manhattan", pickup_zone: "Lower East Side", baseline_avg_daily_trips: 2313, snow_day_trips: 1632, pct_change_vs_baseline: -0.294, lng: -73.989, lat: 40.716, kind: "stable" }
+    ];
+
+    const views = {
+      city: {
+        center: [-73.91, 40.72],
+        zoom: 10.42,
+        pitch: 58,
+        bearing: -22,
+        mode: "baseline",
+        title: "Citywide snow day",
+        text: "Yellow taxis usually carry more than one hundred thousand valid trips a day."
+      },
+      airports: {
+        center: [-73.826, 40.708],
+        zoom: 10.78,
+        pitch: 66,
+        bearing: -30,
+        mode: "airports",
+        title: "Airport disruption",
+        text: "Flight cancellations and airport taxi drops line up on January 25."
+      },
+      snow: {
+        center: [-73.91, 40.72],
+        zoom: 10.42,
+        pitch: 58,
+        bearing: -22,
+        mode: "snow",
+        title: "Snow Sunday",
+        text: "Most high-volume zones fell against the other January Sundays."
+      }
+    };
+
+    const streetMapStyle = {
+      version: 8,
+      sources: {
+        "carto-voyager": {
+          type: "raster",
+          tiles: [
+            "https://a.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
+            "https://b.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
+            "https://c.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png",
+            "https://d.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}.png"
+          ],
+          tileSize: 256,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+        }
+      },
+      layers: [
+        {
+          id: "carto-voyager",
+          type: "raster",
+          source: "carto-voyager",
+          paint: {
+            "raster-opacity": 1
+          }
+        }
+      ]
+    };
+
+    function formatNumber(value) {
+      return new Intl.NumberFormat("en-US").format(Math.round(value));
+    }
+
+    function drawDailyChart() {
+      const svg = document.querySelector("#dailyChart");
+      const width = 900;
+      const height = 420;
+      const margin = { top: 28, right: 42, bottom: 54, left: 76 };
+      const plotW = width - margin.left - margin.right;
+      const plotH = height - margin.top - margin.bottom;
+      const maxSnow = Math.max(...dailyData.map(d => d.snow));
+      const maxTrips = 150000;
+      const minTrips = 35000;
+      const x = i => (i / (dailyData.length - 1)) * plotW;
+      const yTrips = value => plotH - ((value - minTrips) / (maxTrips - minTrips)) * plotH;
+      svg.innerHTML = "";
+
+      const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      g.setAttribute("transform", `translate(${margin.left},${margin.top})`);
+      svg.appendChild(g);
+
+      [50000, 100000, 150000].forEach(tick => {
+        const y = yTrips(tick);
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", 0);
+        line.setAttribute("x2", plotW);
+        line.setAttribute("y1", y);
+        line.setAttribute("y2", y);
+        line.setAttribute("stroke", "#e1d8c8");
+        g.appendChild(line);
+        const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        label.setAttribute("x", -12);
+        label.setAttribute("y", y + 4);
+        label.setAttribute("text-anchor", "end");
+        label.setAttribute("class", "axis-label");
+        label.textContent = `${tick / 1000}k`;
+        g.appendChild(label);
+      });
+
+      dailyData.forEach((d, i) => {
+        if (d.snow > 0) {
+          const snowH = Math.max(4, (d.snow / maxSnow) * 128);
+          const snow = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+          snow.setAttribute("x", x(i) - 7);
+          snow.setAttribute("y", plotH - snowH);
+          snow.setAttribute("width", 14);
+          snow.setAttribute("height", snowH);
+          snow.setAttribute("rx", 7);
+          snow.setAttribute("class", "snow-column");
+          g.appendChild(snow);
+        }
+      });
+
+      const linePath = dailyData
+        .map((d, i) => `${i === 0 ? "M" : "L"} ${x(i).toFixed(2)} ${yTrips(d.trips).toFixed(2)}`)
+        .join(" ");
+      const line = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      line.setAttribute("d", linePath);
+      line.setAttribute("class", "spark-line");
+      g.appendChild(line);
+
+      dailyData.forEach((d, i) => {
+        if ([0, 9, 16, 24, 30].includes(i)) {
+          const label = document.createElementNS("http://www.w3.org/2000/svg", "text");
+          label.setAttribute("x", x(i));
+          label.setAttribute("y", plotH + 24);
+          label.setAttribute("text-anchor", "middle");
+          label.setAttribute("class", "axis-label");
+          label.textContent = String(i + 1);
+          g.appendChild(label);
+        }
+      });
+
+      const markerX = x(24);
+      const markerY = yTrips(dailyData[24].trips);
+      const marker = document.createElementNS("http://www.w3.org/2000/svg", "line");
+      marker.setAttribute("x1", markerX);
+      marker.setAttribute("x2", markerX);
+      marker.setAttribute("y1", 0);
+      marker.setAttribute("y2", plotH);
+      marker.setAttribute("stroke", "#1d4ed8");
+      marker.setAttribute("stroke-width", "2");
+      marker.setAttribute("stroke-dasharray", "5 6");
+      g.appendChild(marker);
+
+      const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      dot.setAttribute("cx", markerX);
+      dot.setAttribute("cy", markerY);
+      dot.setAttribute("r", 8);
+      dot.setAttribute("class", "snow-day-dot");
+      g.appendChild(dot);
+
+      const note = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      note.setAttribute("x", markerX + 14);
+      note.setAttribute("y", markerY - 14);
+      note.setAttribute("fill", "var(--blue)");
+      note.setAttribute("font-weight", "800");
+      note.textContent = "Jan 25: 43,563 trips";
+      g.appendChild(note);
+
+      const xLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      xLabel.setAttribute("x", plotW / 2);
+      xLabel.setAttribute("y", plotH + 48);
+      xLabel.setAttribute("text-anchor", "middle");
+      xLabel.setAttribute("class", "axis-label");
+      xLabel.textContent = "January day";
+      g.appendChild(xLabel);
+    }
+
+    function drawRankChart() {
+      const root = document.querySelector("#rankChart");
+      root.innerHTML = "";
+      const shownZones = [
+        "LaGuardia Airport",
+        "JFK Airport",
+        "Midtown Center",
+        "Upper East Side North",
+        "DUMBO/Vinegar Hill",
+        "Brooklyn Heights",
+        "Fort Greene",
+        "Williamsburg North",
+        "Bushwick South",
+        "South Williamsburg",
+        "Lower East Side"
+      ];
+      zoneData
+        .filter(zone => shownZones.includes(zone.pickup_zone))
+        .sort((a, b) => Math.abs(b.pct_change_vs_baseline) - Math.abs(a.pct_change_vs_baseline))
+        .forEach(zone => {
+        const row = document.createElement("div");
+        row.className = "rank-row";
+        const label = document.createElement("span");
+        label.textContent = zone.pickup_zone;
+        const track = document.createElement("div");
+        track.className = "rank-track";
+        const fill = document.createElement("div");
+        fill.className = `rank-fill ${zone.pct_change_vs_baseline > 0 ? "up" : ""}`;
+        fill.style.width = `${Math.min(100, Math.abs(zone.pct_change_vs_baseline) * 100)}%`;
+        track.appendChild(fill);
+        const value = document.createElement("b");
+        value.textContent = `${Math.round(zone.pct_change_vs_baseline * 100)}%`;
+        row.append(label, track, value);
+          root.appendChild(row);
+        });
+    }
+
+    function countHeight(value) {
+      return Math.round(260 + Math.sqrt(Math.max(0, value)) * 48);
+    }
+
+    function columnFootprint(zone) {
+      const size = zone.kind === "airport" ? 0.0046 : 0.0031;
+      const lngOffset = size / Math.max(0.68, Math.cos(zone.lat * Math.PI / 180));
+      const latOffset = size;
+      return [[
+        [zone.lng - lngOffset, zone.lat - latOffset],
+        [zone.lng + lngOffset, zone.lat - latOffset],
+        [zone.lng + lngOffset, zone.lat + latOffset],
+        [zone.lng - lngOffset, zone.lat + latOffset],
+        [zone.lng - lngOffset, zone.lat - latOffset]
+      ]];
+    }
+
+    function buildColumnFeatures() {
+      return {
+        type: "FeatureCollection",
+        features: zoneData.map(zone => ({
+          type: "Feature",
+          properties: {
+            zone: zone.pickup_zone,
+            borough: zone.pickup_borough,
+            kind: zone.kind,
+            baseline: Math.round(zone.baseline_avg_daily_trips),
+            snowTrips: Math.round(zone.snow_day_trips),
+            baselineHeight: countHeight(zone.baseline_avg_daily_trips),
+            snowHeight: countHeight(zone.snow_day_trips),
+            change: zone.pct_change_vs_baseline
+          },
+          geometry: {
+            type: "Polygon",
+            coordinates: columnFootprint(zone)
+          }
+        }))
+      };
+    }
+
+    function setupMap() {
+      if (!window.maplibregl) {
+        document.querySelector("#map").innerHTML = "";
+        document.querySelector("#map").style.background = "linear-gradient(135deg,#1f2937,#334155)";
+        return;
+      }
+
+      const map = new maplibregl.Map({
+        container: "map",
+        style: streetMapStyle,
+        center: views.city.center,
+        zoom: views.city.zoom,
+        pitch: views.city.pitch,
+        bearing: views.city.bearing,
+        attributionControl: false
+      });
+      map.scrollZoom.disable();
+      map.boxZoom.disable();
+      map.dragRotate.disable();
+      map.touchZoomRotate.disableRotation();
+      map.addControl(new maplibregl.AttributionControl({ compact: true }), "bottom-right");
+      const zoneDetail = document.querySelector(".zone-detail");
+      let selectedZone = null;
+
+      const columnOpacity = mode => {
+        if (mode === "airports") {
+          return ["case", ["==", ["get", "kind"], "airport"], 0.92, 0.13];
+        }
+        if (mode === "snow") {
+          return 0.86;
+        }
+        return 0.78;
+      };
+
+      const actualColumnColor = () => {
+        const base = "#2fa36b";
+        const selected = "#111827";
+        const selectedCase = selectedZone ? [["==", ["get", "zone"], selectedZone], selected] : [];
+        return selectedZone ? ["case", ...selectedCase, base] : base;
+      };
+
+      const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+      const smoothProgress = value => {
+        const t = clamp(value);
+        return t * t * (3 - 2 * t);
+      };
+
+      const actualColumnHeightExpression = progress => {
+        if (progress <= 0) {
+          return ["get", "baselineHeight"];
+        }
+        if (progress >= 1) {
+          return ["get", "snowHeight"];
+        }
+        return [
+          "+",
+          ["get", "baselineHeight"],
+          ["*", ["-", ["get", "snowHeight"], ["get", "baselineHeight"]], progress]
+        ];
+      };
+
+      const lossColumnBaseExpression = progress => {
+        if (progress <= 0) {
+          return ["get", "baselineHeight"];
+        }
+        if (progress >= 1) {
+          return [
+            "case",
+            ["<", ["get", "change"], 0],
+            ["get", "snowHeight"],
+            ["get", "baselineHeight"]
+          ];
+        }
+        return [
+          "case",
+          ["<", ["get", "change"], 0],
+          [
+            "+",
+            ["get", "baselineHeight"],
+            ["*", ["-", ["get", "snowHeight"], ["get", "baselineHeight"]], progress]
+          ],
+          ["get", "baselineHeight"]
+        ];
+      };
+
+      const lossColumnHeightExpression = () => {
+        return ["get", "baselineHeight"];
+      };
+
+      const lossColumnColor = () => {
+        const selected = "#111827";
+        const selectedCase = selectedZone ? [["==", ["get", "zone"], selectedZone], selected] : [];
+        return selectedZone ? ["case", ...selectedCase, "#d13b2f"] : "#d13b2f";
+      };
+
+      const lossColumnFilter = mode => {
+        const visibleLoss = ["<", ["get", "change"], 0];
+        if (mode === "airports") {
+          return ["all", visibleLoss, ["==", ["get", "kind"], "airport"]];
+        }
+        return visibleLoss;
+      };
+
+      const lossColumnOpacity = mode => {
+        if (mode === "airports") {
+          return 0.94;
+        }
+        if (mode === "baseline") {
+          return 0.18;
+        }
+        return 0.9;
+      };
+
+      const setColumnMode = (mode, progress = mode === "baseline" ? 0 : 1) => {
+        if (!map.getLayer("zone-actual-columns")) return;
+        document.body.dataset.mapState = mode;
+        currentMode = mode;
+        currentProgress = progress;
+        const transitionDuration = 0;
+        const easedProgress = smoothProgress(progress);
+        [
+          "zone-actual-columns",
+          "zone-loss-columns"
+        ].forEach(layerId => {
+          map.setPaintProperty(layerId, "fill-extrusion-height-transition", { duration: transitionDuration, delay: 0 });
+          map.setPaintProperty(layerId, "fill-extrusion-base-transition", { duration: transitionDuration, delay: 0 });
+          map.setPaintProperty(layerId, "fill-extrusion-opacity-transition", { duration: Math.min(transitionDuration, 280), delay: 0 });
+        });
+        map.setPaintProperty("zone-actual-columns", "fill-extrusion-opacity", columnOpacity(mode));
+        map.setPaintProperty("zone-actual-columns", "fill-extrusion-color", actualColumnColor());
+        map.setPaintProperty("zone-actual-columns", "fill-extrusion-height", actualColumnHeightExpression(easedProgress));
+        map.setFilter("zone-loss-columns", lossColumnFilter(mode));
+        map.setPaintProperty("zone-loss-columns", "fill-extrusion-color", lossColumnColor());
+        map.setPaintProperty("zone-loss-columns", "fill-extrusion-base", lossColumnBaseExpression(easedProgress));
+        map.setPaintProperty("zone-loss-columns", "fill-extrusion-height", lossColumnHeightExpression());
+        map.setPaintProperty("zone-loss-columns", "fill-extrusion-opacity", lossColumnOpacity(mode));
+      };
+
+      const showZoneDetail = feature => {
+        const p = feature.properties;
+        if (selectedZone === p.zone) {
+          selectedZone = null;
+          zoneDetail.classList.remove("is-visible");
+          zoneDetail.innerHTML = "";
+          setColumnMode(currentMode, currentProgress);
+          return;
+        }
+        selectedZone = p.zone;
+        const change = Math.round(Number(p.change) * 100);
+        zoneDetail.innerHTML = `<b>${p.zone}</b><span>${p.borough} · ${change}% vs other January Sundays</span><span>${formatNumber(p.snowTrips)} pickups on Jan 25 · ${formatNumber(p.baseline)} normal Sunday pickups</span>`;
+        zoneDetail.classList.add("is-visible");
+        setColumnMode(currentMode, currentProgress);
+      };
+
+      let currentMode = views.city.mode;
+      let currentProgress = 0;
+      document.body.dataset.mapState = currentMode;
+
+      map.on("load", () => {
+        map.addSource("zone-actual-columns", {
+          type: "geojson",
+          data: buildColumnFeatures()
+        });
+        map.addSource("zone-loss-columns", {
+          type: "geojson",
+          data: buildColumnFeatures()
+        });
+        map.addLayer({
+          id: "zone-actual-columns",
+          type: "fill-extrusion",
+          source: "zone-actual-columns",
+          paint: {
+            "fill-extrusion-color": actualColumnColor(),
+            "fill-extrusion-height": actualColumnHeightExpression(0),
+            "fill-extrusion-base": 0,
+            "fill-extrusion-opacity": columnOpacity(views.city.mode),
+            "fill-extrusion-height-transition": { duration: 420, delay: 0 },
+            "fill-extrusion-color-transition": { duration: 260, delay: 0 },
+            "fill-extrusion-vertical-gradient": true
+          }
+        });
+        map.addLayer({
+          id: "zone-loss-columns",
+          type: "fill-extrusion",
+          source: "zone-loss-columns",
+          filter: lossColumnFilter(views.city.mode),
+          paint: {
+            "fill-extrusion-color": lossColumnColor(),
+            "fill-extrusion-height": lossColumnHeightExpression(),
+            "fill-extrusion-base": lossColumnBaseExpression(0),
+            "fill-extrusion-opacity": lossColumnOpacity(views.city.mode),
+            "fill-extrusion-height-transition": { duration: 420, delay: 0 },
+            "fill-extrusion-base-transition": { duration: 420, delay: 0 },
+            "fill-extrusion-opacity-transition": { duration: 260, delay: 0 },
+            "fill-extrusion-vertical-gradient": true
+          }
+        });
+
+        ["zone-loss-columns", "zone-actual-columns"].forEach(layerId => {
+          map.on("click", layerId, event => {
+            const feature = event.features && event.features[0];
+            if (feature) showZoneDetail(feature);
+          });
+
+          map.on("mouseenter", layerId, () => {
+            map.getCanvas().style.cursor = "pointer";
+          });
+
+          map.on("mouseleave", layerId, () => {
+            map.getCanvas().style.cursor = "";
+          });
+        });
+
+        setColumnMode(currentMode);
+      });
+
+      let activeViewKey = null;
+      const setView = key => {
+        if (key === activeViewKey) return;
+        const previousViewKey = activeViewKey;
+        const view = views[key] || views.city;
+        activeViewKey = key;
+        currentMode = view.mode;
+        const shouldMoveCamera = key === "airports" || previousViewKey === "airports";
+        if (shouldMoveCamera) {
+          map.flyTo({
+            center: view.center,
+            zoom: view.zoom,
+            pitch: view.pitch,
+            bearing: view.bearing,
+            duration: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 850,
+            essential: true
+          });
+        }
+      };
+
+      const cardProgress = card => {
+        const rect = card.getBoundingClientRect();
+        const visibleHeight = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+        const visibleRatio = Math.max(0, visibleHeight) / Math.max(1, Math.min(rect.height, window.innerHeight));
+        if (rect.bottom < window.innerHeight * 0.32) {
+          return 1;
+        }
+        return clamp(visibleRatio / 0.92);
+      };
+
+      const getCard = key => document.querySelector(`.step[data-view="${key}"] .card`);
+      const applyStoryScrollState = () => {
+        if (!map.getLayer("zone-actual-columns")) return;
+        const snowCard = getCard("snow");
+        const airportCard = getCard("airports");
+        const snowProgress = snowCard ? cardProgress(snowCard) : 0;
+        const airportProgress = airportCard ? cardProgress(airportCard) : 0;
+        if (airportProgress > 0.48) {
+          setView("airports");
+          setColumnMode("airports", 1);
+        } else if (snowProgress > 0.01) {
+          setView("snow");
+          setColumnMode("snow", snowProgress);
+        } else {
+          setView("city");
+          setColumnMode("baseline", 0);
+        }
+      };
+
+      let storyScrollFrame = null;
+      const requestStoryScrollState = () => {
+        if (storyScrollFrame) return;
+        storyScrollFrame = requestAnimationFrame(() => {
+          storyScrollFrame = null;
+          applyStoryScrollState();
+        });
+      };
+      window.addEventListener("scroll", requestStoryScrollState, { passive: true });
+      window.addEventListener("resize", requestStoryScrollState);
+      requestAnimationFrame(applyStoryScrollState);
+    }
+
+    drawDailyChart();
+    drawRankChart();
+    setupMap();
+  </script>
+</body>
+</html>
