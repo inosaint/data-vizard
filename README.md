@@ -26,6 +26,17 @@ The local skills live in `skills/`.
 
 Each skill has a `SKILL.md` file with its operating rules. Some skills also include `references/` for playbooks and reusable guidance, or `assets/` for starter files.
 
+## Plugin Install
+
+The Codex plugin source lives in `plugins/data-vizard/`, with a repo-local marketplace at `.agents/plugins/marketplace.json`. From a fresh clone, install it with:
+
+```bash
+codex plugin marketplace add "$(pwd)"
+codex plugin add data-vizard@personal
+```
+
+See `plugins/data-vizard/README.md` for full install, usage, update, and troubleshooting notes.
+
 ## Folder Guide
 
 - `outcome/` - Final or in-progress public-facing visualization artifacts. Each project gets its own folder, usually with an `index.html` and supporting files such as story briefs, design notes, SVG favicons, or map assets.

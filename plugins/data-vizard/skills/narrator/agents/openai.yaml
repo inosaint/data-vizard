@@ -1,0 +1,4 @@
+interface:
+  display_name: "Narrator"
+  short_description: "Shape the visualization story and language"
+  default_prompt: "Use $narrator to turn my selected data insight into a clear visualization story."
