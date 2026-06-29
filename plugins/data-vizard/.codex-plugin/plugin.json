@@ -1,6 +1,6 @@
 {
   "name": "data-vizard",
-  "version": "0.1.0+codex.20260629165549",
+  "version": "0.1.0",
   "description": "A staged data visualization workshop for moving from dataset intake to analysis, narrative, design, and an HTML artifact.",
   "author": {
     "name": "Trine"

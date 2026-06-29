@@ -1,7 +1,7 @@
 {
-  "name": "personal",
+  "name": "data-vizard",
   "interface": {
-    "displayName": "Personal"
+    "displayName": "Data Vizard"
   },
   "plugins": [
     {

@@ -1,6 +1,6 @@
 # Data Vizard
 
-Data Vizard is a WIP plugin repo for building data visualization stories with a staged agent workflow. The workflow moves from data intake to analysis, narrative framing, visual design, and a final HTML artifact while keeping user decisions explicit.
+Data Vizard is a WIP agent plugin for building data visualization stories with a staged workflow. The workflow moves from data intake to analysis, narrative framing, visual design, and a final HTML artifact while keeping user decisions explicit.
 
 ## Workflow
 
@@ -26,13 +26,35 @@ The local skills live in `skills/`.
 
 Each skill has a `SKILL.md` file with its operating rules. Some skills also include `references/` for playbooks and reusable guidance, or `assets/` for starter files.
 
-## Plugin Install
+## Install
 
-The Codex plugin source lives in `plugins/data-vizard/`, with a repo-local marketplace at `.agents/plugins/marketplace.json`. From a fresh clone, install it with:
+Install the published package with npm, pnpm, or Bun:
+
+```bash
+npx data-vizard install
+pnpm dlx data-vizard install
+bunx data-vizard install
+```
+
+The installer copies the bundled plugin into a stable local marketplace at `~/.data-vizard/marketplace`, then registers and installs it for Codex and Claude Code when their CLIs are available.
+
+After installing, start a new agent session and invoke the orchestrator:
+
+```text
+Codex: $data-vizard:data-vizard
+Claude Code: /data-vizard:data-vizard
+```
+
+## Manual Plugin Install
+
+The plugin source lives in `plugins/data-vizard/`, with repo-local marketplace files for Codex and Claude Code. From a fresh clone, install it manually with:
 
 ```bash
 codex plugin marketplace add "$(pwd)"
-codex plugin add data-vizard@personal
+codex plugin add data-vizard@data-vizard
+
+claude plugin marketplace add "$(pwd)"
+claude plugin install data-vizard@data-vizard
 ```
 
 See `plugins/data-vizard/README.md` for full install, usage, update, and troubleshooting notes.
