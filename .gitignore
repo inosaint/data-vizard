@@ -1,13 +1,14 @@
 .DS_Store
 Thumbs.db
 
+
 # Local editor and agent state
 .agents/
-!.agents/
+.agents/
 .agents/*
-!.agents/plugins/
+.agents/plugins/
 .agents/plugins/*
-!.agents/plugins/marketplace.json
+.agents/plugins/marketplace.json
 .cursor/
 .claude/
 .codex/
@@ -18,15 +19,17 @@ node_modules/
 .codex_deps/
 .venv/
 venv/
+.venv-validator
 __pycache__/
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/
+.claude-plugin
 
 # Environment and secrets
 .env
 .env.*
-!.env.example
+.env.example
 
 # Logs and temporary files
 *.log
