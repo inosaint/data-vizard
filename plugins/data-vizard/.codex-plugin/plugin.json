@@ -1,9 +1,10 @@
 {
   "name": "data-vizard",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "A staged data visualization workshop for moving from dataset intake to analysis, narrative, design, and an HTML artifact.",
   "author": {
-    "name": "Trine"
+    "name": "inosaint",
+    "url": "https://github.com/inosaint"
   },
   "license": "MIT",
   "keywords": [
@@ -18,7 +19,7 @@
     "displayName": "Data Vizard",
     "shortDescription": "Guide data visualization projects from dataset to HTML story.",
     "longDescription": "Data Vizard bundles five Codex skills for a complete data visualization workflow: orchestration, data curation, exploratory analysis, narrative framing, and HTML visualization design.",
-    "developerName": "Trine",
+    "developerName": "inosaint",
     "category": "Productivity",
     "capabilities": [
       "Interactive",
@@ -26,7 +27,14 @@
       "Data Analysis",
       "Visualization"
     ],
-    "brandColor": "#2563EB",
+    "brandColor": "#5B35D5",
+    "composerIcon": "./assets/icon.png",
+    "logo": "./assets/icon.png",
+    "logoDark": "./assets/logo-dark.png",
+    "screenshots": [
+      "./assets/screenshot-workflow.png",
+      "./assets/screenshot-output.png"
+    ],
     "defaultPrompt": [
       "Use Data Vizard to build a visualization from this CSV.",
       "Guide me from dataset intake to an HTML data story.",

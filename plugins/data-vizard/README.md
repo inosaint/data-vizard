@@ -2,11 +2,13 @@
 
 Data Vizard is an agent plugin for staged data visualization work. It bundles skills for dataset intake, curation, exploratory analysis, narrative framing, and HTML visualization design.
 
+![Data Vizard workflow](assets/screenshot-workflow.png)
+
 ## What This Plugin Provides
 
 - `data-vizard:data-vizard` - Orchestrates the full workflow and keeps user decision gates explicit.
-- `data-vizard:data-curator` - Profiles, cleans, reshapes, joins, and documents datasets.
-- `data-vizard:data-analyst` - Finds patterns, caveats, and evidence-backed story directions.
+- `data-vizard:data-curator` - Profiles, cleans, reshapes, joins, enriches, and documents datasets.
+- `data-vizard:data-analyst` - Finds patterns, caveats, comparisons, anomalies, and evidence-backed story directions.
 - `data-vizard:narrator` - Turns analysis into audience-facing structure, copy, titles, annotations, and caveats.
 - `data-vizard:designer` - Designs and builds HTML visualization artifacts with chart, layout, accessibility, interaction, and motion guidance.
 
@@ -27,7 +29,17 @@ bunx data-vizard install
 
 The installer copies this plugin into `~/.data-vizard/marketplace`, writes Codex and Claude Code marketplace files, and attempts to install `data-vizard@data-vizard` with both CLIs when available.
 
-## Install From A Fresh Clone
+## Compatibility
+
+| Host | Status | Manifest | Notes |
+| --- | --- | --- | --- |
+| Codex app and CLI | Supported | `.codex-plugin/plugin.json` | Visual plugin metadata, skills, and local marketplace install are supported. Local/workspace plugins can appear through marketplaces or workspace sharing. |
+| Claude Code | Supported | `.claude-plugin/plugin.json` | Uses a separate Claude manifest and marketplace file. Validate with `claude plugin validate`. |
+| npm | Supported | `bin/data-vizard.js` | Ships the plugin, assets, marketplace files, root README, and changelog. |
+
+## Development Install From A Fresh Clone
+
+Normal installs should use npm. This clone-based path is only for development before a version is published.
 
 Prerequisites:
 
@@ -53,20 +65,18 @@ claude plugin install data-vizard@data-vizard
 
 Why this works:
 
-- The marketplace definition lives at `.agents/plugins/marketplace.json`.
+- The Codex marketplace definition lives at `.agents/plugins/marketplace.json`.
 - The Claude Code marketplace definition lives at `.claude-plugin/marketplace.json`.
 - Both marketplaces are named `data-vizard`.
-- It points Codex to the plugin source at `./plugins/data-vizard`.
+- Both point to the plugin source at `./plugins/data-vizard`.
 
 Verify the install:
 
 ```bash
 codex plugin marketplace list
-codex plugin list
+codex plugin list --available --json
 claude plugin list
 ```
-
-You should see a `data-vizard` marketplace pointing at this repo and `data-vizard@data-vizard` listed as installed and enabled.
 
 After installing or reinstalling a plugin, start a new Codex thread or Claude Code session so the updated skills are loaded.
 
@@ -93,11 +103,15 @@ Use $data-vizard:narrator to turn this analysis into a story brief.
 Use $data-vizard:designer to build the HTML visualization.
 ```
 
-The default workflow stores project artifacts in the repo:
+The orchestrator confirms where project artifacts should live in the active workspace before creating or changing files.
 
-- `data/<project-name>/` - Raw snapshots, curated data, data dictionaries, and analysis files.
-- `outcome/<project-name>/` - Final or in-progress visualization artifacts, usually including `index.html`.
-- `project-ledgers/<project-name>.md` - Stage progress, user decisions, caveats, and handoffs.
+![Data Vizard output example](assets/screenshot-output.png)
+
+## Privacy And Data
+
+Data Vizard works on files and datasets you provide in the active workspace. The plugin does not add a server, background sync, analytics, or external app connector. Codex and Claude Code host settings still control model access, file permissions, network access, and command approvals.
+
+For sensitive datasets, review source rights before importing data, keep private raw files out of commits, and document caveats close to any public-facing claims.
 
 ## Updating After Pulling Changes
 
@@ -110,6 +124,33 @@ claude plugin install data-vizard@data-vizard
 ```
 
 Then start a new Codex thread or Claude Code session. If Codex or Claude Code still shows an older version, confirm that the plugin manifests under `plugins/data-vizard/` have a new version, then reinstall again.
+
+## Release Checks
+
+Local package checks:
+
+```bash
+NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npm pack --dry-run --json
+node bin/data-vizard.js install --dry-run --root /tmp/data-vizard-local-smoke
+```
+
+Published-package smoke test:
+
+```bash
+cd /tmp
+NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.2 --version
+NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.2 install --dry-run --root /tmp/data-vizard-published-smoke
+NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.2 install --root /tmp/data-vizard-published-stage --no-codex --no-claude
+```
+
+Claude Code compatibility check:
+
+```bash
+claude plugin validate plugins/data-vizard
+claude plugin marketplace add /tmp/data-vizard-published-stage
+claude plugin install data-vizard@data-vizard --scope local
+claude plugin list
+```
 
 ## Troubleshooting
 

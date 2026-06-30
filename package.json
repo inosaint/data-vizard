@@ -1,10 +1,11 @@
 {
   "name": "data-vizard",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Installer for the Data Vizard agent workflow plugin.",
   "license": "MIT",
   "author": {
-    "name": "Trine"
+    "name": "inosaint",
+    "url": "https://github.com/inosaint"
   },
   "homepage": "https://github.com/inosaint/data-vizard#readme",
   "repository": {
@@ -29,6 +30,7 @@
     "plugins/data-vizard/",
     ".agents/plugins/marketplace.json",
     ".claude-plugin/marketplace.json",
+    "CHANGELOG.md",
     "README.md"
   ],
   "engines": {
