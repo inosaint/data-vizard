@@ -4,6 +4,13 @@ Data Vizard is an agent plugin for building data visualization stories with a st
 
 ## Install
 
+Prerequisites:
+
+- Node.js 18 or newer.
+- Codex CLI installed and signed in if you want automatic Codex registration.
+- Claude Code CLI installed and signed in if you want automatic Claude Code registration.
+- Gemini CLI installed and signed in if you want automatic Gemini extension installation.
+
 Install the published package with npm, pnpm, or Bun:
 
 ```bash
@@ -12,15 +19,18 @@ pnpm dlx data-vizard install
 bunx data-vizard install
 ```
 
-The installer copies the bundled plugin into a stable local marketplace at `~/.data-vizard/marketplace`, writes Codex and Claude Code marketplace files, and attempts to install `data-vizard@data-vizard` when those CLIs are available.
+The installer copies the bundled plugin and Gemini extension into a stable local install root at `~/.data-vizard/marketplace`, writes Codex and Claude Code marketplace files, and attempts to install `data-vizard@data-vizard` plus the Gemini extension when those CLIs are available.
+
+The Codex and Claude desktop apps still rely on their CLIs for this npm installer flow. If a CLI is missing, the installer stages the marketplace files and prints the manual commands to run after installing that host CLI.
 
 ## Quickstart
 
-After installing, start a new Codex thread or Claude Code session so the plugin skills are loaded.
+After installing, start a new Codex thread, Claude Code session, or Gemini CLI session so the plugin skills are loaded.
 
 ```text
 Codex: Use $data-vizard:data-vizard to build a visualization from this CSV.
 Claude Code: /data-vizard:data-vizard Build a visualization from this CSV.
+Gemini CLI: /data-vizard Build a visualization from this CSV.
 ```
 
 You can also call a role skill directly:
@@ -38,6 +48,7 @@ $data-vizard:designer
 | --- | --- | --- | --- |
 | Codex app and CLI | Supported | `.agents/plugins/marketplace.json` plus `.codex-plugin/plugin.json` | Local and workspace plugins can appear in the Codex plugin directory through marketplaces or workspace sharing. The public OpenAI-curated directory is not a self-serve npm publishing target. |
 | Claude Code | Supported | `.claude-plugin/marketplace.json` plus `.claude-plugin/plugin.json` | Validate with `claude plugin validate` and install with `claude plugin install data-vizard@data-vizard`. |
+| Gemini CLI | Supported | `extensions/data-vizard/gemini-extension.json` | Installs as a Gemini extension with bundled skills and a `/data-vizard` command. |
 | npm | Supported | `bin/data-vizard.js` installer | The package ships the plugin, marketplace files, README, and changelog. |
 
 ## Verify
@@ -53,17 +64,18 @@ Published-package smoke test:
 
 ```bash
 cd /tmp
-NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.2 --version
-NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.2 install --dry-run --root /tmp/data-vizard-published-smoke
-NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.2 install --root /tmp/data-vizard-published-stage --no-codex --no-claude
+NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.3 --version
+NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.3 install --dry-run --root /tmp/data-vizard-published-smoke
+NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.3 install --root /tmp/data-vizard-published-stage --no-codex --no-claude --no-gemini
 ```
 
 Full install verification:
 
 ```bash
-npx --yes data-vizard@0.1.2 install
+npx --yes data-vizard@0.1.3 install
 codex plugin list --available --json
 claude plugin list
+gemini extensions list
 ```
 
 Claude Code compatibility check:
@@ -73,6 +85,15 @@ claude plugin validate plugins/data-vizard
 claude plugin marketplace add /tmp/data-vizard-published-stage
 claude plugin install data-vizard@data-vizard --scope local
 claude plugin list
+```
+
+Gemini CLI compatibility check:
+
+```bash
+gemini extensions validate extensions/data-vizard
+gemini extensions install /tmp/data-vizard-published-stage/extensions/data-vizard --consent --skip-settings
+gemini extensions list
+gemini skills list --all
 ```
 
 ## Update Or Remove
@@ -108,6 +129,8 @@ codex plugin add data-vizard@data-vizard
 
 claude plugin marketplace add "$(pwd)"
 claude plugin install data-vizard@data-vizard
+
+gemini extensions install "$(pwd)/extensions/data-vizard" --consent --skip-settings
 ```
 
 The plugin source lives in `plugins/data-vizard/`. See `plugins/data-vizard/README.md` for role details, usage notes, update flow, and troubleshooting.
@@ -116,13 +139,14 @@ The plugin source lives in `plugins/data-vizard/`. See `plugins/data-vizard/READ
 
 - `bin/data-vizard.js` - npm installer CLI.
 - `plugins/data-vizard/` - Packaged plugin source for Codex and Claude Code.
+- `extensions/data-vizard/` - Packaged Gemini CLI extension source.
 - `plugins/data-vizard/assets/` - Plugin icon, logo, and screenshots.
 - `CHANGELOG.md` - Release history.
 
 ## Release Checklist
 
-- Keep `package.json`, `plugins/data-vizard/.codex-plugin/plugin.json`, `.claude-plugin/marketplace.json`, and `plugins/data-vizard/.claude-plugin/plugin.json` versions aligned.
+- Keep `package.json`, `plugins/data-vizard/.codex-plugin/plugin.json`, `.claude-plugin/marketplace.json`, `plugins/data-vizard/.claude-plugin/plugin.json`, and `extensions/data-vizard/gemini-extension.json` versions aligned.
 - Regenerate plugin assets with `python3 scripts/generate_plugin_assets.py`; pass `--source /path/to/logo.png` when replacing the canonical logo.
 - Run npm pack and installer dry-run checks before publishing.
-- Run Codex and Claude Code install checks in a fresh terminal or CI job.
+- Run Codex, Claude Code, and Gemini CLI install checks in a fresh terminal or CI job.
 - Update `CHANGELOG.md` for every release.

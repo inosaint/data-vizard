@@ -1,0 +1,934 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FIFA World Cup 2026</title>
+  <meta name="description" content="A pitch-grid explorer for all 72 group-stage matches in a 2026 FIFA World Cup dataset, comparing match metrics with outcomes.">
+  <meta property="og:title" content="FIFA World Cup 2026">
+  <meta property="og:description" content="Toggle possession, shots, discipline, and pressure metrics across all 72 group-stage matches.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="FIFA World Cup 2026">
+  <meta name="twitter:description" content="A pitch-grid explorer for the 2026 FIFA World Cup group stage.">
+  <meta name="theme-color" content="oklch(0.48 0.16 250)">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400&display=swap" rel="stylesheet">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: oklch(1 0 0);
+      --surface: oklch(1 0 0);
+      --surface-2: oklch(0.97 0.004 245);
+      --ink: oklch(0.18 0.02 245);
+      --muted: oklch(0.42 0.025 245);
+      --soft: oklch(0.92 0.012 245);
+      --line: oklch(0.86 0.012 245);
+      --line-strong: oklch(0.70 0.018 245);
+      --primary: oklch(0.48 0.16 250);
+      --primary-soft: oklch(0.88 0.06 250);
+      --font: "Lexend", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --display-font: var(--font);
+      --win-green: #006926;
+      --home: oklch(0.50 0.17 250);
+      --home-soft: oklch(0.74 0.12 250 / 0.58);
+      --away: oklch(0.56 0.17 35);
+      --away-soft: oklch(0.76 0.12 35 / 0.58);
+      --draw: oklch(0.50 0.11 150);
+      --draw-soft: oklch(0.85 0.08 150);
+      --lost: oklch(0.55 0.15 28);
+      --lost-soft: oklch(0.91 0.055 28);
+      --higher: oklch(0.38 0.19 150);
+      --higher-fill: #38A35D;
+      --lower: oklch(0.47 0.20 28);
+      --lower-fill: #AB7D5F;
+      --tie: oklch(0.32 0.14 238);
+      --tie-fill: oklch(0.72 0.16 232 / 0.94);
+      --tie-home-fill: oklch(0.74 0.17 204 / 0.94);
+      --tie-away-fill: oklch(0.72 0.16 258 / 0.94);
+      --missing-fill: oklch(0.80 0.01 245 / 0.34);
+      --warn: oklch(0.70 0.14 86);
+      --field: #38A35D;
+      --field-dark: oklch(0.43 0.10 155);
+      --field-line: #060606;
+      --pitch-mark: clamp(4px, 0.34vw, 6px);
+      --qualified: oklch(0.45 0.14 150);
+      --shadow: 0 2px 6px oklch(0.22 0.03 245 / 0.08);
+      --radius: 8px;
+      --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+      font-family: var(--font);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 16px/1.5 var(--font);
+      font-synthesis: none;
+      letter-spacing: 0;
+      text-rendering: optimizeLegibility;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+      letter-spacing: 0;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    :focus-visible {
+      outline: 3px solid oklch(0.70 0.14 86);
+      outline-offset: 3px;
+    }
+
+    .shell {
+      width: min(1680px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 14px 0 40px;
+    }
+
+    .controls {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: block;
+      padding: 8px 0 10px;
+      background: oklch(1 0 0 / 0.98);
+      backdrop-filter: blur(10px);
+    }
+
+    .page-title {
+      margin: 0 0 12px;
+    }
+
+    .page-title h1 {
+      margin: 0;
+      color: #060606;
+      font-family: var(--display-font);
+      font-size: 1.18rem;
+      line-height: 1.1;
+      font-weight: 400;
+    }
+
+    .segments {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 6px;
+      align-items: center;
+      min-width: 0;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      padding-bottom: 1px;
+    }
+
+    .segments button {
+      flex: 0 0 auto;
+      min-height: 34px;
+      border: 1px solid var(--line-strong);
+      border-radius: 0;
+      background: var(--surface);
+      color: var(--ink);
+      padding: 0 11px;
+      font-size: 0.82rem;
+      transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+    }
+
+    .segments button[aria-pressed="true"] {
+      border-color: var(--primary);
+      background: var(--surface);
+      color: var(--primary);
+      box-shadow: inset 0 0 0 1px var(--primary);
+    }
+
+    .groups {
+      display: grid;
+      gap: 26px;
+      margin-top: 20px;
+    }
+
+    .group-section {
+      scroll-margin-top: 132px;
+      padding-top: 4px;
+    }
+
+    .group-header {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .group-header h2 {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.1;
+      font-weight: 400;
+      white-space: nowrap;
+    }
+
+    .group-teams {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.35;
+    }
+
+    .group-teams b {
+      color: var(--qualified);
+      font-weight: 400;
+    }
+
+    .team-code {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .match-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px 12px;
+    }
+
+    .match-card {
+      position: relative;
+      min-width: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: var(--ink);
+      box-shadow: none;
+      padding: 0;
+      transition: border-color 160ms ease, background 160ms ease;
+    }
+
+    .match-card.is-selected {
+      box-shadow: none;
+    }
+
+    .match-card.is-selected .pitch {
+      outline: 0;
+    }
+
+    .match-head {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      min-height: 16px;
+      color: var(--muted);
+      font-size: 0.68rem;
+    }
+
+    .score-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 8px;
+      align-items: center;
+      margin: 0 0 5px;
+    }
+
+    .team-name {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-family: var(--display-font);
+      font-size: 1.08rem;
+      line-height: 1.05;
+      font-weight: 400;
+    }
+
+    .team-name.winner {
+      color: var(--win-green);
+      font-weight: 400;
+    }
+
+    .team-name.loser {
+      color: #060606;
+      font-weight: 400;
+    }
+
+    .team-name.drawn {
+      color: var(--ink);
+      font-weight: 400;
+    }
+
+    .team-name.away {
+      text-align: right;
+    }
+
+    .score {
+      display: inline-flex;
+      align-items: baseline;
+      justify-content: center;
+      gap: 3px;
+      min-width: 44px;
+      background: transparent;
+      padding: 0 7px;
+      text-align: center;
+      font-family: var(--display-font);
+      font-size: 1.08rem;
+      line-height: 1;
+      font-weight: 400;
+      color: #060606;
+    }
+
+    .score-part.winner {
+      color: var(--win-green);
+    }
+
+    .pitch {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1.64;
+      overflow: hidden;
+      border-radius: 0;
+      border: 0;
+      background: var(--field-line);
+      isolation: isolate;
+    }
+
+    .pitch-line {
+      position: absolute;
+      z-index: 4;
+      pointer-events: none;
+      border-color: var(--field-line);
+    }
+
+    .pitch-outline {
+      inset: 0;
+      z-index: 5;
+      border: var(--pitch-mark) solid var(--field-line);
+    }
+
+    .center-line {
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: var(--pitch-mark);
+      border: 0;
+      background: var(--field-line);
+      transform: translateX(-50%);
+    }
+
+    .center-circle {
+      width: 33%;
+      aspect-ratio: 1;
+      left: 50%;
+      top: 50%;
+      border: var(--pitch-mark) solid var(--field-line);
+      border-radius: 999px;
+      transform: translate(-50%, -50%);
+    }
+
+    .box-left,
+    .box-right {
+      top: 23%;
+      width: 17%;
+      height: 54%;
+      border: var(--pitch-mark) solid var(--field-line);
+    }
+
+    .box-left {
+      left: var(--pitch-mark);
+      border-left: 0;
+    }
+
+    .box-right {
+      right: var(--pitch-mark);
+      border-right: 0;
+    }
+
+    .metric-fill {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      z-index: 2;
+      min-width: 2px;
+      border-radius: 0;
+      opacity: 1;
+      transition: width 190ms var(--ease-out), left 190ms var(--ease-out), right 190ms var(--ease-out), opacity 160ms ease;
+    }
+
+    .metric-fill.home {
+      left: 0;
+      width: var(--home-width);
+      background: var(--home-fill);
+    }
+
+    .metric-fill.away {
+      right: 0;
+      width: var(--away-width);
+      background: var(--away-fill);
+    }
+
+    .metric-missing .metric-fill {
+      opacity: 0.2;
+      background: var(--missing-fill);
+    }
+
+    .metric-tooltip {
+      position: absolute;
+      z-index: 8;
+      left: 50%;
+      top: 50%;
+      max-width: calc(100% - 18px);
+      border: 1px solid rgb(0 0 0 / 0.18);
+      border-radius: 6px;
+      background: rgb(255 255 255 / 0.94);
+      color: var(--ink);
+      padding: 5px 7px;
+      font-size: 0.68rem;
+      font-weight: 400;
+      line-height: 1.25;
+      text-align: center;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.14);
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, -50%) translateY(4px);
+      transition: opacity 160ms ease, transform 160ms var(--ease-out);
+    }
+
+    .match-card:is(:hover, :focus, :focus-within) .metric-tooltip {
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+
+    .metric-tooltip .home-value {
+      color: var(--home-value);
+    }
+
+    .metric-tooltip .away-value {
+      color: var(--away-value);
+    }
+
+    .empty-state {
+      border: 1px dashed var(--line-strong);
+      border-radius: var(--radius);
+      padding: 24px;
+      color: var(--muted);
+      background: var(--surface);
+    }
+
+    .caveat {
+      margin: 24px 0 0;
+      border-top: 1px solid var(--line);
+      padding-top: 14px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.45;
+    }
+
+    @media (min-width: 1180px) {
+      .match-grid {
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: 12px 10px;
+      }
+
+      .match-head {
+        font-size: 0.66rem;
+      }
+
+      .team-name {
+        font-size: 0.9rem;
+      }
+
+      .score-row {
+        gap: 6px;
+      }
+
+      .score {
+        min-width: 38px;
+        padding: 0 5px;
+        font-size: 0.92rem;
+      }
+
+      .metric-tooltip {
+        font-size: 0.63rem;
+        padding: 4px 6px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .shell {
+        width: min(100% - 20px, 1660px);
+        padding-top: 8px;
+      }
+
+      .controls {
+        position: static;
+        padding-bottom: 10px;
+      }
+
+      .group-header {
+        display: grid;
+        gap: 5px;
+      }
+
+      .match-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <header class="page-title">
+      <h1>FIFA World Cup 2026</h1>
+    </header>
+
+    <section class="controls" aria-label="Visualization controls">
+      <div class="segments" id="metricButtons" role="group" aria-label="Choose metric layer"></div>
+    </section>
+
+    <div class="groups" id="groups"></div>
+
+    <p class="caveat">Scope note: this artifact uses only the 72 group-stage rows from the <a href="https://www.kaggle.com/datasets/swaptr/fifa-wc-2026-matches/data" target="_blank" rel="noreferrer">Kaggle FIFA WC 2026 Matches dataset</a>. Groups are inferred from the match graph because the source data does not include a group column. Possession is rounded, and offsides are missing for three matches.</p>
+  </main>
+
+  <script>
+    const rawData = `id	group	gameweek	day	date	time	home	away	score	homeScore	awayScore	attendance	venue	homeFormation	awayFormation	homeManager	awayManager	homePoss	awayPoss	homeSot	awaySot	homeShots	awayShots	homeSaves	awaySaves	homeYellow	awayYellow	homeRed	awayRed	homeFouls	awayFouls	homeCorners	awayCorners	homeCrosses	awayCrosses	homeInterceptions	awayInterceptions	homeOffsides	awayOffsides	winner	margin	totalGoals
+1	A	1	Thu	2026-06-11	13:00	Mexico	South Africa	2–0	2	0	80824	Estadio Banorte, Coyoacán	4-1-4-1	5-3-2	Javier Aguirre	Hugo Broos	61	40	4	2	16	3	2	2	1	2	1	2	12	11	3	1	12	8	8	7	1	1	home	2	2
+2	A	1	Thu	2026-06-11	20:00	Korea Republic	Czechia	2–1	2	1	44985	Estadio Akron, Zapopan	3-4-3	3-4-3	Hong Myung-bo	Miroslav Koubek	62	38	6	4	15	7	3	4	1	0	0	0	9	16	4	5	12	15	11	7	2	2	home	1	3
+3	B	1	Fri	2026-06-12	15:00	Canada	Bosnia & Herz.	1–1	1	1	43002	BMO Field, Toronto	4-2-2-2	4-2-2-2	Jesse Marsch	Sergej Barbarez	61	39	4	3	13	8	2	1	2	3	0	0	10	20	9	4	24	10	4	10	1	0	draw	0	2
+4	C	1	Fri	2026-06-12	18:00	United States	Paraguay	4–1	4	1	70492	SoFi Stadium, Inglewood	4-2-3-1	4-2-2-2	Mauricio Pochettino	Gustavo Alfaro	65	35	6	1	16	9	0	3	1	5	0	0	13	17	3	1	17	5	11	9	2	1	home	3	5
+5	B	1	Sat	2026-06-13	12:00	Qatar	Switzerland	1–1	1	1	67966	Levi's Stadium, Santa Clara	4-1-4-1	4-2-3-1	Julen Lopetegui	Murat Yakin	32	68	4	7	7	26	5	3	2	1	0	0	12	11	3	10	8	35	10	7	0	1	draw	0	2
+6	D	1	Sat	2026-06-13	18:00	Brazil	Morocco	1–1	1	1	80663	MetLife Stadium, East Rutherford	4-2-2-2	4-2-3-1	Carlo Ancelotti	Mohamed Ouahbi	51	49	5	3	12	14	2	4	2	0	0	0	16	14	6	2	16	15	5	4	0	1	draw	0	2
+7	C	1	Sat	2026-06-13	21:00	Australia	Türkiye	2–0	2	0	52497	BC Place Stadium, Vancouver	5-4-1	4-2-3-1	Tony Popovic	Vincenzo Montella	28	72	4	8	9	30	8	2	0	1	0	0	12	4	5	8	14	26	6	4	1	3	home	2	2
+8	D	1	Sat	2026-06-13	21:00	Haiti	Scotland	0–1	0	1	64146	Gillette Stadium, Foxborough	4-2-2-2	4-2-2-2	Sébastien Migné	Steve Clarke	54	46	2	2	15	9	1	2	1	3	0	0	23	21	4	3	23	14	6	6	3	1	away	1	1
+9	E	1	Sun	2026-06-14	12:00	Germany	Curaçao	7–1	7	1	68021	Reliant Stadium, Houston	4-2-3-1	4-3-1-2	Julian Nagelsmann	Dick Advocaat	65	35	12	2	26	8	1	4	0	0	0	0	18	11	8	1	12	7	10	16	0	1	home	6	8
+10	F	1	Sun	2026-06-14	15:00	Netherlands	Japan	2–2	2	2	69285	AT&T Stadium, Arlington	4-1-4-1	3-4-3	Ronald Koeman	Hajime Moriyasu	60	40	6	3	10	10	1	4	3	0	0	0	7	7	5	4	21	23	7	4	1	0	draw	0	4
+11	E	1	Sun	2026-06-14	19:00	Côte d'Ivoire	Ecuador	1–0	1	0	68274	Lincoln Financial Field, Philadelphia	4-2-2-2	4-2-2-2	Emerse Faé	Sebastián Becaccece	48	52	4	1	15	12	1	3	3	1	0	0	10	13	3	5	7	14	11	13			home	1	1
+12	F	1	Sun	2026-06-14	20:00	Sweden	Tunisia	5–1	5	1	50987	Estadio BBVA Bancomer, Guadalupe	3-4-1-2	5-3-2	Graham Potter	Sabri Lamouchi	49	51	7	2	13	6	1	1	0	1	0	0	10	8	4	2	12	13	8	5	3	6	home	4	6
+13	G	1	Mon	2026-06-15	12:00	Belgium	Egypt	1–1	1	1	66775	Lumen Field, Seattle	4-2-3-1	4-2-3-1	Rudi Garcia	Hossam Hassan	54	46	3	3	15	14	2	3	2	2	0	0	15	15	2	7	16	13	10	12	0	1	draw	0	2
+14	H	1	Mon	2026-06-15	12:00	Spain	Cabo Verde	0–0	0	0	67640	Mercedes-Benz Stadium, Atlanta	4-1-4-1	4-1-4-1	Luis de la Fuente	Bubista	74	26	7	1	27	6	1	7	1	1	0	0	10	1	11	1	36	4	6	16	2	3	draw	0	0
+15	H	1	Mon	2026-06-15	18:00	Saudi Arabia	Uruguay	1–1	1	1	62764	Hard Rock Stadium, Miami Gardens	4-2-2-2	4-2-2-2	Georgios Donis	Marcelo Bielsa	33	67	3	10	7	27	9	2	1	0	0	0	11	6	4	14	7	47	7	10	0	6	draw	0	2
+16	G	1	Mon	2026-06-15	18:00	IR Iran	New Zealand	2–2	2	2	70108	SoFi Stadium, Inglewood	4-2-2-2	4-2-3-1	Amir Ghalehnoy	Darren Bazeley	48	52	4	8	17	14	6	2	1	0	0	0	10	8	4	1	19	12	11	13	2	0	draw	0	4
+17	I	1	Tue	2026-06-16	15:00	France	Senegal	3–1	3	1	80545	MetLife Stadium, East Rutherford	4-2-3-1	4-2-3-1	Didier Deschamps	Pape Thiaw	54	46	8	2	11	6	2	5	0	0	0	0	5	9	6	4	9	9	7	8	1	3	home	2	4
+18	I	1	Tue	2026-06-16	18:00	Iraq	Norway	1–4	1	4	63106	Gillette Stadium, Foxborough	4-2-2-2	4-1-4-1	Graham Arnold	Ståle Solbakken	39	61	1	5	11	12	2	0	1	0	0	0	12	13	2	5	13	17	5	3	1	0	away	3	5
+19	J	1	Tue	2026-06-16	20:00	Argentina	Algeria	3–0	3	0	69045	GEHA Field at Arrowhead Stadium, Kansas City	4-2-2-2	4-2-3-1	Lionel Scaloni	Vladimir Petković	48	52	6	0	10	7	0	3	0	0	0	0	13	8	2	2	5	8	12	8	3	1	home	3	3
+20	J	1	Tue	2026-06-16	21:00	Austria	Jordan	3–1	3	1	68527	Levi's Stadium, Santa Clara	4-2-3-1	5-4-1	Ralf Rangnick	Jamal Sellami	63	37	4	4	11	11	3	1	1	0	0	0	12	7	4	3	17	15	15	12	3	1	home	2	4
+21	K	1	Wed	2026-06-17	12:00	Portugal	Congo DR	1–1	1	1	68777	Reliant Stadium, Houston	4-2-3-1	5-3-2	Roberto Martínez	Sébastien Desabre	75	25	1	2	7	8	1	0	3	1	0	0	9	10	5	4	23	9	2	5	3	2	draw	0	2
+22	L	1	Wed	2026-06-17	15:00	England	Croatia	4–2	4	2	70389	AT&T Stadium, Arlington	4-2-3-1	3-4-3	Thomas Tuchel	Zlatko Dalić	52	48	11	5	22	10	3	7	0	0	0	0	10	12	8	2	13	13	7	7	0	1	home	2	6
+23	L	1	Wed	2026-06-17	19:00	Ghana	Panama	1–0	1	0	42942	BMO Field, Toronto	4-2-3-1	3-4-3	Carlos Queiroz	Thomas Christiansen	38	62	2	4	8	11	4	2	1	2	0	0	9	11	2	2	16	21	8	5	4	1	home	1	1
+24	K	1	Wed	2026-06-17	20:00	Uzbekistan	Colombia	1–3	1	3	80824	Estadio Banorte, Coyoacán	5-4-1	4-1-4-1	Fabio Cannavaro	Néstor Lorenzo	39	62	2	4	8	15	1	1	1	1	0	0	14	11	3	4	13	15	7	6	0	3	away	2	4
+25	B	2	Thu	2026-06-18	12:00	Switzerland	Bosnia & Herz.	4–1	4	1	70026	SoFi Stadium, Inglewood	4-1-4-1	4-2-2-2	Murat Yakin	Sergej Barbarez	62	38	7	3	13	5	2	3	1	2	0	1	7	18	7	3	22	12	4	12	3	1	home	3	5
+26	A	2	Thu	2026-06-18	12:00	Czechia	South Africa	1–1	1	1	67442	Mercedes-Benz Stadium, Atlanta	5-3-2	4-1-4-1	Miroslav Koubek	Hugo Broos	38	62	3	4	14	17	3	2	1	2	0	0	12	10	5	5	16	17	9	9	2	3	draw	0	2
+27	B	2	Thu	2026-06-18	15:00	Canada	Qatar	6–0	6	0	52497	BC Place Stadium, Vancouver	4-2-2-2	4-3-2-1	Jesse Marsch	Julen Lopetegui	79	21	10	0	32	2	0	4	1	1	0	2	9	10	19	1	55	3	6	11	1	1	home	6	6
+28	A	2	Thu	2026-06-18	19:00	Mexico	Korea Republic	1–0	1	0	45522	Estadio Akron, Zapopan	4-1-4-1	3-4-3	Javier Aguirre	Hong Myung-bo	42	58	4	2	8	9	2	3	0	2	0	0	9	7	0	2	5	9	7	5	3	6	home	1	1
+29	C	2	Fri	2026-06-19	12:00	United States	Australia	2–0	2	0	66925	Lumen Field, Seattle	3-5-2	5-4-1	Mauricio Pochettino	Tony Popovic	62	38	2	2	10	5	2	1	3	4	0	0	12	16	7	4	14	19	21	7	1	0	home	2	2
+30	D	2	Fri	2026-06-19	18:00	Scotland	Morocco	0–1	0	1	64146	Gillette Stadium, Foxborough	4-1-4-1	4-2-3-1	Steve Clarke	Mohamed Ouahbi	41	59	0	2	6	12	1	0	1	1	0	0	11	8	2	5	13	10	9	5	1	0	away	1	1
+31	C	2	Fri	2026-06-19	20:00	Türkiye	Paraguay	0–1	0	1	68827	Levi's Stadium, Santa Clara	4-2-3-1	4-2-2-2	Vincenzo Montella	Gustavo Alfaro	79	22	5	2	32	7	1	5	2	1	0	1	14	15	12	0	42	6	6	9	2	3	away	1	1
+32	D	2	Fri	2026-06-19	20:30	Brazil	Haiti	3–0	3	0	68324	Lincoln Financial Field, Philadelphia	4-1-4-1	3-4-3	Carlo Ancelotti	Sébastien Migné	57	43	5	3	8	7	3	2	1	3	0	0	13	14	4	4	9	11	10	9	8	4	home	3	3
+33	F	2	Sat	2026-06-20	12:00	Netherlands	Sweden	5–1	5	1	68777	Reliant Stadium, Houston	4-1-4-1	3-1-4-2	Ronald Koeman	Graham Potter	51	49	7	8	10	16	7	2	0	3	0	0	9	12	2	5	15	21	8	6	3	3	home	4	6
+34	E	2	Sat	2026-06-20	16:00	Germany	Côte d'Ivoire	2–1	2	1	43036	BMO Field, Toronto	4-2-3-1	4-1-4-1	Julian Nagelsmann	Emerse Faé	59	41	7	2	16	9	1	5	0	0	0	0	5	7	8	3	21	9	7	13	0	1	home	1	3
+35	E	2	Sat	2026-06-20	19:00	Ecuador	Curaçao	0–0	0	0	68598	GEHA Field at Arrowhead Stadium, Kansas City	3-1-4-2	5-4-1	Sebastián Becaccece	Dick Advocaat	75	25	15	3	27	10	3	15	1	5	0	0	7	10	9	0	32	1	7	8	1	2	draw	0	0
+36	F	2	Sat	2026-06-20	22:00	Tunisia	Japan	0–4	0	4	51243	Estadio BBVA, Guadalupe	5-4-1	3-4-3	Hervé Renard	Hajime Moriyasu	38	62	0	5	2	11	1	0	0	0	0	0	8	15	3	5	10	11	14	6	1	1	away	4	4
+37	G	2	Sun	2026-06-21	12:00	Belgium	IR Iran	0–0	0	0	70317	SoFi Stadium, Inglewood	4-2-3-1	5-4-1	Rudi Garcia	Amir Ghalehnoy	70	30	7	3	23	7	3	7	1	1	1	0	7	9	4	2	32	8	3	13	3	4	draw	0	0
+38	H	2	Sun	2026-06-21	12:00	Spain	Saudi Arabia	4–0	4	0	68239	Mercedes-Benz Stadium, Atlanta	4-1-4-1	5-4-1	Luis de la Fuente	Georgios Donis	67	33	8	1	22	3	1	5	0	2	0	0	10	2	6	1	25	5	16	12	2	3	home	4	4
+39	H	2	Sun	2026-06-21	18:00	Uruguay	Cabo Verde	2–2	2	2	64003	Hard Rock Stadium, Miami Gardens	4-1-4-1	4-1-4-1	Marcelo Bielsa	Bubista	65	35	2	4	17	12	2	0	2	2	0	0	11	4	11	4	29	7	8	13	3	0	draw	0	4
+40	G	2	Sun	2026-06-21	18:00	New Zealand	Egypt	1–3	1	3	52497	BC Place Stadium, Vancouver	4-2-3-1	4-2-2-2	Darren Bazeley	Hossam Hassan	44	56	5	7	11	19	4	4	2	1	0	0	14	8	4	3	15	22	5	7	3	0	away	2	4
+41	J	2	Mon	2026-06-22	12:00	Argentina	Austria	2–0	2	0	70649	AT&T Stadium, Arlington	4-2-2-2	4-2-3-1	Lionel Scaloni	Ralf Rangnick	54	46	5	1	12	6	1	2	2	2	0	0	13	13	1	3	4	16	8	9	2	0	home	2	2
+42	I	2	Mon	2026-06-22	17:00	France	Iraq	3–0	3	0	68324	Lincoln Financial Field, Philadelphia	4-2-3-1	4-1-4-1	Didier Deschamps	Graham Arnold	56	45	5	0	19	4	0	2	0	1	0	0	8	4	4	2	14	9	5	11	1	0	home	3	3
+43	I	2	Mon	2026-06-22	20:00	Norway	Senegal	3–2	3	2	80663	MetLife Stadium, East Rutherford	4-1-4-1	4-2-3-1	Ståle Solbakken	Pape Thiaw	42	58	7	4	13	16	2	3	0	0	0	0	13	5	5	4	10	23	8	10	0	4	home	1	5
+44	J	2	Mon	2026-06-22	20:00	Jordan	Algeria	1–2	1	2	68371	Levi's Stadium, Santa Clara	5-4-1	4-2-3-1	Jamal Sellami	Vladimir Petković	28	72	4	8	8	17	6	3	1	1	0	0	11	6	1	10	5	21	2	10	1	0	away	1	3
+45	K	2	Tue	2026-06-23	12:00	Portugal	Uzbekistan	5–0	5	0	68777	Reliant Stadium, Houston	4-2-3-1	5-4-1	Roberto Martínez	Fabio Cannavaro	66	34	9	2	17	7	2	4	1	1	0	0	14	15	3	2	22	8	5	14	2	2	home	5	5
+46	L	2	Tue	2026-06-23	16:00	England	Ghana	0–0	0	0	63983	Gillette Stadium, Foxborough	4-2-3-1	4-1-4-1	Thomas Tuchel	Carlos Queiroz	79	21	3	1	19	2	0	3	1	1	0	0	14	24	9	2	30	5	1	8	2	2	draw	0	0
+47	L	2	Tue	2026-06-23	19:00	Panama	Croatia	0–1	0	1	43036	BMO Field, Toronto	5-4-1	4-2-3-1	Thomas Christiansen	Zlatko Dalić	42	58	1	2	8	6	1	1	1	1	0	0	19	12	7	2	29	17	4	5	1	2	away	1	1
+48	K	2	Tue	2026-06-23	20:00	Colombia	Congo DR	1–0	1	0	45358	Estadio Akron, Zapopan	4-1-4-1	5-3-2	Néstor Lorenzo	Sébastien Desabre	64	37	9	1	20	7	1	8	2	1	0	0	12	16	5	4	12	14	10	7	7	0	home	1	1
+49	B	3	Wed	2026-06-24	12:00	Bosnia & Herz.	Qatar	3–1	3	1	66925	Lumen Field, Seattle	4-2-2-2	4-3-2-1	Sergej Barbarez	Julen Lopetegui	55	46	5	3	14	9	2	3	1	1	0	0	9	14	5	5	22	17	4	4	1	3	home	2	4
+50	B	3	Wed	2026-06-24	12:00	Switzerland	Canada	2–1	2	1	52497	BC Place Stadium, Vancouver	4-2-2-2	4-2-2-2	Murat Yakin	Jesse Marsch	55	45	4	7	6	13	6	2	1	2	0	0	19	13	2	7	6	26	5	13	1	3	home	1	3
+51	D	3	Wed	2026-06-24	18:00	Morocco	Haiti	4–2	4	2	68239	Mercedes-Benz Stadium, Atlanta	4-2-2-2	4-2-2-2	Mohamed Ouahbi	Sébastien Migné	69	31	11	2	22	9	1	8	0	3	0	0	10	18	9	1	22	3	7	14	5	0	home	2	6
+52	D	3	Wed	2026-06-24	18:00	Scotland	Brazil	0–3	0	3	64478	Hard Rock Stadium, Miami Gardens	4-2-3-1	4-1-4-1	Steve Clarke	Carlo Ancelotti	46	54	5	9	14	21	5	5	1	2	0	0	10	11	7	6	23	12	2	13	0	1	away	3	3
+53	A	3	Wed	2026-06-24	19:00	Czechia	Mexico	0–3	0	3	80824	Estadio Banorte, Coyoacán	3-4-3	4-1-4-1	Miroslav Koubek	Javier Aguirre	52	48	1	5	13	11	2	1	0	1	0	0	9	13	5	1	26	13	3	7	1	0	away	3	3
+54	A	3	Wed	2026-06-24	19:00	South Africa	Korea Republic	1–0	1	0	51243	Estadio BBVA, Guadalupe	4-2-3-1	3-4-3	Hugo Broos	Hong Myung-bo	32	69	4	3	13	8	2	3	1	1	0	0	7	9	4	6	8	33	15	4	3	0	home	1	1
+55	E	3	Thu	2026-06-25	16:00	Ecuador	Germany	2–1	2	1	80663	MetLife Stadium, East Rutherford	4-2-2-2	4-2-3-1	Sebastián Becaccece	Julian Nagelsmann	39	61	3	3	7	11	2	1	3	1	0	0	15	10	3	2	12	16	12	4			home	1	3
+56	E	3	Thu	2026-06-25	16:00	Curaçao	Côte d'Ivoire	0–2	0	2	68324	Lincoln Financial Field, Philadelphia	5-4-1	4-2-2-2	Dick Advocaat	Emerse Faé	37	63	2	3	11	7	1	2	2	1	0	0	11	6	4	6	15	16	15	12	2	1	away	2	2
+57	F	3	Thu	2026-06-25	18:00	Japan	Sweden	1–1	1	1	70137	AT&T Stadium, Arlington	3-4-3	3-4-3	Hajime Moriyasu	Graham Potter	52	48	3	5	8	11	4	2	1	2	0	0	20	11	2	8	13	16	4	5	3	2	draw	0	2
+58	F	3	Thu	2026-06-25	18:00	Tunisia	Netherlands	1–3	1	3	68391	GEHA Field at Arrowhead Stadium, Kansas City	5-4-1	4-1-4-1	Hervé Renard	Ronald Koeman	29	72	4	7	10	20	4	3	0	0	0	0	11	10	4	6	13	28	8	10	2	1	away	2	4
+59	C	3	Thu	2026-06-25	19:00	Paraguay	Australia	0–0	0	0	68827	Levi's Stadium, Santa Clara	5-3-2	3-4-3	Gustavo Alfaro	Tony Popovic	44	56	2	5	7	12	5	2	1	1	0	0	9	6	1	3	7	13	8	7			draw	0	0
+60	C	3	Thu	2026-06-25	19:00	Türkiye	United States	3–2	3	2	70492	SoFi Stadium, Inglewood	5-4-1	4-2-3-1	Vincenzo Montella	Mauricio Pochettino	48	53	3	7	9	18	5	0	0	1	0	0	13	13	2	9	11	18	8	11	2	5	home	1	5
+61	I	3	Fri	2026-06-26	15:00	Norway	France	1–4	1	4	64146	Gillette Stadium, Foxborough	4-1-4-1	4-2-3-1	Ståle Solbakken	Guy Stéphan	43	57	4	9	10	18	5	2	1	1	0	0	9	11	4	5	9	9	13	11	1	2	away	3	5
+62	I	3	Fri	2026-06-26	15:00	Senegal	Iraq	5–0	5	0	43036	BMO Field, Toronto	4-1-4-1	4-2-3-1	Pape Thiaw	Graham Arnold	69	31	12	1	28	6	1	7	2	2	0	1	10	11	12	3	25	6	2	7	1	0	home	5	5
+63	H	3	Fri	2026-06-26	18:00	Uruguay	Spain	0–1	0	1	45065	Estadio Akron, Zapopan	4-1-4-1	4-1-4-1	Marcelo Bielsa	Luis de la Fuente	33	67	1	1	5	6	0	1	3	1	1	0	14	14	1	6	16	12	14	9	5	2	away	1	1
+64	H	3	Fri	2026-06-26	19:00	Cabo Verde	Saudi Arabia	0–0	0	0	68278	Reliant Stadium, Houston	4-1-4-1	4-2-3-1	Bubista	Georgios Donis	51	49	2	3	15	7	3	2	1	3	0	0	10	16	4	2	18	10	13	10	2	0	draw	0	0
+65	G	3	Fri	2026-06-26	20:00	Egypt	IR Iran	1–1	1	1	66925	Lumen Field, Seattle	4-2-2-2	5-4-1	Hossam Hassan	Amir Ghalehnoy	61	39	3	4	15	13	1	2	3	4	0	0	11	16	8	2	15	10	7	8	0	3	draw	0	2
+66	G	3	Fri	2026-06-26	20:00	New Zealand	Belgium	1–5	1	5	52497	BC Place Stadium, Vancouver	4-2-3-1	4-2-3-1	Darren Bazeley	Rudi Garcia	45	55	2	10	6	35	5	1	2	0	0	0	10	7	5	8	17	16	6	10	1	1	away	4	6
+67	L	3	Sat	2026-06-27	17:00	Panama	England	0–2	0	2	80663	MetLife Stadium, East Rutherford	5-4-1	4-2-3-1	Thomas Christiansen	Thomas Tuchel	33	67	2	6	13	17	4	2	2	1	0	0	16	13	3	7	9	25	6	5	4	4	away	2	2
+68	L	3	Sat	2026-06-27	17:00	Croatia	Ghana	2–1	2	1	68324	Lincoln Financial Field, Philadelphia	4-2-3-1	4-1-4-1	Zlatko Dalić	Carlos Queiroz	53	47	4	1	8	6	0	2	1	1	0	0	9	13	3	2	15	12	4	10	1	2	home	1	3
+69	K	3	Sat	2026-06-27	19:30	Congo DR	Uzbekistan	3–1	3	1	68239	Mercedes-Benz Stadium, Atlanta	4-2-2-2	3-4-3	Sébastien Desabre	Fabio Cannavaro	58	42	4	1	19	3	1	1	3	2	0	0	6	16	2	4	21	16	7	12	3	1	home	2	4
+70	K	3	Sat	2026-06-27	19:30	Colombia	Portugal	0–0	0	0	64478	Hard Rock Stadium, Miami Gardens	4-1-4-1	4-2-3-1	Néstor Lorenzo	Roberto Martínez	55	45	6	2	24	13	2	6	1	0	0	0	12	6	5	2	10	14	5	11	3	2	draw	0	0
+71	J	3	Sat	2026-06-27	21:00	Jordan	Argentina	1–3	1	3	70649	AT&T Stadium, Arlington	5-4-1	4-1-4-1	Jamal Sellami	Lionel Scaloni	27	73	1	4	5	12	1	0	3	0	0	0	13	7	2	6	7	5	19	12	1	3	away	2	4
+72	J	3	Sat	2026-06-27	21:00	Algeria	Austria	3–3	3	3	69045	GEHA Field at Arrowhead Stadium, Kansas City	4-2-3-1	4-1-3-2	Vladimir Petković	Ralf Rangnick	65	35	5	3	12	10	0	2	0	1	0	0	3	7	0	3	5	13	3	10	1	3	draw	0	6`;
+
+    const numericFields = new Set([
+      "id", "gameweek", "homeScore", "awayScore", "attendance", "homePoss", "awayPoss",
+      "homeSot", "awaySot", "homeShots", "awayShots", "homeSaves", "awaySaves",
+      "homeYellow", "awayYellow", "homeRed", "awayRed", "homeFouls", "awayFouls",
+      "homeCorners", "awayCorners", "homeCrosses", "awayCrosses", "homeInterceptions",
+      "awayInterceptions", "homeOffsides", "awayOffsides", "margin", "totalGoals"
+    ]);
+
+    const metrics = [
+      { id: "possession", label: "Possession", short: "Poss.", home: "homePoss", away: "awayPoss", unit: "%", mode: "possession", leader: "higher possession", note: "Possession is rounded, so some pairs sum to 101." },
+      { id: "sot", label: "Shots on target", short: "SOT", home: "homeSot", away: "awaySot", unit: "SOT", mode: "count", leader: "more shots on target", note: "Chance quality proxy; this metric aligns with winners most often in this file." },
+      { id: "shots", label: "Total shots", short: "Shots", home: "homeShots", away: "awayShots", unit: "shots", mode: "count", leader: "more total shots", note: "Volume without shot location or expected goals." },
+      { id: "corners", label: "Corners", short: "Corners", home: "homeCorners", away: "awayCorners", unit: "corners", mode: "count", leader: "more corners", note: "A pressure signal, not a finish-quality measure." },
+      { id: "crosses", label: "Crosses", short: "Crosses", home: "homeCrosses", away: "awayCrosses", unit: "crosses", mode: "count", leader: "more crosses", note: "Cross volume often reflects chasing or wide play, not necessarily control." },
+      { id: "fouls", label: "Fouls", short: "Fouls", home: "homeFouls", away: "awayFouls", unit: "fouls", mode: "count", leader: "more fouls", note: "A discipline and disruption metric; higher is not better." },
+      { id: "yellow", label: "Yellow cards", short: "Yellow", home: "homeYellow", away: "awayYellow", unit: "yellow", mode: "count", leader: "more yellow cards", note: "Many matches are tied on yellow cards." },
+      { id: "red", label: "Red cards", short: "Red", home: "homeRed", away: "awayRed", unit: "red", mode: "count", leader: "more red cards", note: "Sparse metric: most matches have no red-card difference." },
+      { id: "interceptions", label: "Interceptions", short: "Int.", home: "homeInterceptions", away: "awayInterceptions", unit: "int.", mode: "count", leader: "more interceptions", note: "A defensive activity signal." },
+      { id: "offsides", label: "Offsides", short: "Offside", home: "homeOffsides", away: "awayOffsides", unit: "offsides", mode: "count", leader: "more offsides", note: "Missing for three group-stage matches." }
+    ];
+
+    const teamCodes = new Map([
+      ["Algeria", "ALG"],
+      ["Argentina", "ARG"],
+      ["Australia", "AUS"],
+      ["Austria", "AUT"],
+      ["Belgium", "BEL"],
+      ["Bosnia & Herz.", "BIH"],
+      ["Brazil", "BRA"],
+      ["Cabo Verde", "CPV"],
+      ["Canada", "CAN"],
+      ["Colombia", "COL"],
+      ["Congo DR", "COD"],
+      ["Croatia", "CRO"],
+      ["Curaçao", "CUW"],
+      ["Czechia", "CZE"],
+      ["Côte d'Ivoire", "CIV"],
+      ["Ecuador", "ECU"],
+      ["Egypt", "EGY"],
+      ["England", "ENG"],
+      ["France", "FRA"],
+      ["Germany", "GER"],
+      ["Ghana", "GHA"],
+      ["Haiti", "HAI"],
+      ["IR Iran", "IRN"],
+      ["Iraq", "IRQ"],
+      ["Japan", "JPN"],
+      ["Jordan", "JOR"],
+      ["Korea Republic", "KOR"],
+      ["Mexico", "MEX"],
+      ["Morocco", "MAR"],
+      ["Netherlands", "NED"],
+      ["New Zealand", "NZL"],
+      ["Norway", "NOR"],
+      ["Panama", "PAN"],
+      ["Paraguay", "PAR"],
+      ["Portugal", "POR"],
+      ["Qatar", "QAT"],
+      ["Saudi Arabia", "KSA"],
+      ["Scotland", "SCO"],
+      ["Senegal", "SEN"],
+      ["South Africa", "RSA"],
+      ["Spain", "ESP"],
+      ["Sweden", "SWE"],
+      ["Switzerland", "SUI"],
+      ["Tunisia", "TUN"],
+      ["Türkiye", "TUR"],
+      ["United States", "USA"],
+      ["Uruguay", "URU"],
+      ["Uzbekistan", "UZB"]
+    ]);
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#39;"
+      }[char]));
+    }
+
+    function teamCode(team) {
+      return teamCodes.get(team) || team.slice(0, 3).toUpperCase();
+    }
+
+    function teamMarkup(team) {
+      return `<abbr class="team-code" title="${escapeHtml(team)}" aria-label="${escapeHtml(team)}">${escapeHtml(teamCode(team))}</abbr>`;
+    }
+
+    const headers = rawData.split("\n")[0].split("\t");
+    const matches = rawData.split("\n").slice(1).map((line) => {
+      const values = line.split("\t");
+      const row = {};
+      headers.forEach((key, index) => {
+        const raw = values[index] ?? "";
+        row[key] = numericFields.has(key) ? (raw === "" ? null : Number(raw)) : raw;
+      });
+      return row;
+    });
+
+    const metricButtons = document.querySelector("#metricButtons");
+    const groupsEl = document.querySelector("#groups");
+
+    let activeMetric = metrics[0];
+    let selectedId = matches[0].id;
+
+    const groups = [...new Set(matches.map((match) => match.group))].sort();
+
+    function value(match, metric, side) {
+      return match[side === "home" ? metric.home : metric.away];
+    }
+
+    function relationFor(match, metric) {
+      const home = value(match, metric, "home");
+      const away = value(match, metric, "away");
+      if (home === null || away === null) return { state: "missing", leader: null, label: "missing metric" };
+      if (home === away) return { state: "tie", leader: null, label: "metric tied" };
+      const leader = home > away ? "home" : "away";
+      if (match.winner === "draw") return { state: "drew", leader, label: "leader drew" };
+      if (match.winner === leader) return { state: "won", leader, label: "leader won" };
+      return { state: "lost", leader, label: "leader lost" };
+    }
+
+    function formatValue(match, metric, side) {
+      const metricValue = value(match, metric, side);
+      if (metricValue === null) return "missing";
+      return metric.mode === "possession" ? `${metricValue}%` : `${metricValue} ${metric.unit}`;
+    }
+
+    function groupStandings(groupMatches) {
+      const table = new Map();
+      const ensure = (team) => {
+        if (!table.has(team)) {
+          table.set(team, { team, played: 0, points: 0, gf: 0, ga: 0, gd: 0 });
+        }
+        return table.get(team);
+      };
+      groupMatches.forEach((match) => {
+        const home = ensure(match.home);
+        const away = ensure(match.away);
+        home.played += 1;
+        away.played += 1;
+        home.gf += match.homeScore;
+        home.ga += match.awayScore;
+        away.gf += match.awayScore;
+        away.ga += match.homeScore;
+        home.gd = home.gf - home.ga;
+        away.gd = away.gf - away.ga;
+        if (match.homeScore > match.awayScore) home.points += 3;
+        if (match.homeScore < match.awayScore) away.points += 3;
+        if (match.homeScore === match.awayScore) {
+          home.points += 1;
+          away.points += 1;
+        }
+      });
+      return [...table.values()].sort((a, b) => b.points - a.points || b.gd - a.gd || b.gf - a.gf || a.team.localeCompare(b.team));
+    }
+
+    const groupTables = new Map(groups.map((group) => [
+      group,
+      groupStandings(matches.filter((match) => match.group === group))
+    ]));
+
+    const qualifiedTeams = new Set([
+      ...[...groupTables.values()].flatMap((table) => table.slice(0, 2).map((row) => row.team)),
+      ...[...groupTables.values()]
+        .map((table) => table[2])
+        .sort((a, b) => b.points - a.points || b.gd - a.gd || b.gf - a.gf || a.team.localeCompare(b.team))
+        .slice(0, 8)
+        .map((row) => row.team)
+    ]);
+
+    function renderMetricButtons() {
+      metricButtons.innerHTML = metrics.map((metric) => `
+        <button type="button" data-metric="${metric.id}" aria-pressed="${metric.id === activeMetric.id}" aria-label="${metric.label}">
+          ${metric.label}
+        </button>
+      `).join("");
+    }
+
+    function visibleMatches() {
+      return matches;
+    }
+
+    function cardStyle(match, metric) {
+      const home = value(match, metric, "home");
+      const away = value(match, metric, "away");
+      const total = (home ?? 0) + (away ?? 0);
+      const splitEvenly = home === null || away === null || total === 0;
+      const homeWidth = splitEvenly ? 50 : (home / total) * 100;
+      const awayWidth = splitEvenly ? 50 : (away / total) * 100;
+      const colors = metricColorVars(home, away);
+      return `--home-width:${homeWidth}%; --away-width:${awayWidth}%; --home-fill:${colors.homeFill}; --away-fill:${colors.awayFill}; --home-value:${colors.homeValue}; --away-value:${colors.awayValue};`;
+    }
+
+    function metricColorVars(home, away) {
+      if (home === null || away === null) {
+        return {
+          homeFill: "var(--missing-fill)",
+          awayFill: "var(--missing-fill)",
+          homeValue: "var(--tie)",
+          awayValue: "var(--tie)"
+        };
+      }
+      if (home === away) {
+        return {
+          homeFill: "var(--tie-home-fill)",
+          awayFill: "var(--tie-away-fill)",
+          homeValue: "var(--tie)",
+          awayValue: "var(--tie)"
+        };
+      }
+      return home > away ? {
+        homeFill: "var(--higher-fill)",
+        awayFill: "var(--lower-fill)",
+        homeValue: "var(--higher)",
+        awayValue: "var(--lower)"
+      } : {
+        homeFill: "var(--lower-fill)",
+        awayFill: "var(--higher-fill)",
+        homeValue: "var(--lower)",
+        awayValue: "var(--higher)"
+      };
+    }
+
+    function teamOutcomeClass(match, side) {
+      if (match.winner === "draw") return " drawn";
+      return match.winner === side ? " winner" : " loser";
+    }
+
+    function scorePartClass(match, side) {
+      return match.winner === side ? " winner" : "";
+    }
+
+    function renderCard(match) {
+      const relation = relationFor(match, activeMetric);
+      const selected = match.id === selectedId ? " is-selected" : "";
+      const missingClass = relation.state === "missing" ? " metric-missing" : "";
+      const metricClass = `mode-${activeMetric.mode}`;
+      const homeMetric = formatValue(match, activeMetric, "home");
+      const awayMetric = formatValue(match, activeMetric, "away");
+      return `
+        <article class="match-card relation-${relation.state} result-${match.winner}${selected}" tabindex="0" role="button" data-id="${match.id}" aria-label="${match.home} ${match.score} ${match.away}, ${activeMetric.label}: ${homeMetric} to ${awayMetric}">
+          <div class="match-head" aria-hidden="true"></div>
+          <div class="score-row">
+            <span class="team-name home${teamOutcomeClass(match, "home")}">${teamMarkup(match.home)}</span>
+            <strong class="score" aria-label="${match.score}">
+              <span class="score-part${scorePartClass(match, "home")}">${match.homeScore}</span>
+              <span class="score-dash">-</span>
+              <span class="score-part${scorePartClass(match, "away")}">${match.awayScore}</span>
+            </strong>
+            <span class="team-name away${teamOutcomeClass(match, "away")}">${teamMarkup(match.away)}</span>
+          </div>
+          <div class="pitch ${metricClass}${missingClass}" style="${cardStyle(match, activeMetric)}" aria-hidden="true">
+            <span class="metric-fill away"></span>
+            <span class="metric-fill home"></span>
+            <span class="pitch-line pitch-outline"></span>
+            <span class="pitch-line center-line"></span>
+            <span class="pitch-line center-circle"></span>
+            <span class="pitch-line box-left"></span>
+            <span class="pitch-line box-right"></span>
+            <div class="metric-tooltip">
+              <span class="home-value">${homeMetric}</span>
+              <span aria-hidden="true"> / </span>
+              <span class="away-value">${awayMetric}</span>
+            </div>
+          </div>
+        </article>
+      `;
+    }
+
+    function renderGroups() {
+      const filtered = visibleMatches();
+      const grouped = groups.map((group) => ({
+        group,
+        matches: filtered.filter((match) => match.group === group)
+      })).filter((entry) => entry.matches.length > 0);
+
+      if (!grouped.length) {
+        groupsEl.innerHTML = `<div class="empty-state">No matches match the current filters.</div>`;
+        return;
+      }
+
+      if (!filtered.some((match) => match.id === selectedId)) {
+        selectedId = filtered[0].id;
+      }
+
+      groupsEl.innerHTML = grouped.map((entry) => {
+        const standings = groupTables.get(entry.group);
+        return `
+          <section class="group-section" id="group-${entry.group}">
+            <header class="group-header">
+              <h2>Group ${entry.group}</h2>
+              <p class="group-teams">${standings.map((row) => qualifiedTeams.has(row.team) ? `<b title="${escapeHtml(row.team)} advanced">${teamMarkup(row.team)}</b>` : teamMarkup(row.team)).join(" · ")}</p>
+            </header>
+            <div class="match-grid">
+              ${entry.matches.map(renderCard).join("")}
+            </div>
+          </section>
+        `;
+      }).join("");
+    }
+
+    function selectMatch(id) {
+      const nextId = Number(id);
+      if (nextId === selectedId) return;
+      selectedId = nextId;
+      document.querySelectorAll(".match-card").forEach((card) => {
+        card.classList.toggle("is-selected", Number(card.dataset.id) === selectedId);
+      });
+    }
+
+    function update() {
+      renderMetricButtons();
+      renderGroups();
+    }
+
+    metricButtons.addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-metric]");
+      if (!button) return;
+      activeMetric = metrics.find((metric) => metric.id === button.dataset.metric);
+      update();
+    });
+
+    groupsEl.addEventListener("click", (event) => {
+      const card = event.target.closest(".match-card");
+      if (card) selectMatch(card.dataset.id);
+    });
+
+    groupsEl.addEventListener("keydown", (event) => {
+      const card = event.target.closest(".match-card");
+      if (!card) return;
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        selectMatch(card.dataset.id);
+      }
+    });
+
+    update();
+  </script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+description = "Start the Data Vizard visualization workflow."
+prompt = """
+Use the bundled data-vizard skill to guide this data visualization project from dataset intake through curation, analysis, narrative, design, and HTML artifact planning.
+
+User request:
+{{args}}
+"""

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Data Vizard"
+  short_description: "Guide the full data visualization workflow"
+  default_prompt: "Use $data-vizard to guide me through a data visualization project from dataset to HTML artifact."

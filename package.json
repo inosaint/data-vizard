@@ -1,7 +1,7 @@
 {
   "name": "data-vizard",
-  "version": "0.1.2",
-  "description": "Installer for the Data Vizard agent workflow plugin.",
+  "version": "0.1.3",
+  "description": "Installer for the Data Vizard agent workflow plugin and Gemini CLI extension.",
   "license": "MIT",
   "author": {
     "name": "inosaint",
@@ -20,6 +20,7 @@
     "claude-code",
     "codex",
     "data-visualization",
+    "gemini-cli",
     "plugin"
   ],
   "bin": {
@@ -27,6 +28,7 @@
   },
   "files": [
     "bin/",
+    "extensions/data-vizard/",
     "plugins/data-vizard/",
     ".agents/plugins/marketplace.json",
     ".claude-plugin/marketplace.json",

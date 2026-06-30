@@ -41,9 +41,10 @@ Usage:
   data-vizard install [options]
 
 Options:
-  --root <path>      Stable marketplace root to write. Default: ~/.data-vizard/marketplace
+  --root <path>      Stable install root to write. Default: ~/.data-vizard/marketplace
   --no-codex        Stage files but skip Codex CLI registration/install.
   --no-claude       Stage files but skip Claude Code CLI registration/install.
+  --no-gemini       Stage files but skip Gemini CLI extension install.
   --dry-run         Print planned actions without writing files or running CLIs.
   -h, --help        Show this help.
   -v, --version     Show package version.
@@ -58,9 +59,14 @@ function install(args) {
   );
   const sourcePluginDir = path.join(PACKAGE_ROOT, "plugins", PLUGIN_NAME);
   const targetPluginDir = path.join(marketplaceRoot, "plugins", PLUGIN_NAME);
+  const sourceGeminiExtensionDir = path.join(PACKAGE_ROOT, "extensions", PLUGIN_NAME);
+  const targetGeminiExtensionDir = path.join(marketplaceRoot, "extensions", PLUGIN_NAME);
 
   if (!fs.existsSync(sourcePluginDir)) {
     throw new Error(`Bundled plugin not found at ${sourcePluginDir}`);
+  }
+  if (!fs.existsSync(sourceGeminiExtensionDir)) {
+    throw new Error(`Bundled Gemini extension not found at ${sourceGeminiExtensionDir}`);
   }
 
   const codexMarketplacePath = path.join(marketplaceRoot, ".agents", "plugins", "marketplace.json");
@@ -71,16 +77,18 @@ function install(args) {
 
   if (options.dryRun) {
     console.log(`Would copy ${sourcePluginDir} -> ${targetPluginDir}`);
+    console.log(`Would copy ${sourceGeminiExtensionDir} -> ${targetGeminiExtensionDir}`);
     console.log(`Would write ${codexMarketplacePath}`);
     console.log(`Would write ${claudeMarketplacePath}`);
   } else {
-    copyPlugin(sourcePluginDir, targetPluginDir);
+    copyDirectory(sourcePluginDir, targetPluginDir);
+    copyDirectory(sourceGeminiExtensionDir, targetGeminiExtensionDir);
     writeJson(codexMarketplacePath, createCodexMarketplace());
     writeJson(claudeMarketplacePath, createClaudeMarketplace(packageJson.version));
-    console.log("Staged Data Vizard marketplace files.");
+    console.log("Staged Data Vizard marketplace and Gemini extension files.");
   }
 
-  const stagedOnly = options.noCodex && options.noClaude;
+  const stagedOnly = options.noCodex && options.noClaude && options.noGemini;
   if (!options.noCodex) {
     installCodex(marketplaceRoot, options.dryRun);
   }
@@ -89,13 +97,18 @@ function install(args) {
     installClaude(marketplaceRoot, options.dryRun);
   }
 
+  if (!options.noGemini) {
+    installGemini(targetGeminiExtensionDir, options.dryRun);
+  }
+
   if (stagedOnly) {
-    printManualCommands(marketplaceRoot);
+    printManualCommands(marketplaceRoot, targetGeminiExtensionDir);
   }
 
   console.log("");
   console.log("Start a new Codex thread and use $data-vizard:data-vizard.");
   console.log("Start a new Claude Code session and use /data-vizard:data-vizard.");
+  console.log("Start a new Gemini CLI session and use /data-vizard or the data-vizard skill.");
 }
 
 function parseInstallOptions(args) {
@@ -103,6 +116,7 @@ function parseInstallOptions(args) {
     root: null,
     noCodex: false,
     noClaude: false,
+    noGemini: false,
     dryRun: false,
   };
 
@@ -120,6 +134,8 @@ function parseInstallOptions(args) {
       options.noCodex = true;
     } else if (arg === "--no-claude") {
       options.noClaude = true;
+    } else if (arg === "--no-gemini") {
+      options.noGemini = true;
     } else if (arg === "--dry-run") {
       options.dryRun = true;
     } else if (arg === "--help" || arg === "-h") {
@@ -133,14 +149,29 @@ function parseInstallOptions(args) {
   return options;
 }
 
-function copyPlugin(sourcePluginDir, targetPluginDir) {
-  fs.rmSync(targetPluginDir, { recursive: true, force: true });
-  fs.mkdirSync(path.dirname(targetPluginDir), { recursive: true });
-  fs.cpSync(sourcePluginDir, targetPluginDir, {
+function copyDirectory(sourceDir, targetDir) {
+  assertNoSymlinks(sourceDir);
+  fs.rmSync(targetDir, { recursive: true, force: true });
+  fs.mkdirSync(path.dirname(targetDir), { recursive: true });
+  fs.cpSync(sourceDir, targetDir, {
     recursive: true,
-    dereference: true,
     filter: (source) => !source.includes(`${path.sep}.DS_Store`),
   });
+}
+
+function assertNoSymlinks(rootDir, currentDir = rootDir) {
+  for (const entry of fs.readdirSync(currentDir, { withFileTypes: true })) {
+    const entryPath = path.join(currentDir, entry.name);
+
+    if (entry.isSymbolicLink()) {
+      const relativePath = path.relative(rootDir, entryPath);
+      throw new Error(`Refusing to copy symlink in bundled content: ${relativePath}`);
+    }
+
+    if (entry.isDirectory()) {
+      assertNoSymlinks(rootDir, entryPath);
+    }
+  }
 }
 
 function createCodexMarketplace() {
@@ -170,7 +201,8 @@ function createClaudeMarketplace(version) {
   return {
     name: MARKETPLACE_NAME,
     owner: {
-      name: "Trine",
+      name: "inosaint",
+      url: "https://github.com/inosaint",
     },
     description: "Data Vizard agent workflow plugins.",
     version,
@@ -183,7 +215,8 @@ function createClaudeMarketplace(version) {
           "Guide data visualization projects from dataset intake to analysis, narrative, design, and HTML story output.",
         version,
         author: {
-          name: "Trine",
+          name: "inosaint",
+          url: "https://github.com/inosaint",
         },
         repository: "https://github.com/inosaint/data-vizard",
         license: "MIT",
@@ -266,9 +299,39 @@ function installClaude(marketplaceRoot, dryRun) {
   }
 }
 
-function printManualCommands(marketplaceRoot) {
+function installGemini(geminiExtensionDir, dryRun) {
+  console.log("");
+  console.log("Gemini CLI");
+
+  const installArgs = ["extensions", "install", geminiExtensionDir, "--consent", "--skip-settings"];
+
+  if (dryRun) {
+    console.log(`Would run: gemini ${installArgs.map(shellQuote).join(" ")}`);
+    return;
+  }
+
+  if (!commandExists("gemini")) {
+    console.log("Gemini CLI was not found on PATH.");
+    printGeminiCommands(geminiExtensionDir);
+    return;
+  }
+
+  const extensionInstall = runInteractive("gemini", installArgs);
+  if (extensionInstall.ok) {
+    console.log("Installed Data Vizard in Gemini CLI.");
+  } else {
+    console.warn("Could not install the Gemini CLI extension automatically.");
+    if (extensionInstall.error) {
+      console.warn(`  ${extensionInstall.error.message}`);
+    }
+    printGeminiCommands(geminiExtensionDir);
+  }
+}
+
+function printManualCommands(marketplaceRoot, geminiExtensionDir) {
   printCodexCommands(marketplaceRoot);
   printClaudeCommands(marketplaceRoot);
+  printGeminiCommands(geminiExtensionDir);
 }
 
 function printCodexCommands(marketplaceRoot) {
@@ -290,6 +353,16 @@ function printClaudeCommands(marketplaceRoot) {
   console.log("  /reload-plugins");
 }
 
+function printGeminiCommands(geminiExtensionDir) {
+  console.log("");
+  console.log("To finish Gemini CLI installation manually:");
+  console.log(`  gemini extensions install ${shellQuote(geminiExtensionDir)} --consent --skip-settings`);
+  console.log("  gemini extensions list");
+  console.log("");
+  console.log("Then start a new Gemini CLI session and run:");
+  console.log("  /data-vizard <your request>");
+}
+
 function commandExists(command) {
   const result = spawnSync(command, ["--version"], { encoding: "utf8" });
   return !(result.error && result.error.code === "ENOENT");
@@ -303,6 +376,15 @@ function run(command, args) {
     error: result.error,
     stdout: result.stdout,
     stderr: result.stderr,
+  };
+}
+
+function runInteractive(command, args) {
+  const result = spawnSync(command, args, { stdio: "inherit" });
+  return {
+    ok: !result.error && result.status === 0,
+    status: result.status,
+    error: result.error,
   };
 }
 

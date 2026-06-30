@@ -2,6 +2,13 @@
 
 All notable changes to Data Vizard will be documented here.
 
+## 0.1.3 - 2026-06-30
+
+- Clarified npm install prerequisites for Codex CLI, Claude Code CLI, and Gemini CLI users.
+- Added Gemini CLI extension support with a `gemini-extension.json` manifest, bundled skills, and `/data-vizard` command.
+- Taught the npm installer to stage and install the Gemini CLI extension when `gemini` is available.
+- Fixed generated Claude marketplace publisher metadata to use `inosaint`.
+
 ## 0.1.2 - 2026-06-30
 
 - Pointed all Codex plugin-list image fields at square icon assets so the plugin directory does not render the wide banner in icon slots.

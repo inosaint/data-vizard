@@ -5,14 +5,14 @@
     "url": "https://github.com/inosaint"
   },
   "description": "Data Vizard agent workflow plugins.",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "plugins": [
     {
       "name": "data-vizard",
       "source": "./plugins/data-vizard",
       "displayName": "Data Vizard",
       "description": "Guide data visualization projects from dataset intake to analysis, narrative, design, and HTML story output.",
-      "version": "0.1.2",
+      "version": "0.1.3",
       "author": {
         "name": "inosaint",
         "url": "https://github.com/inosaint"
