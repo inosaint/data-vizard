@@ -1,10 +1,10 @@
 {
   "name": "data-vizard",
   "displayName": "Data Vizard",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Guide data visualization projects from dataset intake to analysis, narrative, design, and HTML story output.",
   "author": {
-    "name": "Trine",
+    "name": "inosaint",
     "url": "https://github.com/inosaint"
   },
   "repository": "https://github.com/inosaint/data-vizard",

@@ -1,30 +1,6 @@
 # Data Vizard
 
-Data Vizard is a WIP agent plugin for building data visualization stories with a staged workflow. The workflow moves from data intake to analysis, narrative framing, visual design, and a final HTML artifact while keeping user decisions explicit.
-
-## Workflow
-
-Most projects follow this path:
-
-1. `data-vizard` coordinates the project and decision gates.
-2. `data-curator` finds, evaluates, cleans, joins, and documents data.
-3. `data-analyst` explores the curated data and proposes evidence-backed story directions.
-4. `narrator` turns the selected analytical direction into a story brief, copy, caveats, and annotation plan.
-5. `designer` chooses the visual form with the user, then builds and verifies the HTML artifact.
-
-Project folders use lowercase hyphen-case slugs, for example `nyc-taxi-weather-jan-2026`.
-
-## Skills
-
-The local skills live in `skills/`.
-
-- `skills/data-vizard/` - Orchestrates the full visualization workflow, routes between role skills, and maintains decision gates.
-- `skills/data-curator/` - Handles dataset discovery, data fitness checks, cleaning, reshaping, joins, enrichment, and curator handoff notes.
-- `skills/data-analyst/` - Profiles curated datasets, finds patterns and caveats, and proposes possible story directions without choosing the final story silently.
-- `skills/narrator/` - Shapes the selected analysis into audience-facing structure: story spine, titles, section copy, annotations, and caveats.
-- `skills/designer/` - Designs and produces HTML-based visualization artifacts, including chart choice, layout, interaction, accessibility, visual style, and motion behavior.
-
-Each skill has a `SKILL.md` file with its operating rules. Some skills also include `references/` for playbooks and reusable guidance, or `assets/` for starter files.
+Data Vizard is an agent plugin for building data visualization stories with a staged workflow. It guides a project from data intake to curation, exploratory analysis, narrative framing, visual design, and a final HTML artifact while keeping user decisions explicit.
 
 ## Install
 
@@ -36,18 +12,95 @@ pnpm dlx data-vizard install
 bunx data-vizard install
 ```
 
-The installer copies the bundled plugin into a stable local marketplace at `~/.data-vizard/marketplace`, then registers and installs it for Codex and Claude Code when their CLIs are available.
+The installer copies the bundled plugin into a stable local marketplace at `~/.data-vizard/marketplace`, writes Codex and Claude Code marketplace files, and attempts to install `data-vizard@data-vizard` when those CLIs are available.
 
-After installing, start a new agent session and invoke the orchestrator:
+## Quickstart
+
+After installing, start a new Codex thread or Claude Code session so the plugin skills are loaded.
 
 ```text
-Codex: $data-vizard:data-vizard
-Claude Code: /data-vizard:data-vizard
+Codex: Use $data-vizard:data-vizard to build a visualization from this CSV.
+Claude Code: /data-vizard:data-vizard Build a visualization from this CSV.
 ```
 
-## Manual Plugin Install
+You can also call a role skill directly:
 
-The plugin source lives in `plugins/data-vizard/`, with repo-local marketplace files for Codex and Claude Code. From a fresh clone, install it manually with:
+```text
+$data-vizard:data-curator
+$data-vizard:data-analyst
+$data-vizard:narrator
+$data-vizard:designer
+```
+
+## Compatibility
+
+| Host | Status | Install path | Notes |
+| --- | --- | --- | --- |
+| Codex app and CLI | Supported | `.agents/plugins/marketplace.json` plus `.codex-plugin/plugin.json` | Local and workspace plugins can appear in the Codex plugin directory through marketplaces or workspace sharing. The public OpenAI-curated directory is not a self-serve npm publishing target. |
+| Claude Code | Supported | `.claude-plugin/marketplace.json` plus `.claude-plugin/plugin.json` | Validate with `claude plugin validate` and install with `claude plugin install data-vizard@data-vizard`. |
+| npm | Supported | `bin/data-vizard.js` installer | The package ships the plugin, marketplace files, README, and changelog. |
+
+## Verify
+
+Local package checks:
+
+```bash
+NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npm pack --dry-run --json
+node bin/data-vizard.js install --dry-run --root /tmp/data-vizard-local-smoke
+```
+
+Published-package smoke test:
+
+```bash
+cd /tmp
+NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.2 --version
+NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.2 install --dry-run --root /tmp/data-vizard-published-smoke
+NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.2 install --root /tmp/data-vizard-published-stage --no-codex --no-claude
+```
+
+Full install verification:
+
+```bash
+npx --yes data-vizard@0.1.2 install
+codex plugin list --available --json
+claude plugin list
+```
+
+Claude Code compatibility check:
+
+```bash
+claude plugin validate plugins/data-vizard
+claude plugin marketplace add /tmp/data-vizard-published-stage
+claude plugin install data-vizard@data-vizard --scope local
+claude plugin list
+```
+
+## Update Or Remove
+
+Update from npm:
+
+```bash
+npx data-vizard@latest install
+```
+
+Remove installed plugins:
+
+```bash
+codex plugin remove data-vizard@data-vizard
+claude plugin uninstall data-vizard@data-vizard
+```
+
+After updating or removing a plugin, start a new Codex thread or Claude Code session.
+
+## Privacy And Data
+
+Data Vizard works on files and datasets you provide in the active workspace. The plugin itself does not add a server, background sync, analytics, or external app connector. Host-level model, tool, network, approval, and file-access settings still apply in Codex and Claude Code.
+
+For sensitive datasets, review source rights before importing data, avoid committing private raw files, and keep project caveats close to any published visualization.
+
+## Development Install From Clone
+
+Normal installs should use npm. This clone-based path is only for development before a version is published:
 
 ```bash
 codex plugin marketplace add "$(pwd)"
@@ -57,27 +110,19 @@ claude plugin marketplace add "$(pwd)"
 claude plugin install data-vizard@data-vizard
 ```
 
-See `plugins/data-vizard/README.md` for full install, usage, update, and troubleshooting notes.
+The plugin source lives in `plugins/data-vizard/`. See `plugins/data-vizard/README.md` for role details, usage notes, update flow, and troubleshooting.
 
-## Folder Guide
+## Package Contents
 
-- `outcome/` - Final or in-progress public-facing visualization artifacts. Each project gets its own folder, usually with an `index.html` and supporting files such as story briefs, design notes, SVG favicons, or map assets.
-- `data/` - Curated data, raw source snapshots, transformation notes, and intermediate datasets used to build a visualization.
-- `scripts/` - Reproducible data preparation scripts. For example, `scripts/build_nyc_taxi_weather_hourly.py` builds the NYC taxi/weather dataset.
-- `skills/` - Local role skills used by the Data Vizard workflow.
-- `project-ledgers/` - Project ledgers that record stage progress, skill handoffs, decisions, caveats, and important files.
-- `outcome/<project-name>/PRODUCT.md` - Project-specific product context: audience, purpose, brand personality, anti-references, design principles, and accessibility goals.
+- `bin/data-vizard.js` - npm installer CLI.
+- `plugins/data-vizard/` - Packaged plugin source for Codex and Claude Code.
+- `plugins/data-vizard/assets/` - Plugin icon, logo, and screenshots.
+- `CHANGELOG.md` - Release history.
 
+## Release Checklist
 
-## Current Projects
-
-- `outcome/nyc-taxi-weather-jan-2026/` - A map-led scrollytelling story about how the January 25, 2026 snow day affected NYC yellow taxi pickups.
-- `outcome/india-state-choropleth/` - An India state choropleth visualization workspace.
-
-## Working Notes
-
-- Keep user-facing visualization outputs under `outcome/<project-name>/`.
-- Keep curated data and transformation artifacts under `data/<project-name>/`.
-- Keep project progress notes in `project-ledgers/<project-name>.md`.
-- When adding new skills, include a clear `SKILL.md` and keep supporting guidance in that skill's `references/` folder.
-- For chart and map animations, prefer semantic data transitions: animate heights, bases, segment boundaries, filters, and scales rather than relying on opacity-only color swaps.
+- Keep `package.json`, `plugins/data-vizard/.codex-plugin/plugin.json`, `.claude-plugin/marketplace.json`, and `plugins/data-vizard/.claude-plugin/plugin.json` versions aligned.
+- Regenerate plugin assets with `python3 scripts/generate_plugin_assets.py`; pass `--source /path/to/logo.png` when replacing the canonical logo.
+- Run npm pack and installer dry-run checks before publishing.
+- Run Codex and Claude Code install checks in a fresh terminal or CI job.
+- Update `CHANGELOG.md` for every release.
