@@ -1,0 +1,9 @@
+# FIFA 2026 World Cup visualization ledger
+
+| Stage | Skill | Status | Decisions / Evidence | Outputs |
+| --- | --- | --- | --- | --- |
+| Brief | Data Vizard | In progress | User supplied Kaggle `matches.csv` and asked what could be created. User decided to ignore the first Round of 32 match and keep the working scope to the group stage. | Project slug: `fifa-2026-world-cup` |
+| Curate | Data Curator | Complete | Source file had 73 match rows: 72 group-stage rows and 1 Round of 32 row. Curated dataset filters to `round == "Group stage"`. | `data/fifa-2026-world-cup/raw/matches.csv`; `data/fifa-2026-world-cup/curated/matches_group_stage.csv`; `data/fifa-2026-world-cup/curated/group_stage_team_summary.csv`; `data/fifa-2026-world-cup/curated/README.md` |
+| Analyze | Data Analyst | Complete | User selected a pitch-based small-multiples direction. Metric scan found shots on target most aligned with outcomes, while crosses, fouls, and cards often do not point toward the winner. | `data/fifa-2026-world-cup/curated/matches_group_stage_with_groups.csv`; `data/fifa-2026-world-cup/curated/group_stage_standings.csv` |
+| Narrate | Narrator | Complete | Frame: comparative/investigative. Main question: which match metrics move with the result, and which are match texture? Caveats include group-stage-only scope, inferred groups, rounded possession, and missing offsides in 3 matches. | `outcome/fifa-2026-world-cup/STORY.md` |
+| Design | Designer | In progress | User specified football-ground small multiples, group organization, metric toggle, and outcome comparison cues. Revised design direction removes dashboard chrome: no hero, KPI strip, search/filter panel, standings tables, or side detail panel. | `outcome/fifa-2026-world-cup/DESIGN_BRIEF.md`; `outcome/fifa-2026-world-cup/index.html` |

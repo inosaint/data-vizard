@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data Vizard Artifact</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f8fafc;
+      --ink: #172033;
+      --muted: #5b677a;
+      --line: #d8dee8;
+      --accent: #2563eb;
+      --panel: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 16px/1.5 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    main {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 40px 0;
+    }
+
+    header {
+      max-width: 760px;
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .viz-shell {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+    }
+
+    .chart {
+      min-height: 420px;
+      display: grid;
+      place-items: center;
+      border: 1px dashed var(--line);
+      color: var(--muted);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Data Vizard Artifact</h1>
+      <p class="subtitle">Replace this starter with the selected story, visual direction, and data.</p>
+    </header>
+    <section class="viz-shell" aria-label="Data visualization">
+      <div class="chart" id="chart">Visualization goes here.</div>
+    </section>
+  </main>
+  <script>
+    const chart = document.querySelector("#chart");
+    chart.textContent = "Ready for data.";
+  </script>
+</body>
+</html>

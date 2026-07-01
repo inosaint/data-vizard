@@ -26,6 +26,22 @@ C. Short option label - one sentence explaining the tradeoff.
 
 Use no more than four options unless the user asks for a broader menu. Include `D. Something else - describe the visual direction you want.` when the user may want a custom path. Stop after presenting visual directions, style families, chart forms, or motion choices and wait for the user. Do not include a second `Choose one:` block in the same response.
 
+## Rendering And Library Selection
+
+Before proposing visual directions, consider whether the artifact should use plain HTML/CSS/JS or a visualization/rendering library. Do not default to vanilla HTML when the visual idea would be stronger, clearer, or more reliable with a proven library.
+
+Evaluate these options when relevant:
+
+- Vanilla HTML/CSS/SVG: simple static layouts, lightweight small multiples, and fully portable one-file artifacts.
+- D3.js: bespoke charts, custom scales, force layouts, transitions, unusual small multiples, and fine-grained SVG or canvas control.
+- Vega-Lite: declarative statistical charts, quick iteration, linked views, and transparent chart grammar.
+- Observable Plot: concise exploratory charts with strong defaults.
+- Canvas/WebGL: thousands of marks, particle-like motion, dense spatial fields, or performance-heavy interactions.
+- Three.js: 3D scenes, dimensional metaphors, spatial storytelling, camera movement, or immersive visual systems.
+- Mapbox/MapLibre: real geographic maps, basemaps, pan/zoom, layers, geocoding, and spatial overlays.
+
+Prefer proven libraries for established charting, mapping, 3D, physics, or layout problems instead of hand-rolling core rendering logic. When offering visual directions, name the rendering approach, such as `D3/SVG pitch small multiples`, `MapLibre map-led story`, `Three.js spatial field`, or `Vega-Lite linked chart explorer`.
+
 ## Workflow
 
 1. Confirm inputs.
@@ -44,9 +60,9 @@ Use no more than four options unless the user asks for a broader menu. Include `
    For country maps, use boundary sources and visual treatments that align with the country's official sovereignty position and avoid disputed-boundary surprises from generic global map providers. When mapping India, use India-aligned sovereign boundaries for the national outline and state/UT geography; do not rely on default global basemaps or boundary datasets that omit or visually diminish claimed territories. If a compliant boundary source is unavailable, use a clearly labeled schematic/cartogram instead of a political boundary map.
 
 2. Offer visual directions.
-   Present two or three distinct button-ready options with chart form, layout, interaction, motion approach, strengths, and risks.
+   Present two or three distinct button-ready options with chart form, layout, interaction, rendering/library choice, motion approach, strengths, and risks.
 
-   When visual judgment matters, create a small browser-viewable option board or rough HTML prototype under `outcome/<project-name>/options.html`. Open it in the browser when available, show the user the visual options, and ask them to choose using the same button-ready format. Keep the option board lightweight and disposable unless the user asks to preserve it.
+   When visual judgment matters, create a browser-viewable option board under `outcome/<project-name>/options.html` with visual previews for each option. Do not present options as text-only unless the user explicitly asks for speed or the choice is purely technical. Open it in the browser when available, show the user the visual options, and ask them to choose using the same button-ready format. Keep the option board lightweight and disposable unless the user asks to preserve it.
 
 3. Ask the user to choose.
    Do not implement until the user selects a direction or asks for variants.
@@ -55,7 +71,7 @@ Use no more than four options unless the user asks for a broader menu. Include `
    Plan chart encodings, hierarchy, annotations, responsive layout, accessibility, color, typography, axis/legend/label attachment, chart hover/focus/selected states, and motion.
 
 5. Build HTML.
-   Prefer a single HTML file with embedded CSS and JavaScript. Use vanilla HTML/CSS/JS unless the requested interaction needs a framework. Keep data loading simple and reproducible.
+   Prefer a single HTML file with embedded CSS and JavaScript when feasible. Use vanilla HTML/CSS/JS when it is sufficient, but use D3, Vega-Lite, Observable Plot, Mapbox/MapLibre, Canvas/WebGL, Three.js, or another proven library when it better matches the visual metaphor, interaction model, data scale, or rendering complexity. Keep data loading simple and reproducible.
 
 6. Verify the result.
    Open or render the artifact when possible. Check that it is nonblank, readable, responsive, accessible enough for workshop use, faithful to the selected story, that every axis label, tick label, legend, and unit is visibly attached to the marks or plot it describes, and that chart hover/focus states reveal the expected values without layout shift.
@@ -75,6 +91,32 @@ Use style families to avoid repetitive outputs. Present relevant options and let
 - Scrollytelling: progressive sections, guided reveal, motion used with restraint.
 - Studio: expressive composition, stronger visual personality, custom interactions.
 - Teaching: simple, explicit, annotated for explaining the data-vis process.
+
+## Visual Option Board
+
+When creating `options.html`, show visual previews of each proposed direction, not just written descriptions. Each option should include a representative visual mockup using the project's actual data shape, the rendering/library choice, the interaction model, what the option is good at, and its main tradeoff.
+
+The previews can be rough, but they must be concrete enough for the user to compare layout, density, visual metaphor, and interaction feel. Example options might include a D3/SVG small-multiple preview, a Three.js spatial scene preview, a Vega-Lite linked-chart preview, or a MapLibre map-led preview.
+
+## Narrative-First Visualization Rule
+
+When the user describes a visual metaphor, spatial system, small multiples, scrollytelling, or exploratory visual story, do not default to dashboard composition. First decide whether the artifact is a dashboard or a visual narrative. If it is a visual narrative, make the primary visualization occupy the first meaningful screen and carry the interface.
+
+For visual narratives, prefer one compact control rail, direct labels over tables, hover or click detail over persistent side panels, visual grouping over filter-heavy navigation, and annotations or emphasis over summary cards.
+
+Do not add KPI strips, explainer cards, side panels, filters, standings tables, search boxes, or dense control bars unless the user explicitly asks for dashboard-style comparison, repeated operational use, or those controls are necessary for the main reading path.
+
+## De-Dashboarding Checklist
+
+Before implementing an HTML visualization, remove any UI element that does not directly support the main visual reading path. Challenge these by default: KPI cards, search fields, dropdown filters, side detail panels, explanatory cards, ranking or standings tables, repeated pills and badges, and large hero sections above the visualization.
+
+If the visualization is a small-multiple grid, the grid should be visible early and should not feel secondary to controls or summary stats. Let the visual system be the interface.
+
+## Control Discipline
+
+Interactive controls in the same rail must share height, radius, typography, and active/focus states. Do not mix text inputs, dropdowns, segmented buttons, and pills with visibly different heights unless the layout clearly separates their roles.
+
+For narrative visualizations, use no more than one primary control group by default. Add secondary controls only when they reveal meaning the main visual cannot carry.
 
 ## Axis And Label Attachment Rules
 
