@@ -1,7 +1,7 @@
 {
   "name": "data-vizard",
-  "version": "0.1.3",
-  "description": "A staged data visualization workshop for moving from dataset intake to analysis, narrative, design, and an HTML artifact.",
+  "version": "0.1.4",
+  "description": "A staged data visualization workshop for moving from dataset intake to analysis, adaptive narration, critique, design, and an HTML artifact.",
   "author": {
     "name": "inosaint",
     "url": "https://github.com/inosaint"
@@ -17,8 +17,8 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "Data Vizard",
-    "shortDescription": "Guide data visualization projects from dataset to HTML story.",
-    "longDescription": "Data Vizard bundles five Codex skills for a complete data visualization workflow: orchestration, data curation, exploratory analysis, narrative framing, and HTML visualization design.",
+    "shortDescription": "Guide data visualization projects from dataset to critique-reviewed HTML story.",
+    "longDescription": "Data Vizard bundles six Codex skills for a complete data visualization workflow: orchestration, data curation, exploratory analysis, adaptive narration, critique, and HTML visualization design.",
     "developerName": "inosaint",
     "category": "Productivity",
     "capabilities": [

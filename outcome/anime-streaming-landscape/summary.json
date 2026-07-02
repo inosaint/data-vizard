@@ -1,0 +1,105 @@
+{
+  "rows": 206,
+  "platforms": {
+    "netflix": 65,
+    "crunchyroll": 169,
+    "amazon_prime": 11,
+    "hulu": 72,
+    "funimation": 79,
+    "disney_plus": 1,
+    "hbo_max": 6,
+    "hidive": 13,
+    "pokemon_tv": 2
+  },
+  "decades": {
+    "1980s": 5,
+    "1990s": 11,
+    "2000s": 36,
+    "2010s": 92,
+    "2020s": 62
+  },
+  "top_genres": [
+    [
+      "Action",
+      137
+    ],
+    [
+      "Drama",
+      21
+    ],
+    [
+      "Adventure",
+      19
+    ],
+    [
+      "Comedy",
+      11
+    ],
+    [
+      "Sports",
+      8
+    ],
+    [
+      "Mystery",
+      6
+    ]
+  ],
+  "top_multi_platform": [
+    {
+      "title": "Attack on Titan: The Final Season Part 2",
+      "year": 2022,
+      "rating": 9.3,
+      "platforms": "Crunchyroll | Hulu | Funimation",
+      "count": 3
+    },
+    {
+      "title": "Attack on Titan: The Final Season",
+      "year": 2020,
+      "rating": 9.2,
+      "platforms": "Crunchyroll | Hulu | Funimation",
+      "count": 3
+    },
+    {
+      "title": "Fullmetal Alchemist: Brotherhood",
+      "year": 2009,
+      "rating": 9.1,
+      "platforms": "Netflix | Crunchyroll | Hulu | Funimation",
+      "count": 4
+    },
+    {
+      "title": "Hunter x Hunter (2011)",
+      "year": 2011,
+      "rating": 9.1,
+      "platforms": "Netflix | Crunchyroll | Hulu",
+      "count": 3
+    },
+    {
+      "title": "Steins;Gate",
+      "year": 2011,
+      "rating": 9.1,
+      "platforms": "Crunchyroll | Hulu | Funimation",
+      "count": 3
+    },
+    {
+      "title": "Bleach: Thousand-Year Blood War",
+      "year": 2022,
+      "rating": 9.1,
+      "platforms": "Hulu | Disney+",
+      "count": 2
+    },
+    {
+      "title": "Fruits Basket: The Final - Season 3",
+      "year": 2021,
+      "rating": 9.1,
+      "platforms": "Crunchyroll | Funimation",
+      "count": 2
+    },
+    {
+      "title": "Vinland Saga Season 2",
+      "year": 2023,
+      "rating": 9.1,
+      "platforms": "Netflix | Prime Video",
+      "count": 2
+    }
+  ]
+}

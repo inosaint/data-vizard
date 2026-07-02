@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bangalore Weather Options</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f4f0e6;
+      --ink: #1d1a17;
+      --muted: #6a5e53;
+      --line: rgba(29, 26, 23, 0.14);
+      --rain: #2f6fdd;
+      --storm: #0d47a1;
+      --mist: #9bc8ff;
+      --heat: #d97a1f;
+      --moss: #748b39;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(47,111,221,0.12), transparent 22%),
+        linear-gradient(180deg, #fbf8f1 0%, var(--paper) 100%);
+      color: var(--ink);
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    }
+    main {
+      width: min(1320px, calc(100vw - 28px));
+      margin: 0 auto;
+      padding: 22px 0 28px;
+    }
+    .kicker, .tag, .meta, .month {
+      font: 700 0.76rem/1.2 "Avenir Next", "Segoe UI", sans-serif;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+    .kicker { margin: 0 0 10px; color: var(--muted); }
+    h1 {
+      margin: 0;
+      max-width: 980px;
+      font: 800 clamp(2.9rem, 6vw, 5.8rem)/0.9 "Avenir Next Condensed", "Arial Narrow", sans-serif;
+      letter-spacing: -0.07em;
+    }
+    .dek {
+      margin: 10px 0 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.42;
+    }
+    .options {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    article {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.42);
+      display: grid;
+      grid-template-rows: 280px auto;
+    }
+    .preview {
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      padding: 14px;
+    }
+    .copy {
+      padding: 14px 14px 16px;
+      display: grid;
+      gap: 8px;
+    }
+    .tag { margin: 0; color: var(--muted); }
+    h2 {
+      margin: 0;
+      font: 800 2rem/0.96 "Avenir Next Condensed", "Arial Narrow", sans-serif;
+      letter-spacing: -0.05em;
+    }
+    .summary, .tradeoff { margin: 0; font-size: 0.98rem; line-height: 1.35; }
+    .tradeoff, .meta { color: var(--muted); }
+
+    .arc-preview {
+      background: linear-gradient(180deg, rgba(47,111,221,0.08), transparent);
+      display: grid;
+      align-content: end;
+    }
+    .arc-svg { width: 100%; height: 100%; }
+
+    .plate-preview {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.2), transparent),
+        linear-gradient(90deg, rgba(155,200,255,0.16), rgba(255,255,255,0.02));
+    }
+    .plate-grid {
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      gap: 6px;
+      align-items: end;
+    }
+    .plate-col {
+      display: grid;
+      justify-items: center;
+      gap: 6px;
+      align-content: end;
+    }
+    .plate-bar {
+      width: 100%;
+      height: var(--h);
+      background: linear-gradient(180deg, var(--mist), var(--storm));
+    }
+
+    .ribbon-preview {
+      background: #161d28;
+      color: #eef4ff;
+      display: grid;
+      align-items: center;
+    }
+    .ribbon-rows {
+      display: grid;
+      gap: 12px;
+    }
+    .ribbon {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr) 56px;
+      gap: 10px;
+      align-items: center;
+    }
+    .ribbon .month { color: rgba(238,244,255,0.72); }
+    .ribbon-line {
+      height: 14px;
+      background: linear-gradient(90deg, rgba(47,111,221,0.24), rgba(47,111,221,0.92));
+      width: var(--w);
+    }
+    .ribbon .val {
+      font: 800 1.1rem/1 "Avenir Next Condensed", "Arial Narrow", sans-serif;
+      letter-spacing: -0.03em;
+      text-align: right;
+    }
+
+    @media (max-width: 980px) {
+      .options { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="kicker">Bangalore weather climatology</p>
+    <h1>Three directions for explaining the city's two rain peaks.</h1>
+    <p class="dek">Each preview uses the actual monthly rainfall shape from the curated climatology, including the pre-monsoon rise in May and the strongest aggregate peak in October.</p>
+
+    <section class="options">
+      <article>
+        <div class="preview arc-preview">
+          <svg class="arc-svg" viewBox="0 0 360 240" aria-hidden="true">
+            <defs>
+              <linearGradient id="rainLine" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#9bc8ff"/>
+                <stop offset="100%" stop-color="#0d47a1"/>
+              </linearGradient>
+            </defs>
+            <path d="M22 202 C58 200, 74 196, 92 178 S138 72, 172 92 S238 104, 270 46 S316 30, 338 34" fill="none" stroke="url(#rainLine)" stroke-width="8" stroke-linecap="round"/>
+            <circle cx="140" cy="92" r="8" fill="#2f6fdd"/>
+            <circle cx="322" cy="34" r="8" fill="#0d47a1"/>
+            <text x="116" y="78" font-size="12" fill="#6a5e53">May build</text>
+            <text x="280" y="24" font-size="12" fill="#6a5e53">October peak</text>
+          </svg>
+        </div>
+        <div class="copy">
+          <p class="tag">A</p>
+          <h2>Seasonal Arc</h2>
+          <p class="summary">A guided annual curve that makes the pre-monsoon rise, wet mid-year run, and October crest read as one continuous climate rhythm.</p>
+          <p class="meta">Aesthetic family: Field guide naturalist</p>
+          <p class="tradeoff">Strongest if you want the cleanest explanatory reading path, but it is more classically chart-like than the other options.</p>
+        </div>
+      </article>
+
+      <article>
+        <div class="preview plate-preview">
+          <div class="plate-grid">
+            <div class="plate-col"><div class="plate-bar" style="--h:6%;"></div><div class="month">Jan</div></div>
+            <div class="plate-col"><div class="plate-bar" style="--h:7%;"></div><div class="month">Feb</div></div>
+            <div class="plate-col"><div class="plate-bar" style="--h:12%;"></div><div class="month">Mar</div></div>
+            <div class="plate-col"><div class="plate-bar" style="--h:31%;"></div><div class="month">Apr</div></div>
+            <div class="plate-col"><div class="plate-bar" style="--h:90%;"></div><div class="month">May</div></div>
+            <div class="plate-col"><div class="plate-bar" style="--h:82%;"></div><div class="month">Jun</div></div>
+            <div class="plate-col"><div class="plate-bar" style="--h:96%;"></div><div class="month">Jul</div></div>
+            <div class="plate-col"><div class="plate-bar" style="--h:93%;"></div><div class="month">Aug</div></div>
+            <div class="plate-col"><div class="plate-bar" style="--h:91%;"></div><div class="month">Sep</div></div>
+            <div class="plate-col"><div class="plate-bar" style="--h:100%;"></div><div class="month">Oct</div></div>
+            <div class="plate-col"><div class="plate-bar" style="--h:52%;"></div><div class="month">Nov</div></div>
+            <div class="plate-col"><div class="plate-bar" style="--h:20%;"></div><div class="month">Dec</div></div>
+          </div>
+        </div>
+        <div class="copy">
+          <p class="tag">B</p>
+          <h2>Climate Plate</h2>
+          <p class="summary">A month specimen board that stages each part of the year side by side so the second peak is obvious as structure, not just as one annotated point.</p>
+          <p class="meta">Aesthetic family: Archival modernist</p>
+          <p class="tradeoff">Strongest if you want month-by-month comparison clarity, but it feels more plate-like and less flowing than the arc option.</p>
+        </div>
+      </article>
+
+      <article>
+        <div class="preview ribbon-preview">
+          <div class="ribbon-rows">
+            <div class="ribbon"><div class="month">May</div><div class="ribbon-line" style="--w:90%;"></div><div class="val">5631</div></div>
+            <div class="ribbon"><div class="month">Jul</div><div class="ribbon-line" style="--w:96%;"></div><div class="val">6004</div></div>
+            <div class="ribbon"><div class="month">Aug</div><div class="ribbon-line" style="--w:93%;"></div><div class="val">5838</div></div>
+            <div class="ribbon"><div class="month">Sep</div><div class="ribbon-line" style="--w:91%;"></div><div class="val">5677</div></div>
+            <div class="ribbon"><div class="month">Oct</div><div class="ribbon-line" style="--w:100%;"></div><div class="val">6276</div></div>
+          </div>
+        </div>
+        <div class="copy">
+          <p class="tag">C</p>
+          <h2>Peak Comparison Ribbons</h2>
+          <p class="summary">A tighter explanatory comparison that focuses directly on the wet months and lets October win visibly over the mid-year run.</p>
+          <p class="meta">Aesthetic family: Diagrammatic atlas</p>
+          <p class="tradeoff">Strongest if you want the argument made fast, but it trims away the drier months and loses some full-year atmosphere.</p>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

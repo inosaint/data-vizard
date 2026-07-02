@@ -1,0 +1,4 @@
+interface:
+  display_name: "Critic"
+  short_description: "Critique data-visualization language and craft"
+  default_prompt: "Use $critic to review this visualization brief or artifact for editorial rigor, visual craft, and unnecessary clutter."

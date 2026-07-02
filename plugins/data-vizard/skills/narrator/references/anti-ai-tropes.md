@@ -1,6 +1,6 @@
 # Anti-AI Writing Pass
 
-Run this pass before handing visualization copy to the user or Designer.
+Run this pass before handing visualization copy to the user, Critic, or Designer.
 
 ## Cut These Habits
 
@@ -12,6 +12,8 @@ Run this pass before handing visualization copy to the user or Designer.
 - Decorative drama: "tells a story of resilience", "paints a picture", "reveals a tapestry"
 - Empty conclusions: "Only time will tell", "the data speaks for itself"
 - Repeated sentence scaffolds: "This is not just X. It is Y."
+- Poetic obviousness that restates what the viewer already sees
+- Decorative headers, taglines, or hover copy that add mood but no meaning
 
 ## Prefer This Instead
 
@@ -21,8 +23,9 @@ Run this pass before handing visualization copy to the user or Designer.
 - Replace abstract nouns with visible specifics.
 - Let the data carry force; do not add theatrical emphasis.
 - Use one strong metaphor at most, and only if it clarifies the chart.
+- If the line is not orienting, evidencing, qualifying, or instructing, delete it.
 
-## Rewrite Examples
+## Rewrite Or Remove
 
 Instead of:
 "This chart highlights the critical impact of snow on urban mobility."
@@ -41,3 +44,24 @@ Instead of:
 
 Use:
 "The snow changed where taxi service held up and where it broke down."
+
+Instead of:
+"206 titles, suspended as stars. Hover to read the sky."
+
+Use:
+"206 suspended titles."
+
+Or remove entirely if the visual already makes that legible.
+
+Instead of:
+"A constellation of voices lights up the archive."
+
+Remove entirely unless the metaphor is analytically necessary.
+
+Instead of:
+"Hover to explore the story hidden in the data."
+
+Use:
+"Hover for title and year."
+
+Or remove entirely if the interaction is already obvious.

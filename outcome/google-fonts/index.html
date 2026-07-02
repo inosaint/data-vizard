@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>After Latin, The Field Frays.</title>
+  <meta name="description" content="A broadside view of Google Fonts subset coverage, where Latin support dominates and the rest of the catalog thins into a long multilingual ledger.">
+  <meta name="theme-color" content="#f3ecde">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="After Latin, The Field Frays.">
+  <meta property="og:description" content="A broadside view of Google Fonts subset coverage, where Latin support dominates and the rest of the catalog thins into a long multilingual ledger.">
+  <meta property="og:image" content="favicon.svg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="After Latin, The Field Frays.">
+  <meta name="twitter:description" content="A broadside view of Google Fonts subset coverage, where Latin support dominates and the rest of the catalog thins into a long multilingual ledger.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="broadside">
+    <div class="topline">
+      <p class="eyebrow">Google Fonts coverage field</p>
+      <button class="notes-button" type="button" id="open-notes" aria-haspopup="dialog" aria-controls="notes-dialog">
+        Notes
+      </button>
+    </div>
+
+    <header class="masthead">
+      <h1>After Latin, The Field Frays.</h1>
+      <p class="caption">A coverage landscape where near-universal Latin support gives way to a much thinner multilingual tail.</p>
+    </header>
+
+    <section class="coverage-field" aria-label="Google Fonts subset coverage field">
+      <div class="major-tier" id="major-tier"></div>
+      <div class="middle-tier" id="middle-tier"></div>
+      <div class="tail-tier" id="tail-tier"></div>
+    </section>
+
+    <section class="focus-band" aria-live="polite">
+      <p class="focus-kicker">Selected subset</p>
+      <div class="focus-primary">
+        <h2 id="detail-name">Vietnamese</h2>
+        <p class="focus-count"><span id="detail-count">511</span> families</p>
+        <p class="focus-context" id="detail-context">First major drop</p>
+      </div>
+      <dl class="focus-facts">
+        <div>
+          <dt>Avg variants</dt>
+          <dd id="detail-variants">6.83</dd>
+        </div>
+        <div>
+          <dt>Top category</dt>
+          <dd id="detail-category">sans-serif</dd>
+        </div>
+        <div>
+          <dt>Spread</dt>
+          <dd id="detail-spread">5 categories</dd>
+        </div>
+      </dl>
+      <div class="mix-chart" id="mix-chart" aria-label="Category mix breakdown"></div>
+    </section>
+  </main>
+
+  <dialog class="notes-dialog" id="notes-dialog">
+    <form method="dialog" class="notes-card">
+      <div class="notes-top">
+        <p class="notes-label">Source note</p>
+        <button class="notes-close" type="submit" aria-label="Close notes">Close</button>
+      </div>
+      <h2>Counts only.</h2>
+      <p>The source is a local snapshot of the <code>hasinhayder/google-fonts</code> catalog index updated on April 10, 2026.</p>
+      <p>Each subset count shows how many font families list that support. It does not measure usage, quality, or language importance.</p>
+    </form>
+  </dialog>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

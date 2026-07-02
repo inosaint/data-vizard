@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Google Fonts Coverage Field Options</title>
+  <meta name="description" content="Visual direction options for a data-art-led Google Fonts coverage visualization.">
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f4efe6;
+      --ink: #161310;
+      --muted: #6f6358;
+      --line: rgba(22, 19, 16, 0.12);
+      --card: rgba(255, 250, 243, 0.82);
+      --shadow: 0 20px 40px rgba(31, 22, 15, 0.12);
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top left, rgba(216, 105, 58, 0.18), transparent 28%),
+        radial-gradient(circle at 85% 12%, rgba(85, 96, 203, 0.12), transparent 24%),
+        linear-gradient(180deg, #f8f3ea 0%, #efe7da 100%);
+      color: var(--ink);
+    }
+
+    main {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 36px;
+      display: grid;
+      gap: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 4vw, 4.3rem);
+      line-height: 0.92;
+      letter-spacing: -0.05em;
+      max-width: 880px;
+    }
+
+    .intro {
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .option {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: var(--card);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .preview {
+      aspect-ratio: 4 / 4.6;
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .preview-a {
+      background:
+        radial-gradient(circle at 50% 50%, rgba(217, 79, 36, 0.18), transparent 18%),
+        radial-gradient(circle at 50% 50%, rgba(27, 24, 22, 0.08) 0 22%, transparent 22.5%),
+        radial-gradient(circle at 50% 50%, rgba(27, 24, 22, 0.08) 0 38%, transparent 38.5%),
+        linear-gradient(180deg, #f8f1e4, #efe3cf);
+    }
+
+    .preview-a::before,
+    .preview-a::after {
+      content: "";
+      position: absolute;
+      inset: 12% 18%;
+      border-radius: 999px;
+      border: 1px solid rgba(22, 19, 16, 0.14);
+    }
+
+    .preview-a::after {
+      inset: 24% 29%;
+    }
+
+    .a-dot {
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #d85e32;
+      box-shadow: 0 0 0 8px rgba(216, 94, 50, 0.12);
+    }
+
+    .preview-b {
+      background: linear-gradient(180deg, #111111, #1a1714);
+    }
+
+    .b-bar {
+      position: absolute;
+      left: 12%;
+      right: 12%;
+      height: 18px;
+      background: #f5ecdf;
+    }
+
+    .preview-c {
+      background:
+        linear-gradient(90deg, rgba(0,0,0,0.06) 1px, transparent 1px),
+        linear-gradient(rgba(0,0,0,0.06) 1px, transparent 1px),
+        linear-gradient(180deg, #f8f6ef, #e9e3d5);
+      background-size: 42px 42px, 42px 42px, auto;
+    }
+
+    .c-tile {
+      position: absolute;
+      border: 1px solid rgba(22, 19, 16, 0.14);
+      background: rgba(255, 252, 246, 0.82);
+      color: #181410;
+      font-size: 0.72rem;
+      display: grid;
+      place-items: center;
+      letter-spacing: 0.06em;
+    }
+
+    .body {
+      padding: 18px 18px 20px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .label {
+      display: inline-flex;
+      width: fit-content;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 1.4rem;
+      line-height: 1.02;
+      letter-spacing: -0.03em;
+    }
+
+    p, ul {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    ul {
+      padding-left: 18px;
+    }
+
+    li + li {
+      margin-top: 6px;
+    }
+
+    strong {
+      color: var(--ink);
+    }
+
+    @media (max-width: 980px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Google Fonts coverage can read as a field, a poster, or a specimen wall.</h1>
+      <p class="intro">All three directions keep the story data-art-led and copy-light. The difference is where the meaning lives: in a spatial coverage field, in ranked typographic contrast, or in a quieter archival matrix.</p>
+    </header>
+
+    <section class="grid">
+      <article class="option">
+        <div class="preview preview-a">
+          <span class="a-dot" style="left:49%; top:45%;"></span>
+          <span class="a-dot" style="left:51%; top:63%; width:11px; height:11px;"></span>
+          <span class="a-dot" style="left:66%; top:76%; width:8px; height:8px; background:#3347cc;"></span>
+          <span class="a-dot" style="left:33%; top:79%; width:8px; height:8px; background:#3347cc;"></span>
+          <span class="a-dot" style="left:74%; top:26%; width:6px; height:6px; background:#1a1714;"></span>
+          <span class="a-dot" style="left:23%; top:32%; width:6px; height:6px; background:#1a1714;"></span>
+        </div>
+        <div class="body">
+          <span class="label">Option A</span>
+          <h2>Orbit Field</h2>
+          <p><strong>Studio gloss + diagrammatic atlas.</strong> A radial field where subset families cluster by coverage depth, making the dominance of Latin feel immediate before the long tail resolves.</p>
+          <ul>
+            <li><strong>Focal point:</strong> the steep drop from the central coverage tiers to the outer ring.</li>
+            <li><strong>Rendering:</strong> D3/SVG or positioned HTML marks.</li>
+            <li><strong>Risk avoided:</strong> does not read like a spreadsheet ranking.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="option">
+        <div class="preview preview-b">
+          <span class="b-bar" style="top:18%; width:76%; background:#f5ecdf;"></span>
+          <span class="b-bar" style="top:31%; width:60%; background:#e86a34;"></span>
+          <span class="b-bar" style="top:44%; width:22%; background:#f5ecdf;"></span>
+          <span class="b-bar" style="top:57%; width:12%; background:#f5ecdf;"></span>
+          <span class="b-bar" style="top:70%; width:7%; background:#f5ecdf;"></span>
+        </div>
+        <div class="body">
+          <span class="label">Option B</span>
+          <h2>Signal Drop Poster</h2>
+          <p><strong>Minimal brutalist + editorial poster.</strong> A sparse ranked composition that turns the subset drop-off into one dramatic typographic chart.</p>
+          <ul>
+            <li><strong>Focal point:</strong> the visual break between `latin-ext` and `vietnamese`.</li>
+            <li><strong>Rendering:</strong> HTML/CSS/SVG.</li>
+            <li><strong>Risk avoided:</strong> does not bury the main comparison inside atmospheric clustering.</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="option">
+        <div class="preview preview-c">
+          <span class="c-tile" style="left:10%; top:14%; width:33%; height:18%;">LATIN</span>
+          <span class="c-tile" style="left:46%; top:14%; width:26%; height:18%;">LATIN-EXT</span>
+          <span class="c-tile" style="left:74%; top:14%; width:12%; height:18%;">VIET</span>
+          <span class="c-tile" style="left:10%; top:38%; width:16%; height:12%;">CYR</span>
+          <span class="c-tile" style="left:29%; top:38%; width:14%; height:12%;">GREEK</span>
+          <span class="c-tile" style="left:47%; top:38%; width:12%; height:12%;">JP</span>
+          <span class="c-tile" style="left:63%; top:38%; width:10%; height:12%;">AR</span>
+          <span class="c-tile" style="left:76%; top:38%; width:9%; height:12%;">TH</span>
+        </div>
+        <div class="body">
+          <span class="label">Option C</span>
+          <h2>Coverage Cabinet</h2>
+          <p><strong>Archival modernist + gallery label.</strong> A quiet matrix of subset tiles sized by family count, with sparse detail on focus and an index-card tone.</p>
+          <ul>
+            <li><strong>Focal point:</strong> Latin dominance framed as a catalog cabinet rather than a chart.</li>
+            <li><strong>Rendering:</strong> HTML/CSS grid with lightweight JS detail.</li>
+            <li><strong>Risk avoided:</strong> does not slide into utility UI or chart-first defaulting.</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

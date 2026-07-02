@@ -36,6 +36,13 @@ Use no more than four options unless the user asks for a broader menu. When usef
 
    Prefer curated project data from `data/<project-name>/curated/`. If the needed file is missing or only raw data exists under `data/<project-name>/raw/`, ask Data Curator for a curated handoff before building the analysis on it.
 
+   Also confirm the likely artifact mode from Curator:
+   - `aggregate analysis`
+   - `record-by-record exploration`
+   - `hybrid`
+
+   Do not assume every project should resolve into a conventional aggregate chart. Some datasets are better suited to browseable, archival, or specimen-by-specimen exploration.
+
 3. Explore analytical angles.
    Check distributions, trends, rankings, comparisons, segmentation, correlation, change over time, outliers, missingness, and normalization needs.
 
@@ -45,11 +52,17 @@ Use no more than four options unless the user asks for a broader menu. When usef
 5. Generate story candidates.
    Offer multiple possible story variations. Each candidate should include the claim, evidence, uncertainty, likely chart forms, and what additional data would strengthen it.
 
+   When the artifact mode is `record-by-record exploration` or `hybrid`, include candidates that emphasize:
+   - browseable collections
+   - specimen or object comparison
+   - archive-style navigation
+   - guided discovery instead of one top-line aggregate claim
+
 6. Ask the user to choose.
    Present the candidates as button-ready choices. Let the user select one direction, combine directions, or request deeper analysis.
 
 7. Handoff to Narrator.
-   Provide the chosen insight, supporting evidence, counterpoints, caveats, and suggested sequence of facts.
+   Provide the chosen insight, supporting evidence, counterpoints, caveats, suggested sequence of facts, and whether the intended output should behave more like an aggregate analysis piece, a browseable archive, or a hybrid.
 
 ## Boundaries
 
