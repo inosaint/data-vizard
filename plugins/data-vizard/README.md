@@ -2,8 +2,6 @@
 
 Data Vizard is an agent plugin for staged data visualization work. It bundles skills for dataset intake, curation, exploratory analysis, adaptive narration, critique, and HTML visualization design.
 
-![Data Vizard workflow](assets/screenshot-workflow.png)
-
 ## What This Plugin Provides
 
 - `data-vizard:data-vizard` - Orchestrates the full workflow, delegates role work, and keeps user decision gates explicit.
@@ -133,8 +131,6 @@ Use $data-vizard:designer to build the HTML visualization.
 ```
 
 The orchestrator confirms where project artifacts should live in the active workspace before creating or changing files, asks early about explanatory versus data-art posture, and uses critique passes before final signoff.
-
-![Data Vizard output example](assets/screenshot-output.png)
 
 ## Privacy And Data
 

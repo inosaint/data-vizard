@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Data Vizard</title>
+  <meta name="description" content="Data Vizard turns datasets into staged, critique-ready HTML stories with Codex, Claude Code, and Gemini support.">
+  <meta name="theme-color" content="#f6f2ff">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Data Vizard">
+  <meta property="og:description" content="A minimal landing page for the Data Vizard plugin and a few selected outcome examples.">
+  <link rel="icon" href="plugins/data-vizard/assets/logo.png" type="image/png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0,0">
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f2ff;
+      --bg-2: #ffffff;
+      --ink: #1e1633;
+      --muted: #5f5872;
+      --line: #ded6f3;
+      --line-strong: #c7b8ef;
+      --panel: rgba(255, 255, 255, 0.84);
+      --panel-strong: #ffffff;
+      --purple: #6c3df0;
+      --purple-deep: #4a1fb8;
+      --purple-soft: #eee7ff;
+      --shadow: 0 6px 14px rgba(73, 31, 184, 0.08);
+      --radius: 18px;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 18% 14%, rgba(108, 61, 240, 0.14), transparent 22%),
+        radial-gradient(circle at 84% 20%, rgba(108, 61, 240, 0.08), transparent 18%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 56%, #fbfaff 100%);
+      color: var(--ink);
+      font: 16px/1.5 var(--font, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--purple-deep);
+    }
+
+    .page {
+      width: min(1180px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 24px 0 36px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 42px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .brand img {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      box-shadow: var(--shadow);
+    }
+
+    .brand span {
+      font-size: 0.98rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(300px, 0.7fr);
+      gap: 28px;
+      align-items: start;
+      margin-bottom: 52px;
+    }
+
+    .hero-copy {
+      padding-top: 4px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--purple-deep);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      text-wrap: balance;
+      letter-spacing: -0.03em;
+    }
+
+    h1 {
+      max-width: 11ch;
+      font-size: clamp(2.7rem, 6vw, 4.6rem);
+      line-height: 0.95;
+    }
+
+    .lede {
+      max-width: 62ch;
+      margin: 18px 0 0;
+      font-size: 1.08rem;
+      color: var(--muted);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .button,
+    .button-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 0 16px;
+      border-radius: 999px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+    }
+
+    .button {
+      background: var(--purple);
+      color: #fff;
+      border: 1px solid var(--purple);
+    }
+
+    .button-secondary {
+      background: rgba(255, 255, 255, 0.76);
+      border: 1px solid var(--line);
+      color: var(--ink);
+    }
+
+    .button:hover,
+    .button-secondary:hover,
+    .button:focus-visible,
+    .button-secondary:focus-visible {
+      transform: translateY(-1px);
+      outline: none;
+    }
+
+    .hero-panel {
+      display: grid;
+      gap: 12px;
+      padding-top: 8px;
+    }
+
+    .install-card {
+      padding: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .install-card-top {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .install-card .label {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .command-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: center;
+      padding: 14px 14px 14px 16px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.64);
+    }
+
+    .copy-command {
+      min-height: 36px;
+      width: 36px;
+      display: inline-grid;
+      place-items: center;
+      padding: 0;
+      border-radius: 999px;
+      border: 0;
+      background: var(--purple-soft);
+      color: var(--purple-deep);
+      font: 700 0.8rem/1 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      cursor: pointer;
+      transition: transform 160ms ease, background-color 160ms ease, color 160ms ease;
+    }
+
+    .copy-command:hover,
+    .copy-command:focus-visible {
+      transform: translateY(-1px);
+      outline: none;
+      background: #e5dcff;
+    }
+
+    .copy-command[data-state="copied"] {
+      background: var(--purple-soft);
+      color: var(--purple-deep);
+    }
+
+    .copy-command svg {
+      width: 16px;
+      height: 16px;
+      display: block;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .command {
+      margin: 0;
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+      border: 0;
+      color: var(--purple-deep);
+      font: 600 0.98rem/1.35 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      overflow-x: auto;
+    }
+
+    .install-footnote {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .workflow {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+
+    .workflow h2,
+    .section h2 {
+      font-size: clamp(1.55rem, 2vw, 2rem);
+      line-height: 1.05;
+    }
+
+    .workflow-lede {
+      max-width: 64ch;
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .workflow-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .workflow-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.6);
+      box-shadow: var(--shadow);
+    }
+
+    .workflow-icon {
+      display: grid;
+      place-items: center;
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      background: var(--purple-soft);
+      color: var(--purple-deep);
+      flex: 0 0 auto;
+    }
+
+    .material-symbols-rounded {
+      font-family: "Material Symbols Rounded";
+      font-style: normal;
+      font-weight: normal;
+      font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
+      font-size: 22px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      white-space: nowrap;
+    }
+
+    .workflow-copy {
+      display: grid;
+      gap: 3px;
+      min-width: 0;
+      flex: 1 1 auto;
+    }
+
+    .workflow-copy strong {
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .workflow-copy span {
+      color: var(--muted);
+    }
+
+    .section {
+      display: grid;
+      gap: 14px;
+      margin-bottom: 36px;
+    }
+
+    .outcomes {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .outcome {
+      display: grid;
+      gap: 8px;
+    }
+
+    .preview-frame {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      background: #ece7ff;
+      border: 0;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 24px rgba(73, 31, 184, 0.12);
+    }
+
+    .preview-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: #fff;
+      pointer-events: none;
+    }
+
+    .preview-link {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      text-indent: -9999px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .preview-link:focus-visible {
+      outline: 2px solid var(--purple);
+      outline-offset: -2px;
+    }
+
+    .outcome-meta {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 4px 2px 0;
+    }
+
+    .outcome-meta h3 {
+      font-size: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .outcome-meta span {
+      color: var(--muted);
+      font-size: 0.88rem;
+      white-space: nowrap;
+    }
+
+    .outcome-spacer {
+      height: 16px;
+    }
+
+    .outcome a {
+      color: var(--purple-deep);
+      font-weight: 700;
+    }
+
+    .footer {
+      margin-top: 38px;
+      padding-top: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .footer strong {
+      color: var(--ink);
+    }
+
+    .footer-links {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+    }
+
+    @media (max-width: 920px) {
+      .hero,
+      .outcomes {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        gap: 12px;
+        margin-bottom: 30px;
+      }
+
+      .outcomes {
+        gap: 12px;
+      }
+
+      .outcome {
+        gap: 10px;
+      }
+
+      .outcome-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+
+      .outcome-meta span {
+        white-space: normal;
+      }
+
+      .outcome-spacer {
+        height: 10px;
+      }
+
+      .workflow-row {
+        align-items: flex-start;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .page {
+        width: min(100vw - 20px, 1180px);
+        padding-top: 16px;
+      }
+
+      h1 {
+        max-width: 100%;
+        font-size: clamp(2.4rem, 14vw, 4rem);
+      }
+
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Data Vizard home">
+        <img src="plugins/data-vizard/assets/logo.png" alt="Data Vizard logo">
+        <span>Data Vizard</span>
+      </a>
+    </header>
+
+    <section class="hero" id="top">
+      <div class="hero-copy">
+        <p class="eyebrow">Agent workflow plugin</p>
+        <h1>Curate, shape, and ship your data’s story.</h1>
+        <p class="lede">
+          Data Vizard turns a dataset into a staged workflow. Run the stages all at once or one by one: curate the source, find the shape of the story, tighten the narrative, critique the draft, and ship a self-contained HTML outcome.
+        </p>
+      </div>
+
+      <aside class="hero-panel" aria-label="Plugin snapshot">
+        <section class="install-card">
+          <div class="install-card-top">
+            <p class="label">Quick start</p>
+          </div>
+          <div class="command-shell">
+            <pre class="command">npx data-vizard install</pre>
+            <button class="copy-command" type="button" data-copy-command="npx data-vizard install" aria-label="Copy install command" title="Copy install command">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <rect x="9" y="9" width="10" height="10" rx="2"></rect>
+                <path d="M7 15H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </button>
+          </div>
+          <p class="install-footnote">Use <code>npx data-vizard install</code>, then open a fresh Codex, Claude Code, or Gemini session so the new skills load cleanly.</p>
+        </section>
+      </aside>
+    </section>
+
+    <section class="workflow" aria-labelledby="workflow-title">
+      <h2 id="workflow-title">Five roles, one workflow</h2>
+      <p class="workflow-lede">Run them all together or individually. Each role carries a different piece of the work, so the process stays visible instead of disappearing into one opaque prompt.</p>
+      <div class="workflow-list">
+        <article class="workflow-row">
+          <div class="workflow-icon"><span class="material-symbols-rounded" aria-hidden="true">database</span></div>
+          <div class="workflow-copy">
+            <strong>Curator</strong>
+            <span>Prepares the dataset and verifies the source trustworthiness. The curator holds the system together.</span>
+          </div>
+        </article>
+        <article class="workflow-row">
+          <div class="workflow-icon"><span class="material-symbols-rounded" aria-hidden="true">query_stats</span></div>
+          <div class="workflow-copy">
+            <strong>Analyst</strong>
+            <span>Looks for patterns, comparisons, and the shape hiding in the data.</span>
+          </div>
+        </article>
+        <article class="workflow-row">
+          <div class="workflow-icon"><span class="material-symbols-rounded" aria-hidden="true">edit_note</span></div>
+          <div class="workflow-copy">
+            <strong>Narrator</strong>
+            <span>Tightens the narrative so the story says only what it needs to say.</span>
+          </div>
+        </article>
+        <article class="workflow-row">
+          <div class="workflow-icon"><span class="material-symbols-rounded" aria-hidden="true">verified</span></div>
+          <div class="workflow-copy">
+            <strong>Critic</strong>
+            <span>Checks the draft for weak claims, missing links, and fuzzy handoffs.</span>
+          </div>
+        </article>
+        <article class="workflow-row">
+          <div class="workflow-icon"><span class="material-symbols-rounded" aria-hidden="true">palette</span></div>
+          <div class="workflow-copy">
+            <strong>Designer</strong>
+            <span>Turns the finished story into a polished, self-contained HTML outcome.</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="outcomes">
+      <h2>Selected outcomes</h2>
+      <div class="outcomes">
+        <article class="outcome">
+          <div class="preview-frame">
+            <iframe
+              src="outcome/nyc-taxi-weather-jan-2026/index.html"
+              title="NYC taxi weather outcome preview"
+              loading="lazy"
+              aria-hidden="true"
+            ></iframe>
+            <a class="preview-link" href="outcome/nyc-taxi-weather-jan-2026/index.html">Open NYC taxi weather outcome</a>
+          </div>
+          <div class="outcome-meta">
+            <h3><a href="outcome/nyc-taxi-weather-jan-2026/index.html">NYC Taxi Weather</a></h3>
+          </div>
+          <div class="outcome-spacer" aria-hidden="true"></div>
+        </article>
+
+        <article class="outcome">
+          <div class="preview-frame">
+            <iframe
+              src="outcome/fifa-2026-world-cup/index.html"
+              title="FIFA 2026 World Cup outcome preview"
+              loading="lazy"
+              aria-hidden="true"
+            ></iframe>
+            <a class="preview-link" href="outcome/fifa-2026-world-cup/index.html">Open FIFA 2026 World Cup outcome</a>
+          </div>
+          <div class="outcome-meta">
+            <h3><a href="outcome/fifa-2026-world-cup/index.html">FIFA 2026 World Cup</a></h3>
+          </div>
+          <div class="outcome-spacer" aria-hidden="true"></div>
+        </article>
+
+        <article class="outcome">
+          <div class="preview-frame">
+            <iframe
+              src="outcome/anime-stream/outcome/anime-streaming-landscape/index.html"
+              title="Shared Sky outcome preview"
+              loading="lazy"
+              aria-hidden="true"
+            ></iframe>
+            <a class="preview-link" href="outcome/anime-stream/outcome/anime-streaming-landscape/index.html">Open Shared Sky outcome</a>
+          </div>
+          <div class="outcome-meta">
+            <h3><a href="outcome/anime-stream/outcome/anime-streaming-landscape/index.html">Shared Sky</a></h3>
+          </div>
+          <div class="outcome-spacer" aria-hidden="true"></div>
+        </article>
+
+        <article class="outcome">
+          <div class="preview-frame">
+            <iframe
+              src="outcome/google-fonts/index.html"
+              title="Google Fonts outcome preview"
+              loading="lazy"
+              aria-hidden="true"
+            ></iframe>
+            <a class="preview-link" href="outcome/google-fonts/index.html">Open Google Fonts outcome</a>
+          </div>
+          <div class="outcome-meta">
+            <h3><a href="outcome/google-fonts/index.html">After Latin, The Field Frays.</a></h3>
+          </div>
+          <div class="outcome-spacer" aria-hidden="true"></div>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div><strong>Data Vizard 0.1.4</strong> ships Codex, Claude Code, and Gemini surfaces together.</div>
+      <div class="footer-links"><a href="docs.html">Beginner guide</a> <a href="https://www.npmjs.com/package/data-vizard">npm package</a> <a href="plugins/data-vizard/README.md">Plugin README</a> <a href="CHANGELOG.md">Changelog</a></div>
+    </footer>
+  </main>
+  <script>
+    const copyButton = document.querySelector("[data-copy-command]");
+
+    if (copyButton) {
+      copyButton.addEventListener("click", async () => {
+        const value = copyButton.getAttribute("data-copy-command");
+        if (!value) {
+          return;
+        }
+
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(value);
+          } else {
+            const textarea = document.createElement("textarea");
+            textarea.value = value;
+            textarea.setAttribute("readonly", "");
+            textarea.style.position = "fixed";
+            textarea.style.opacity = "0";
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            textarea.remove();
+          }
+
+          copyButton.dataset.state = "copied";
+          copyButton.textContent = "Copied";
+          window.setTimeout(() => {
+            copyButton.dataset.state = "";
+            copyButton.textContent = "Copy command";
+          }, 1600);
+        } catch (error) {
+          copyButton.textContent = "Copy failed";
+          window.setTimeout(() => {
+            copyButton.textContent = "Copy command";
+          }, 1600);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
