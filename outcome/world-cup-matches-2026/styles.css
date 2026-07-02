@@ -1,0 +1,400 @@
+:root {
+  color-scheme: dark;
+  --bg: #0f1116;
+  --bg-soft: #151922;
+  --panel: rgba(14, 17, 25, 0.72);
+  --ink: #f3eee5;
+  --muted: rgba(243, 238, 229, 0.72);
+  --line: rgba(243, 238, 229, 0.16);
+  --line-strong: rgba(243, 238, 229, 0.28);
+  --hot: #ff6138;
+  --amber: #ffbf1f;
+  --blue: #5f88ff;
+  --lime: #8ecf3a;
+  --cyan: #6de2ff;
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 14% 18%, rgba(255, 97, 56, 0.18), transparent 22%),
+    radial-gradient(circle at 88% 78%, rgba(95, 136, 255, 0.16), transparent 26%),
+    linear-gradient(180deg, #11131a 0%, #0b0d12 100%);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+button {
+  font: inherit;
+}
+
+.page-shell {
+  position: relative;
+  z-index: 1;
+  width: min(1380px, calc(100vw - 24px));
+  margin: 0 auto;
+  padding: 20px 0 28px;
+}
+
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  align-items: start;
+  margin-bottom: 18px;
+}
+
+.kicker,
+.notes-label,
+.tooltip-code,
+.tooltip-stats dt,
+.zone,
+.axis-label,
+.tick {
+  margin: 0;
+  color: var(--muted);
+  font: 700 0.76rem/1.2 "Avenir Next", "Segoe UI", sans-serif;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.kicker {
+  margin-bottom: 8px;
+}
+
+h1,
+.tooltip h2 {
+  font-family: "Avenir Next Condensed", "Arial Narrow", "Avenir Next", "Segoe UI", sans-serif;
+}
+
+h1 {
+  margin: 0;
+  max-width: 720px;
+  font-size: clamp(3.2rem, 8vw, 7rem);
+  line-height: 0.88;
+  letter-spacing: -0.075em;
+}
+
+.caption {
+  margin: 10px 0 0;
+  max-width: 620px;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.notes-button,
+.notes-close {
+  appearance: none;
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--ink);
+  padding: 8px 12px;
+  cursor: pointer;
+  font: 700 0.72rem/1.2 "Avenir Next", "Segoe UI", sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.notes-button:hover,
+.notes-button:focus-visible,
+.notes-close:hover,
+.notes-close:focus-visible {
+  background: rgba(255, 255, 255, 0.08);
+  outline: none;
+}
+
+.chart-stage {
+  position: relative;
+  min-height: calc(100vh - 180px);
+}
+
+.field-frame {
+  position: relative;
+  min-height: calc(100vh - 180px);
+  border: 1px solid var(--line);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.04), transparent),
+    linear-gradient(90deg, rgba(255, 97, 56, 0.05) 0%, transparent 28%, transparent 72%, rgba(142, 207, 58, 0.05) 100%),
+    linear-gradient(180deg, rgba(109, 226, 255, 0.03) 0%, transparent 34%, transparent 70%, rgba(255, 97, 56, 0.03) 100%),
+    var(--panel);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.field-frame::before,
+.field-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.field-frame::before {
+  background-image:
+    linear-gradient(rgba(243, 238, 229, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(243, 238, 229, 0.05) 1px, transparent 1px);
+  background-size: 10% 16.66%;
+}
+
+.field-frame::after {
+  background:
+    linear-gradient(90deg, transparent calc(50% - 1px), rgba(243, 238, 229, 0.09) calc(50% - 1px), rgba(243, 238, 229, 0.09) calc(50% + 1px), transparent calc(50% + 1px)),
+    linear-gradient(180deg, transparent calc(50% - 1px), rgba(243, 238, 229, 0.09) calc(50% - 1px), rgba(243, 238, 229, 0.09) calc(50% + 1px), transparent calc(50% + 1px));
+}
+
+.zone,
+.axis-label,
+.tick {
+  position: absolute;
+  z-index: 2;
+}
+
+.zone-clinical {
+  top: 16px;
+  left: 18px;
+  color: rgba(255, 191, 31, 0.9);
+}
+
+.zone-waste {
+  right: 18px;
+  bottom: 18px;
+  color: rgba(255, 97, 56, 0.9);
+}
+
+.axis-y {
+  top: 18px;
+  right: 18px;
+}
+
+.axis-x {
+  left: 18px;
+  bottom: 18px;
+}
+
+.tick-y {
+  right: 18px;
+}
+
+.tick-y-top { top: 72px; }
+.tick-y-mid { top: 50%; transform: translateY(-50%); }
+.tick-y-low { bottom: 72px; }
+
+.tick-x {
+  bottom: 44px;
+}
+
+.tick-x-left { left: 14%; }
+.tick-x-mid { left: 50%; transform: translateX(-50%); }
+.tick-x-right { right: 14%; }
+
+.mark-layer {
+  position: absolute;
+  inset: 0;
+}
+
+.mark {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+  border: none;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  padding: 0;
+}
+
+.mark:hover .mark-dot,
+.mark:focus-visible .mark-dot,
+.mark.is-active .mark-dot {
+  transform: scale(1.2);
+  box-shadow: 0 0 0 3px rgba(243, 238, 229, 0.18);
+}
+
+.mark:focus-visible {
+  outline: none;
+}
+
+.mark-dot {
+  width: var(--size);
+  height: var(--size);
+  border-radius: 999px;
+  background: var(--tone);
+  box-shadow: 0 0 0 1px rgba(10, 11, 17, 0.8);
+  transition: transform 140ms ease, box-shadow 140ms ease;
+}
+
+.mark-code {
+  color: rgba(243, 238, 229, 0.88);
+  font: 700 0.7rem/1.1 "Avenir Next", "Segoe UI", sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.55);
+  white-space: nowrap;
+}
+
+.tooltip {
+  position: absolute;
+  z-index: 3;
+  width: min(260px, calc(100vw - 40px));
+  border: 1px solid var(--line-strong);
+  background: rgba(8, 10, 15, 0.92);
+  backdrop-filter: blur(10px);
+  padding: 12px 12px 10px;
+  pointer-events: none;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.4);
+}
+
+.tooltip[hidden] {
+  display: none;
+}
+
+.tooltip h2 {
+  margin: 4px 0 8px;
+  font-size: 2rem;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+}
+
+.tooltip-stats {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+}
+
+.tooltip-stats div {
+  display: grid;
+  gap: 2px;
+}
+
+.tooltip-stats dd {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.notes-dialog {
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+
+.notes-dialog::backdrop {
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+}
+
+.notes-card {
+  width: min(560px, calc(100vw - 24px));
+  border: 1px solid var(--line-strong);
+  background: #12151d;
+  color: var(--ink);
+  padding: 18px;
+  display: grid;
+  gap: 12px;
+}
+
+.notes-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: start;
+}
+
+.notes-card h2 {
+  margin: 0;
+  font-size: 2rem;
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+}
+
+.notes-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.42;
+}
+
+@media (max-width: 900px) {
+  .masthead {
+    flex-direction: column;
+  }
+
+  .chart-stage,
+  .field-frame {
+    min-height: 72vh;
+  }
+
+  .tooltip {
+    width: min(220px, calc(100vw - 32px));
+  }
+}
+
+@media (max-width: 640px) {
+  .page-shell {
+    width: min(100vw - 16px, 100%);
+    padding-top: 16px;
+  }
+
+  .axis-y,
+  .tick-y {
+    right: 10px;
+  }
+
+  .axis-x,
+  .tick-x {
+    left: 10px;
+    right: auto;
+    transform: none;
+  }
+
+  .tick-x-mid {
+    left: 46%;
+    transform: translateX(-50%);
+  }
+
+  .tick-x-right {
+    left: auto;
+    right: 10px;
+  }
+
+  .mark-code {
+    font-size: 0.62rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}

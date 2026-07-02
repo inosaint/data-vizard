@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shared Sky</title>
+  <meta name="description" content="A brutalist night-sky data artwork of anime streaming overlap, where each title appears as a star and platform reach shapes the field.">
+  <meta name="theme-color" content="#040814">
+  <meta property="og:title" content="Shared Sky">
+  <meta property="og:description" content="A brutalist night-sky data artwork of anime streaming overlap, built from the provided Kaggle dataset.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Shared Sky">
+  <meta name="twitter:description" content="A brutalist night-sky data artwork of anime streaming overlap, where each title becomes a star.">
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Asimovian&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-top: #02040b;
+      --bg-mid: #071125;
+      --bg-bottom: #030712;
+      --text: #ecf3ff;
+      --muted: rgba(221, 232, 255, 0.7);
+      --line: rgba(201, 221, 255, 0.18);
+      --one: #7d93ff;
+      --two: #9fd8ff;
+      --three: #8ef0df;
+      --four: #ffd48c;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      min-height: 100%;
+      font-family: "Space Grotesk", "Avenir Next", "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 18% 22%, rgba(126, 147, 255, 0.24), transparent 24%),
+        radial-gradient(circle at 72% 20%, rgba(142, 240, 223, 0.14), transparent 22%),
+        radial-gradient(circle at 56% 58%, rgba(121, 170, 255, 0.12), transparent 28%),
+        radial-gradient(circle at 80% 72%, rgba(255, 212, 140, 0.12), transparent 24%),
+        linear-gradient(180deg, var(--bg-top), var(--bg-mid) 52%, var(--bg-bottom));
+      overflow: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    body::before {
+      background-image:
+        radial-gradient(circle at 10% 14%, rgba(255, 255, 255, 0.8) 0 1px, transparent 1.4px),
+        radial-gradient(circle at 36% 72%, rgba(255, 255, 255, 0.42) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 78% 18%, rgba(255, 255, 255, 0.62) 0 1px, transparent 1.5px),
+        radial-gradient(circle at 86% 64%, rgba(255, 255, 255, 0.52) 0 1px, transparent 1.6px),
+        radial-gradient(circle at 56% 34%, rgba(255, 255, 255, 0.28) 0 1px, transparent 1.5px);
+      background-size: 300px 300px, 440px 440px, 360px 360px, 420px 420px, 520px 520px;
+      opacity: 0.52;
+    }
+
+    body::after {
+      background:
+        radial-gradient(circle at 26% 58%, rgba(108, 124, 255, 0.16), transparent 25%),
+        radial-gradient(circle at 68% 42%, rgba(97, 210, 255, 0.12), transparent 30%),
+        radial-gradient(circle at 82% 78%, rgba(255, 197, 120, 0.08), transparent 20%);
+      filter: blur(36px);
+      opacity: 0.8;
+    }
+
+    .frame {
+      position: relative;
+      min-height: 100vh;
+      isolation: isolate;
+    }
+
+    .nebula {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .cloud {
+      position: absolute;
+      border-radius: 999px;
+      filter: blur(28px);
+      mix-blend-mode: screen;
+      opacity: 0.54;
+      animation: drift 18s ease-in-out infinite alternate;
+    }
+
+    .cloud.one {
+      width: 34vw;
+      height: 18vw;
+      left: 9vw;
+      top: 16vh;
+      background: radial-gradient(circle, rgba(120, 137, 255, 0.4), rgba(120, 137, 255, 0.02) 72%);
+    }
+
+    .cloud.two {
+      width: 40vw;
+      height: 22vw;
+      left: 34vw;
+      top: 34vh;
+      background: radial-gradient(circle, rgba(97, 194, 255, 0.28), rgba(97, 194, 255, 0.02) 74%);
+      animation-delay: -5s;
+    }
+
+    .cloud.three {
+      width: 22vw;
+      height: 15vw;
+      right: 10vw;
+      top: 14vh;
+      background: radial-gradient(circle, rgba(142, 240, 223, 0.28), rgba(142, 240, 223, 0.01) 78%);
+      animation-delay: -9s;
+    }
+
+    .cloud.four {
+      width: 24vw;
+      height: 14vw;
+      right: 14vw;
+      bottom: 8vh;
+      background: radial-gradient(circle, rgba(255, 212, 140, 0.22), rgba(255, 212, 140, 0.01) 78%);
+      animation-delay: -12s;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    header {
+      position: absolute;
+      top: 18px;
+      left: 20px;
+      z-index: 5;
+      max-width: calc(100vw - 40px);
+      padding: 0;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Asimovian", "Space Grotesk", sans-serif;
+      font-size: clamp(2.9rem, 9vw, 7.8rem);
+      line-height: 0.88;
+      letter-spacing: 0.02em;
+      font-weight: 400;
+      text-transform: uppercase;
+      text-shadow: 0 0 18px rgba(255, 255, 255, 0.12);
+    }
+
+    .legend {
+      position: absolute;
+      left: 20px;
+      bottom: 18px;
+      z-index: 5;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      max-width: min(760px, calc(100vw - 40px));
+      padding: 0;
+      color: rgba(231, 240, 255, 0.78);
+      font-size: 0.74rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .chip-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      box-shadow: 0 0 12px currentColor;
+    }
+
+    .source {
+      position: absolute;
+      right: 20px;
+      bottom: 18px;
+      z-index: 5;
+      max-width: min(340px, calc(100vw - 40px));
+      color: rgba(231, 240, 255, 0.62);
+      font-size: 0.68rem;
+      line-height: 1.45;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-align: right;
+    }
+
+    .source a {
+      color: rgba(255, 255, 255, 0.88);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.28);
+    }
+
+    .source a:hover,
+    .source a:focus-visible {
+      border-bottom-color: rgba(255, 255, 255, 0.76);
+    }
+
+    .stage {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .star {
+      position: absolute;
+      border: 0;
+      background: transparent;
+      padding: 0;
+      cursor: pointer;
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      outline: none;
+    }
+
+    .star-core,
+    .star-core::before,
+    .star-core::after {
+      display: block;
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      border-radius: 999px;
+    }
+
+    .star-core {
+      width: var(--size);
+      height: var(--size);
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.96) 0%, var(--star-color) 55%, rgba(255, 255, 255, 0.08) 100%);
+      box-shadow:
+        0 0 calc(var(--size) * 1.1) rgba(255, 255, 255, 0.72),
+        0 0 calc(var(--size) * 3.6) color-mix(in srgb, var(--star-color) 72%, white 28%);
+      opacity: var(--opacity);
+      animation: pulse var(--pulse) ease-in-out infinite;
+    }
+
+    .star-core::before {
+      width: calc(var(--size) * 5.2);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
+      opacity: 0.78;
+    }
+
+    .star-core::after {
+      width: 1px;
+      height: calc(var(--size) * 5.2);
+      background: linear-gradient(180deg, transparent, rgba(255, 255, 255, 0.86), transparent);
+      opacity: 0.78;
+    }
+
+    .star::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: calc(var(--size) * 10);
+      height: calc(var(--size) * 10);
+      transform: translate(-50%, -50%);
+      border-radius: 999px;
+      background: radial-gradient(circle, color-mix(in srgb, var(--star-color) 30%, transparent) 0%, rgba(255, 255, 255, 0) 72%);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .star:hover,
+    .star:focus-visible,
+    .star.active,
+    .star.active-preview {
+      z-index: 6;
+    }
+
+    .star:hover .star-core,
+    .star:focus-visible .star-core,
+    .star.active .star-core,
+    .star.active-preview .star-core {
+      transform: translate(-50%, -50%) scale(1.28);
+      box-shadow:
+        0 0 calc(var(--size) * 1.6) rgba(255, 255, 255, 0.92),
+        0 0 calc(var(--size) * 5.5) color-mix(in srgb, var(--star-color) 78%, white 22%);
+      opacity: 1;
+    }
+
+    .cluster-path {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.56;
+      z-index: 2;
+    }
+
+    .tooltip {
+      position: fixed;
+      z-index: 10;
+      width: min(300px, calc(100vw - 24px));
+      padding: 14px 14px 12px;
+      border: 1px solid rgba(190, 214, 255, 0.18);
+      border-radius: 18px;
+      background: rgba(7, 12, 23, 0.86);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.34);
+      color: var(--text);
+      opacity: 0;
+      transform: translate3d(-9999px, -9999px, 0);
+      pointer-events: none;
+      transition: opacity 140ms ease;
+    }
+
+    .tooltip.visible {
+      opacity: 1;
+    }
+
+    .tooltip-title {
+      margin: 0 0 4px;
+      font-size: 1rem;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+
+    .tooltip-row,
+    .tooltip-platforms {
+      margin: 0;
+      color: rgba(229, 238, 255, 0.78);
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+
+    .tooltip-row strong {
+      color: rgba(255, 255, 255, 0.96);
+      font-weight: 500;
+    }
+
+    .tooltip-platforms {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(182, 206, 255, 0.1);
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: var(--opacity);
+      }
+      50% {
+        opacity: calc(var(--opacity) + 0.16);
+      }
+    }
+
+    @keyframes drift {
+      0% {
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+      100% {
+        transform: translate3d(14px, -10px, 0) scale(1.03);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cloud,
+      .star-core {
+        animation: none;
+      }
+
+      .tooltip {
+        transition: none;
+      }
+    }
+
+    @media (max-width: 740px) {
+      .legend {
+        left: 18px;
+        bottom: 18px;
+        max-width: calc(100vw - 36px);
+      }
+
+      .source {
+        left: 18px;
+        right: auto;
+        bottom: 72px;
+        text-align: left;
+        max-width: calc(100vw - 36px);
+      }
+
+      .cloud.one,
+      .cloud.two,
+      .cloud.three,
+      .cloud.four {
+        width: 54vw;
+        height: 30vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="frame">
+    <div class="nebula" aria-hidden="true">
+      <div class="cloud one"></div>
+      <div class="cloud two"></div>
+      <div class="cloud three"></div>
+      <div class="cloud four"></div>
+    </div>
+
+    <header>
+      <h1>Shared Sky</h1>
+    </header>
+
+    <svg class="cluster-path" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M10,66 C20,50 30,44 42,42 C54,40 58,34 66,26" fill="none" stroke="rgba(159, 216, 255, 0.12)" stroke-width="0.25"></path>
+      <path d="M44,42 C52,54 65,62 82,70" fill="none" stroke="rgba(142, 240, 223, 0.12)" stroke-width="0.25"></path>
+      <path d="M66,26 C76,22 82,26 89,36" fill="none" stroke="rgba(255, 212, 140, 0.12)" stroke-width="0.22"></path>
+    </svg>
+
+    <main id="stage" class="stage" aria-label="Interactive star map of anime availability"></main>
+
+    <div class="legend" aria-hidden="true">
+      <span class="chip"><span class="chip-dot" style="color: var(--one); background: var(--one);"></span>1 platform</span>
+      <span class="chip"><span class="chip-dot" style="color: var(--two); background: var(--two);"></span>2 platforms</span>
+      <span class="chip"><span class="chip-dot" style="color: var(--three); background: var(--three);"></span>3 platforms</span>
+      <span class="chip"><span class="chip-dot" style="color: var(--four); background: var(--four);"></span>4 platforms</span>
+    </div>
+
+    <div class="source">Source: <a href="https://www.kaggle.com/datasets/devashish001/anime-dataset-with-ratings-and-streaming-platforms" target="_blank" rel="noreferrer">Kaggle anime dataset with ratings and streaming platforms</a></div>
+
+    <div id="tooltip" class="tooltip" role="status" aria-live="polite"></div>
+  </div>
+
+  <script src="./data.js"></script>
+  <script>
+    const data = Array.isArray(window.ANIME_DATA) ? window.ANIME_DATA.slice() : [];
+    const stage = document.getElementById("stage");
+    const tooltip = document.getElementById("tooltip");
+    const palette = {
+      1: getComputedStyle(document.documentElement).getPropertyValue("--one").trim(),
+      2: getComputedStyle(document.documentElement).getPropertyValue("--two").trim(),
+      3: getComputedStyle(document.documentElement).getPropertyValue("--three").trim(),
+      4: getComputedStyle(document.documentElement).getPropertyValue("--four").trim()
+    };
+
+    const clusters = {
+      1: [
+        { x: 0.22, y: 0.66, spreadX: 0.11, spreadY: 0.09 },
+        { x: 0.32, y: 0.54, spreadX: 0.08, spreadY: 0.07 }
+      ],
+      2: [
+        { x: 0.46, y: 0.46, spreadX: 0.13, spreadY: 0.11 },
+        { x: 0.58, y: 0.58, spreadX: 0.11, spreadY: 0.09 }
+      ],
+      3: [
+        { x: 0.7, y: 0.3, spreadX: 0.09, spreadY: 0.08 },
+        { x: 0.76, y: 0.52, spreadX: 0.08, spreadY: 0.07 }
+      ],
+      4: [
+        { x: 0.86, y: 0.2, spreadX: 0.04, spreadY: 0.04 }
+      ]
+    };
+
+    function hash(str) {
+      let h = 2166136261;
+      for (let i = 0; i < str.length; i += 1) {
+        h ^= str.charCodeAt(i);
+        h = Math.imul(h, 16777619);
+      }
+      return h >>> 0;
+    }
+
+    function random(seed) {
+      const x = Math.sin(seed) * 10000;
+      return x - Math.floor(x);
+    }
+
+    function clamp(v, min, max) {
+      return Math.max(min, Math.min(max, v));
+    }
+
+    function formatRating(value) {
+      return typeof value === "number" ? value.toFixed(1) : "N/A";
+    }
+
+    function computeLayout() {
+      const width = stage.clientWidth;
+      const height = stage.clientHeight;
+
+      stage.innerHTML = "";
+
+      data.forEach((item, index) => {
+        const set = clusters[item.platformCount] || clusters[1];
+        const cluster = set[index % set.length];
+        const seed = hash(item.title + String(item.year || "") + String(item.id));
+        const angle = random(seed) * Math.PI * 2;
+        const distance = Math.sqrt(random(seed + 1));
+        const jitterX = Math.cos(angle) * distance * cluster.spreadX + (random(seed + 2) - 0.5) * 0.012;
+        const jitterY = Math.sin(angle) * distance * cluster.spreadY + (random(seed + 3) - 0.5) * 0.014;
+        const mobileBias = width < 740 ? 0.04 : 0;
+        const x = clamp(cluster.x + jitterX, 0.06, 0.94);
+        const y = clamp(cluster.y + jitterY + mobileBias, 0.08, 0.9);
+        const ratingBoost = item.rating ? (item.rating - 7.2) * 0.9 : 0.2;
+        const popularityBoost = item.popularity ? Math.min(Math.log10(item.popularity) - 5.4, 1.2) : 0.3;
+        const size = clamp(4.4 + item.platformCount * 1.2 + ratingBoost + popularityBoost, 4.8, 12.8);
+        const opacity = clamp(0.56 + item.platformCount * 0.08 + ratingBoost * 0.04, 0.58, 0.98);
+        const pulse = 3.8 + random(seed + 4) * 4.6;
+
+        const button = document.createElement("button");
+        button.className = "star";
+        button.type = "button";
+        button.style.left = `${x * width}px`;
+        button.style.top = `${y * height}px`;
+        button.style.setProperty("--size", `${size}px`);
+        button.style.setProperty("--star-color", palette[item.platformCount] || palette[1]);
+        button.style.setProperty("--opacity", opacity.toFixed(2));
+        button.style.setProperty("--pulse", `${pulse.toFixed(2)}s`);
+        button.setAttribute("aria-label", `${item.title}, ${item.year || "year unknown"}, rating ${formatRating(item.rating)}, ${item.platformCount} platforms`);
+        button.dataset.item = JSON.stringify(item);
+
+        const core = document.createElement("span");
+        core.className = "star-core";
+        core.setAttribute("aria-hidden", "true");
+        button.appendChild(core);
+
+        const sr = document.createElement("span");
+        sr.className = "sr-only";
+        sr.textContent = item.title;
+        button.appendChild(sr);
+
+        button.addEventListener("pointerenter", (event) => showTooltip(button, event));
+        button.addEventListener("pointermove", (event) => moveTooltip(event.clientX, event.clientY));
+        button.addEventListener("pointerleave", hideTooltip);
+        button.addEventListener("focus", () => showTooltip(button));
+        button.addEventListener("blur", hideTooltip);
+        stage.appendChild(button);
+      });
+    }
+
+    function tooltipMarkup(item) {
+      const genres = item.genres.slice(0, 4).join(", ");
+      return `
+        <p class="tooltip-title">${item.title}</p>
+        <p class="tooltip-row"><strong>${item.year || "Unknown year"}</strong> · Rating ${formatRating(item.rating)} · ${item.platformCount} platforms</p>
+        <p class="tooltip-row">${item.episodes || "?"} episodes · ${item.status}</p>
+        <p class="tooltip-row">${genres || "Genres unavailable"}</p>
+        <p class="tooltip-platforms">${item.platforms.join(" · ")}</p>
+      `;
+    }
+
+    function showTooltip(button, event) {
+      document.querySelectorAll(".star.active-preview").forEach((node) => node.classList.remove("active-preview"));
+      button.classList.add("active-preview");
+      const item = JSON.parse(button.dataset.item);
+      tooltip.innerHTML = tooltipMarkup(item);
+      tooltip.classList.add("visible");
+
+      if (event) {
+        moveTooltip(event.clientX, event.clientY);
+        return;
+      }
+
+      const rect = button.getBoundingClientRect();
+      moveTooltip(rect.left + rect.width / 2, rect.top - 10);
+    }
+
+    function moveTooltip(clientX, clientY) {
+      const pad = 14;
+      const rect = tooltip.getBoundingClientRect();
+      const width = rect.width || 280;
+      const height = rect.height || 120;
+      let left = clientX + 18;
+      let top = clientY - height - 18;
+
+      if (left + width > window.innerWidth - pad) {
+        left = clientX - width - 18;
+      }
+      if (left < pad) {
+        left = pad;
+      }
+      if (top < pad) {
+        top = clientY + 18;
+      }
+      if (top + height > window.innerHeight - pad) {
+        top = window.innerHeight - height - pad;
+      }
+
+      tooltip.style.transform = `translate3d(${left}px, ${top}px, 0)`;
+    }
+
+    function hideTooltip() {
+      tooltip.classList.remove("visible");
+      document.querySelectorAll(".star.active-preview").forEach((node) => node.classList.remove("active-preview"));
+    }
+
+    computeLayout();
+    window.addEventListener("resize", computeLayout);
+  </script>
+</body>
+</html>

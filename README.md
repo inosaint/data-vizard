@@ -39,6 +39,7 @@ You can also call a role skill directly:
 $data-vizard:data-curator
 $data-vizard:data-analyst
 $data-vizard:narrator
+$data-vizard:critic
 $data-vizard:designer
 ```
 
@@ -64,15 +65,15 @@ Published-package smoke test:
 
 ```bash
 cd /tmp
-NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.3 --version
-NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.3 install --dry-run --root /tmp/data-vizard-published-smoke
-NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.3 install --root /tmp/data-vizard-published-stage --no-codex --no-claude --no-gemini
+NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.4 --version
+NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.4 install --dry-run --root /tmp/data-vizard-published-smoke
+NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.4 install --root /tmp/data-vizard-published-stage --no-codex --no-claude --no-gemini
 ```
 
 Full install verification:
 
 ```bash
-npx --yes data-vizard@0.1.3 install
+npx --yes data-vizard@0.1.4 install
 codex plugin list --available --json
 claude plugin list
 gemini extensions list
@@ -104,14 +105,15 @@ Update from npm:
 npx data-vizard@latest install
 ```
 
-Remove installed plugins:
+Remove installed integrations:
 
 ```bash
 codex plugin remove data-vizard@data-vizard
 claude plugin uninstall data-vizard@data-vizard
+gemini extensions uninstall data-vizard
 ```
 
-After updating or removing a plugin, start a new Codex thread or Claude Code session.
+After updating or removing an installed integration, start a new Codex thread, Claude Code session, or Gemini CLI session.
 
 ## Privacy And Data
 

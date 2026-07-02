@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>World Cup Efficiency Options</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f3ecdf;
+      --ink: #171411;
+      --muted: #66584b;
+      --line: rgba(23, 20, 17, 0.18);
+      --red: #cc462b;
+      --gold: #d9a21b;
+      --blue: #2b53d0;
+      --green: #6f8f2d;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(204, 70, 43, 0.12), transparent 24%),
+        linear-gradient(180deg, #faf5eb 0%, var(--paper) 100%);
+      color: var(--ink);
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    }
+
+    main {
+      width: min(1320px, calc(100vw - 28px));
+      margin: 0 auto;
+      padding: 22px 0 28px;
+    }
+
+    .kicker,
+    .option-tag,
+    .meta,
+    .label,
+    .scale {
+      font: 700 0.76rem/1.2 "Avenir Next", "Segoe UI", sans-serif;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .kicker { margin: 0 0 10px; color: var(--muted); }
+    h1 {
+      margin: 0;
+      max-width: 980px;
+      font: 800 clamp(2.9rem, 6vw, 5.8rem)/0.9 "Avenir Next Condensed", "Arial Narrow", sans-serif;
+      letter-spacing: -0.07em;
+    }
+    .dek {
+      margin: 10px 0 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.42;
+    }
+
+    .options {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    article {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.42);
+      display: grid;
+      grid-template-rows: 280px auto;
+    }
+
+    .preview {
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .copy {
+      padding: 14px 14px 16px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .option-tag { margin: 0; color: var(--muted); }
+    h2 {
+      margin: 0;
+      font: 800 2rem/0.96 "Avenir Next Condensed", "Arial Narrow", sans-serif;
+      letter-spacing: -0.05em;
+    }
+    .summary,
+    .tradeoff {
+      margin: 0;
+      font-size: 0.98rem;
+      line-height: 1.35;
+    }
+    .tradeoff { color: var(--muted); }
+    .meta { color: var(--muted); }
+
+    .signal-preview {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.2), transparent),
+        linear-gradient(135deg, rgba(204,70,43,0.18) 0 24%, transparent 24% 100%);
+      padding: 14px;
+      display: grid;
+      align-content: end;
+    }
+
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      align-items: end;
+      height: 220px;
+    }
+
+    .signal-bar {
+      position: relative;
+      background: linear-gradient(180deg, rgba(255,255,255,0.12), transparent);
+      border-top: 8px solid var(--tone);
+      min-height: 64px;
+      height: var(--h);
+      padding: 8px 6px;
+      display: grid;
+      align-content: space-between;
+    }
+
+    .signal-bar .team {
+      font-size: 0.92rem;
+      line-height: 1.02;
+    }
+    .signal-bar .value {
+      margin: 0;
+      color: var(--tone);
+      font: 800 2rem/0.9 "Avenir Next Condensed", "Arial Narrow", sans-serif;
+      letter-spacing: -0.05em;
+    }
+
+    .scatter-preview {
+      background: #171411;
+      color: #f7f1e5;
+      padding: 14px;
+    }
+
+    .scatter-wrap {
+      position: relative;
+      height: 100%;
+      border-left: 1px solid rgba(247,241,229,0.24);
+      border-bottom: 1px solid rgba(247,241,229,0.24);
+    }
+
+    .dot {
+      position: absolute;
+      left: var(--x);
+      bottom: var(--y);
+      width: 12px;
+      height: 12px;
+      margin-left: -6px;
+      margin-bottom: -6px;
+      border-radius: 999px;
+      background: var(--c);
+      box-shadow: 0 0 0 2px rgba(23,20,17,0.55);
+    }
+
+    .dot-label {
+      position: absolute;
+      left: calc(var(--x) + 8px);
+      bottom: calc(var(--y) + 6px);
+      font: 700 0.72rem/1.2 "Avenir Next", "Segoe UI", sans-serif;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(247,241,229,0.86);
+    }
+
+    .axis-x,
+    .axis-y {
+      position: absolute;
+      color: rgba(247,241,229,0.58);
+    }
+    .axis-x { right: 0; bottom: -28px; }
+    .axis-y { left: -4px; top: 0; writing-mode: vertical-rl; transform: rotate(180deg); }
+
+    .ledger-preview {
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.24), transparent),
+        linear-gradient(90deg, rgba(43,83,208,0.1) 0 50%, rgba(204,70,43,0.1) 50% 100%);
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .ledger-side {
+      display: grid;
+      align-content: start;
+      gap: 6px;
+    }
+
+    .ledger-side .label {
+      color: var(--muted);
+      margin: 0 0 4px;
+    }
+
+    .ledger-row {
+      padding-top: 6px;
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: baseline;
+    }
+
+    .ledger-row .team {
+      font-size: 0.92rem;
+      line-height: 1.05;
+    }
+
+    .ledger-row .value {
+      margin: 0;
+      color: var(--tone);
+      font: 800 1.45rem/0.9 "Avenir Next Condensed", "Arial Narrow", sans-serif;
+      letter-spacing: -0.05em;
+    }
+
+    @media (max-width: 980px) {
+      .options { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="kicker">World Cup finishing efficiency</p>
+    <h1>Three directions for a data-art-led efficiency field.</h1>
+    <p class="dek">These previews use the actual team shape from the curated summary: efficient finishers like Netherlands, Japan, and Argentina at one end, high-volume waste like Türkiye and Panama at the other.</p>
+
+    <section class="options">
+      <article>
+        <div class="preview signal-preview">
+          <div class="signal-grid">
+            <div class="signal-bar" style="--tone:#cc462b; --h:100%;">
+              <div class="team">Netherlands</div>
+              <p class="value">.250</p>
+            </div>
+            <div class="signal-bar" style="--tone:#d9a21b; --h:96.4%;">
+              <div class="team">Japan</div>
+              <p class="value">.241</p>
+            </div>
+            <div class="signal-bar" style="--tone:#2b53d0; --h:94%;">
+              <div class="team">Argentina</div>
+              <p class="value">.235</p>
+            </div>
+            <div class="signal-bar" style="--tone:#6f8f2d; --h:16.8%;">
+              <div class="team">Türkiye</div>
+              <p class="value">.042</p>
+            </div>
+          </div>
+        </div>
+        <div class="copy">
+          <p class="option-tag">A</p>
+          <h2>Signal Ladder</h2>
+          <p class="summary">A constructivist rank field where teams rise or collapse by goals-per-shot, with sharp poster energy and immediate hierarchy.</p>
+          <p class="meta">Aesthetic family: Constructivist signal</p>
+          <p class="tradeoff">Strongest if you want instant top-versus-bottom drama, but it flattens the relation between shot volume and finishing rate into one dominant vertical read.</p>
+        </div>
+      </article>
+
+      <article>
+        <div class="preview scatter-preview">
+          <div class="scatter-wrap">
+            <div class="dot" style="--x:56%; --y:100%; --c:#cc462b;"></div>
+            <div class="dot-label" style="--x:56%; --y:100%;">NED</div>
+            <div class="dot" style="--x:39%; --y:96.4%; --c:#d9a21b;"></div>
+            <div class="dot-label" style="--x:39%; --y:96.4%;">JPN</div>
+            <div class="dot" style="--x:46%; --y:94%; --c:#2b53d0;"></div>
+            <div class="dot-label" style="--x:46%; --y:94%;">ARG</div>
+            <div class="dot" style="--x:100%; --y:16.8%; --c:#6f8f2d;"></div>
+            <div class="dot-label" style="--x:100%; --y:16.8%;">TUR</div>
+            <div class="dot" style="--x:45%; --y:83.2%; --c:#f4f0e8;"></div>
+            <div class="dot-label" style="--x:45%; --y:83.2%;">FRA</div>
+            <div class="dot" style="--x:42%; --y:68.4%; --c:#7fd8ff;"></div>
+            <div class="dot-label" style="--x:42%; --y:68.4%;">MEX</div>
+            <div class="axis-y scale">Goals per shot</div>
+            <div class="axis-x scale">Shots taken</div>
+          </div>
+        </div>
+        <div class="copy">
+          <p class="option-tag">B</p>
+          <h2>Shot Burst Field</h2>
+          <p class="summary">A dark studio scatter where efficiency and attacking volume separate into a tense performance landscape, with outliers revealed spatially.</p>
+          <p class="meta">Aesthetic family: Studio gloss</p>
+          <p class="tradeoff">Strongest if you want to preserve two variables at once, but it requires slightly more chart literacy than a ranked poster read.</p>
+        </div>
+      </article>
+
+      <article>
+        <div class="preview ledger-preview">
+          <div class="ledger-side">
+            <p class="label">Finishers</p>
+            <div class="ledger-row"><div class="team">Netherlands</div><p class="value" style="--tone:#cc462b;">.250</p></div>
+            <div class="ledger-row"><div class="team">Japan</div><p class="value" style="--tone:#d9a21b;">.241</p></div>
+            <div class="ledger-row"><div class="team">Argentina</div><p class="value" style="--tone:#2b53d0;">.235</p></div>
+            <div class="ledger-row"><div class="team">Norway</div><p class="value" style="--tone:#6f8f2d;">.229</p></div>
+          </div>
+          <div class="ledger-side">
+            <p class="label">Waste</p>
+            <div class="ledger-row"><div class="team">Türkiye</div><p class="value" style="--tone:#cc462b;">.042</p></div>
+            <div class="ledger-row"><div class="team">Scotland</div><p class="value" style="--tone:#d9a21b;">.034</p></div>
+            <div class="ledger-row"><div class="team">Curaçao</div><p class="value" style="--tone:#2b53d0;">.034</p></div>
+            <div class="ledger-row"><div class="team">Panama</div><p class="value" style="--tone:#6f8f2d;">.000</p></div>
+          </div>
+        </div>
+        <div class="copy">
+          <p class="option-tag">C</p>
+          <h2>Goal Ledger</h2>
+          <p class="summary">A split editorial board that stages the best finishers against the least efficient attacks, with typographic confrontation rather than a single ranked run.</p>
+          <p class="meta">Aesthetic family: Editorial poster</p>
+          <p class="tradeoff">Strongest if you want a cleaner good-versus-bad confrontation, but it sacrifices some middle-range nuance to sharpen the contrast.</p>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

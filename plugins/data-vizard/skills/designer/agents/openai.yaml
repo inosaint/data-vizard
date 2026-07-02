@@ -1,4 +1,4 @@
 interface:
   display_name: "Designer"
-  short_description: "Create HTML data visualization artifacts"
-  default_prompt: "Use $designer to propose visual directions and build a self-contained HTML data visualization artifact."
+  short_description: "Create critique-aware HTML data visualization artifacts"
+  default_prompt: "Use $designer to propose visual directions, show options when helpful, and build a critique-aware HTML data visualization artifact."

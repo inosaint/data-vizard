@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bangalore's Rain Has Two Peaks</title>
+  <meta name="description" content="A long-run climate view of Bangalore rainfall showing a pre-monsoon rise, a wet mid-year run, and an October peak that stands above the rest.">
+  <meta name="theme-color" content="#eef3fb">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Bangalore's Rain Has Two Peaks">
+  <meta property="og:description" content="A long-run climate view of Bangalore rainfall showing a pre-monsoon rise, a wet mid-year run, and an October peak that stands above the rest.">
+  <meta property="og:image" content="favicon.svg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Bangalore's Rain Has Two Peaks">
+  <meta name="twitter:description" content="A long-run climate view of Bangalore rainfall showing a pre-monsoon rise, a wet mid-year run, and an October peak that stands above the rest.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page-shell">
+    <header class="masthead">
+      <div class="title-block">
+        <p class="kicker">Bangalore rainfall climatology</p>
+        <h1>Bangalore's Rain Has Two Peaks.</h1>
+        <p class="subtitle">The city builds into rain before the core monsoon months, stays wet through mid-year, and then reaches its strongest aggregate crest in October.</p>
+      </div>
+      <button class="notes-button" type="button" id="open-notes" aria-haspopup="dialog" aria-controls="notes-dialog">
+        Notes
+      </button>
+    </header>
+
+    <section class="chart-shell" aria-label="Monthly rainfall cycle for Bangalore">
+      <div class="annotation annotation-may">
+        <p class="annotation-label">May build</p>
+        <p class="annotation-copy">The rise is already steep before the core monsoon run.</p>
+      </div>
+      <div class="annotation annotation-oct">
+        <p class="annotation-label">October peak</p>
+        <p class="annotation-copy">The strongest monthly total lands after the mid-year wet stretch.</p>
+      </div>
+
+      <svg class="season-chart" id="season-chart" viewBox="0 0 1200 620" role="img" aria-labelledby="chart-title chart-desc">
+        <title id="chart-title">Bangalore monthly rainfall climatology</title>
+        <desc id="chart-desc">An annual rainfall curve with month labels from January to December and highlighted callouts for May and October.</desc>
+        <g id="chart-grid"></g>
+        <g id="chart-area"></g>
+        <g id="chart-line"></g>
+        <g id="chart-points"></g>
+        <g id="chart-labels"></g>
+      </svg>
+
+      <div class="detail-card" id="detail-card" hidden>
+        <p class="detail-kicker" id="detail-kicker">May</p>
+        <h2 id="detail-rain">5,631</h2>
+        <dl class="detail-stats">
+          <div>
+            <dt>Rainy days</dt>
+            <dd id="detail-days">1,184</dd>
+          </div>
+          <div>
+            <dt>Mean temp</dt>
+            <dd id="detail-temp">26.3 C</dd>
+          </div>
+          <div>
+            <dt>Wettest day</dt>
+            <dd id="detail-peak">82.06</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="notes-dialog" id="notes-dialog">
+    <form method="dialog" class="notes-card">
+      <div class="notes-top">
+        <p class="notes-label">Source note</p>
+        <button class="notes-close" type="submit" aria-label="Close notes">Close</button>
+      </div>
+      <h2>Historical shape.</h2>
+      <p>This view summarizes long-run monthly rainfall structure from hourly Bangalore weather records spanning 1981 to 2026.</p>
+      <p>It is a climatology view, not a forecast, and it explains seasonal shape better than year-to-year variation.</p>
+    </form>
+  </dialog>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

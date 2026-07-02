@@ -1,0 +1,2189 @@
+{
+  "generatedFrom": "data/google-fonts/curated/subset_summary.csv",
+  "totalSubsets": 181,
+  "top": [
+    {
+      "subset": "latin",
+      "fontCount": 1923,
+      "avgVariantCount": 3.97,
+      "categoryMix": {
+        "display": 463,
+        "handwriting": 356,
+        "monospace": 59,
+        "sansSerif": 700,
+        "serif": 345
+      }
+    },
+    {
+      "subset": "latin-ext",
+      "fontCount": 1508,
+      "avgVariantCount": 4.52,
+      "categoryMix": {
+        "display": 352,
+        "handwriting": 199,
+        "monospace": 47,
+        "sansSerif": 630,
+        "serif": 280
+      }
+    },
+    {
+      "subset": "vietnamese",
+      "fontCount": 511,
+      "avgVariantCount": 6.83,
+      "categoryMix": {
+        "display": 90,
+        "handwriting": 99,
+        "monospace": 21,
+        "sansSerif": 215,
+        "serif": 86
+      }
+    },
+    {
+      "subset": "cyrillic",
+      "fontCount": 293,
+      "avgVariantCount": 6.31,
+      "categoryMix": {
+        "display": 64,
+        "handwriting": 15,
+        "monospace": 19,
+        "sansSerif": 128,
+        "serif": 67
+      }
+    },
+    {
+      "subset": "cyrillic-ext",
+      "fontCount": 233,
+      "avgVariantCount": 7.34,
+      "categoryMix": {
+        "display": 57,
+        "handwriting": 7,
+        "monospace": 18,
+        "sansSerif": 107,
+        "serif": 44
+      }
+    },
+    {
+      "subset": "greek",
+      "fontCount": 117,
+      "avgVariantCount": 8.8,
+      "categoryMix": {
+        "display": 10,
+        "handwriting": 4,
+        "monospace": 15,
+        "sansSerif": 60,
+        "serif": 28
+      }
+    },
+    {
+      "subset": "math",
+      "fontCount": 79,
+      "avgVariantCount": 4.7,
+      "categoryMix": {
+        "display": 26,
+        "handwriting": 5,
+        "monospace": 6,
+        "sansSerif": 30,
+        "serif": 12
+      }
+    },
+    {
+      "subset": "symbols",
+      "fontCount": 72,
+      "avgVariantCount": 4.56,
+      "categoryMix": {
+        "display": 24,
+        "handwriting": 1,
+        "monospace": 6,
+        "sansSerif": 31,
+        "serif": 10
+      }
+    },
+    {
+      "subset": "greek-ext",
+      "fontCount": 71,
+      "avgVariantCount": 8.41,
+      "categoryMix": {
+        "display": 3,
+        "handwriting": 3,
+        "monospace": 9,
+        "sansSerif": 37,
+        "serif": 19
+      }
+    },
+    {
+      "subset": "japanese",
+      "fontCount": 67,
+      "avgVariantCount": 2.66,
+      "categoryMix": {
+        "display": 11,
+        "handwriting": 7,
+        "monospace": 1,
+        "sansSerif": 28,
+        "serif": 20
+      }
+    },
+    {
+      "subset": "devanagari",
+      "fontCount": 62,
+      "avgVariantCount": 4.35,
+      "categoryMix": {
+        "display": 10,
+        "handwriting": 4,
+        "monospace": 0,
+        "sansSerif": 27,
+        "serif": 21
+      }
+    },
+    {
+      "subset": "hebrew",
+      "fontCount": 62,
+      "avgVariantCount": 3.71,
+      "categoryMix": {
+        "display": 28,
+        "handwriting": 4,
+        "monospace": 1,
+        "sansSerif": 18,
+        "serif": 11
+      }
+    },
+    {
+      "subset": "arabic",
+      "fontCount": 54,
+      "avgVariantCount": 5.11,
+      "categoryMix": {
+        "display": 12,
+        "handwriting": 1,
+        "monospace": 0,
+        "sansSerif": 26,
+        "serif": 15
+      }
+    },
+    {
+      "subset": "korean",
+      "fontCount": 38,
+      "avgVariantCount": 2.42,
+      "categoryMix": {
+        "display": 10,
+        "handwriting": 7,
+        "monospace": 0,
+        "sansSerif": 14,
+        "serif": 7
+      }
+    },
+    {
+      "subset": "thai",
+      "fontCount": 34,
+      "avgVariantCount": 8.82,
+      "categoryMix": {
+        "display": 2,
+        "handwriting": 6,
+        "monospace": 0,
+        "sansSerif": 21,
+        "serif": 5
+      }
+    },
+    {
+      "subset": "khmer",
+      "fontCount": 28,
+      "avgVariantCount": 3.32,
+      "categoryMix": {
+        "display": 13,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 10,
+        "serif": 5
+      }
+    },
+    {
+      "subset": "telugu",
+      "fontCount": 27,
+      "avgVariantCount": 2.59,
+      "categoryMix": {
+        "display": 4,
+        "handwriting": 1,
+        "monospace": 0,
+        "sansSerif": 15,
+        "serif": 7
+      }
+    },
+    {
+      "subset": "tamil",
+      "fontCount": 17,
+      "avgVariantCount": 5.12,
+      "categoryMix": {
+        "display": 4,
+        "handwriting": 1,
+        "monospace": 0,
+        "sansSerif": 10,
+        "serif": 2
+      }
+    },
+    {
+      "subset": "symbols2",
+      "fontCount": 17,
+      "avgVariantCount": 7.18,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 1,
+        "monospace": 7,
+        "sansSerif": 7,
+        "serif": 2
+      }
+    },
+    {
+      "subset": "chinese-traditional",
+      "fontCount": 16,
+      "avgVariantCount": 3.56,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 3,
+        "monospace": 1,
+        "sansSerif": 9,
+        "serif": 3
+      }
+    },
+    {
+      "subset": "gujarati",
+      "fontCount": 13,
+      "avgVariantCount": 5.08,
+      "categoryMix": {
+        "display": 6,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 5,
+        "serif": 2
+      }
+    },
+    {
+      "subset": "bengali",
+      "fontCount": 11,
+      "avgVariantCount": 5.27,
+      "categoryMix": {
+        "display": 4,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 5,
+        "serif": 2
+      }
+    },
+    {
+      "subset": "kannada",
+      "fontCount": 10,
+      "avgVariantCount": 4.2,
+      "categoryMix": {
+        "display": 2,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 4,
+        "serif": 4
+      }
+    },
+    {
+      "subset": "gurmukhi",
+      "fontCount": 10,
+      "avgVariantCount": 5.1,
+      "categoryMix": {
+        "display": 2,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 5,
+        "serif": 3
+      }
+    }
+  ],
+  "tail": [
+    {
+      "subset": "chinese-simplified",
+      "fontCount": 10,
+      "avgVariantCount": 2.5,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 4,
+        "monospace": 0,
+        "sansSerif": 5,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "malayalam",
+      "fontCount": 9,
+      "avgVariantCount": 5.89,
+      "categoryMix": {
+        "display": 2,
+        "handwriting": 1,
+        "monospace": 0,
+        "sansSerif": 5,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "sinhala",
+      "fontCount": 8,
+      "avgVariantCount": 6.5,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 5,
+        "serif": 3
+      }
+    },
+    {
+      "subset": "emoji",
+      "fontCount": 8,
+      "avgVariantCount": 5.88,
+      "categoryMix": {
+        "display": 1,
+        "handwriting": 5,
+        "monospace": 0,
+        "sansSerif": 2,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "syriac",
+      "fontCount": 7,
+      "avgVariantCount": 7.43,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 1,
+        "sansSerif": 4,
+        "serif": 2
+      }
+    },
+    {
+      "subset": "ethiopic",
+      "fontCount": 6,
+      "avgVariantCount": 5.83,
+      "categoryMix": {
+        "display": 1,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 3,
+        "serif": 2
+      }
+    },
+    {
+      "subset": "oriya",
+      "fontCount": 6,
+      "avgVariantCount": 6.33,
+      "categoryMix": {
+        "display": 2,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 3,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "canadian-aboriginal",
+      "fontCount": 6,
+      "avgVariantCount": 8.67,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 1,
+        "sansSerif": 4,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "braille",
+      "fontCount": 6,
+      "avgVariantCount": 7,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 2,
+        "sansSerif": 3,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "armenian",
+      "fontCount": 6,
+      "avgVariantCount": 8.5,
+      "categoryMix": {
+        "display": 1,
+        "handwriting": 0,
+        "monospace": 2,
+        "sansSerif": 2,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "cherokee",
+      "fontCount": 5,
+      "avgVariantCount": 9.8,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 1,
+        "monospace": 1,
+        "sansSerif": 3,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "lao",
+      "fontCount": 5,
+      "avgVariantCount": 7.4,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 4,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "adlam",
+      "fontCount": 4,
+      "avgVariantCount": 5.25,
+      "categoryMix": {
+        "display": 1,
+        "handwriting": 0,
+        "monospace": 1,
+        "sansSerif": 2,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "tifinagh",
+      "fontCount": 4,
+      "avgVariantCount": 5.5,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 4,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "lisu",
+      "fontCount": 4,
+      "avgVariantCount": 6.5,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 1,
+        "monospace": 1,
+        "sansSerif": 1,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "runic",
+      "fontCount": 3,
+      "avgVariantCount": 2.67,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 2
+      }
+    },
+    {
+      "subset": "chinese-hongkong",
+      "fontCount": 3,
+      "avgVariantCount": 11,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 2
+      }
+    },
+    {
+      "subset": "nushu",
+      "fontCount": 3,
+      "avgVariantCount": 5,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 3,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "georgian",
+      "fontCount": 3,
+      "avgVariantCount": 8.67,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 2,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "tibetan",
+      "fontCount": 3,
+      "avgVariantCount": 3.67,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 0,
+        "serif": 3
+      }
+    },
+    {
+      "subset": "kayah-li",
+      "fontCount": 3,
+      "avgVariantCount": 4.33,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 2,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "myanmar",
+      "fontCount": 3,
+      "avgVariantCount": 6.67,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 2,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "gothic",
+      "fontCount": 2,
+      "avgVariantCount": 2,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "old-italic",
+      "fontCount": 2,
+      "avgVariantCount": 2,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "new-tai-lue",
+      "fontCount": 2,
+      "avgVariantCount": 7,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "old-permic",
+      "fontCount": 2,
+      "avgVariantCount": 6.5,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 1,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "lepcha",
+      "fontCount": 2,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 2,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "limbu",
+      "fontCount": 2,
+      "avgVariantCount": 3,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "gunjala-gondi",
+      "fontCount": 2,
+      "avgVariantCount": 4.5,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 2,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "balinese",
+      "fontCount": 2,
+      "avgVariantCount": 2.5,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "glagolitic",
+      "fontCount": 2,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 1,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "grantha",
+      "fontCount": 2,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "khojki",
+      "fontCount": 2,
+      "avgVariantCount": 2.5,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "mayan-numerals",
+      "fontCount": 2,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 2,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "nko",
+      "fontCount": 2,
+      "avgVariantCount": 2.5,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 2,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "phoenician",
+      "fontCount": 2,
+      "avgVariantCount": 2.5,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 2,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "tai-viet",
+      "fontCount": 2,
+      "avgVariantCount": 1.5,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "vithkuqi",
+      "fontCount": 2,
+      "avgVariantCount": 4,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "yi",
+      "fontCount": 2,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 2,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "kirat-rai",
+      "fontCount": 1,
+      "avgVariantCount": 4,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "beria-erfe",
+      "fontCount": 1,
+      "avgVariantCount": 6,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "music",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "anatolian-hieroglyphs",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "avestan",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "bamum",
+      "fontCount": 1,
+      "avgVariantCount": 4,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "bassa-vah",
+      "fontCount": 1,
+      "avgVariantCount": 4,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "batak",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "bhaiksuki",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "brahmi",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "buginese",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "buhid",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "carian",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "caucasian-albanian",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "chakma",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "cham",
+      "fontCount": 1,
+      "avgVariantCount": 9,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "chorasmian",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "coptic",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "cuneiform",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "cypriot",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "cypro-minoan",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "deseret",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "duployan",
+      "fontCount": 1,
+      "avgVariantCount": 2,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "egyptian-hieroglyphs",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "elbasan",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "elymaic",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "hanifi-rohingya",
+      "fontCount": 1,
+      "avgVariantCount": 4,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "hanunoo",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "hatran",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "imperial-aramaic",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "indic-siyaq-numbers",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "inscriptional-pahlavi",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "inscriptional-parthian",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "javanese",
+      "fontCount": 1,
+      "avgVariantCount": 4,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "kaithi",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "kawi",
+      "fontCount": 1,
+      "avgVariantCount": 4,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "kharoshthi",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "khudawadi",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "linear-a",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "linear-b",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "lycian",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "lydian",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "mahajani",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "mandaic",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "manichaean",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "marchen",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "masaram-gondi",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "medefaidrin",
+      "fontCount": 1,
+      "avgVariantCount": 4,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "meetei-mayek",
+      "fontCount": 1,
+      "avgVariantCount": 9,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "mende-kikakui",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "meroitic",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "meroitic-cursive",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "meroitic-hieroglyphs",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "miao",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "modi",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "mongolian",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "mro",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "multani",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "nabataean",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "nag-mundari",
+      "fontCount": 1,
+      "avgVariantCount": 4,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "nandinagari",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "newa",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "ogham",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "ol-chiki",
+      "fontCount": 1,
+      "avgVariantCount": 4,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "old-hungarian",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "old-north-arabian",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "old-persian",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "old-sogdian",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "old-south-arabian",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "old-turkic",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "osage",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "osmanya",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "pahawh-hmong",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "palmyrene",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "pau-cin-hau",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "phags-pa",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "psalter-pahlavi",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "rejang",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "samaritan",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "saurashtra",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "sharada",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "shavian",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "siddham",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "signwriting",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "sogdian",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "sora-sompeng",
+      "fontCount": 1,
+      "avgVariantCount": 4,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "soyombo",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "sundanese",
+      "fontCount": 1,
+      "avgVariantCount": 4,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "sunuwar",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "syloti-nagri",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "tagalog",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "tagbanwa",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "tai-le",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "tai-tham",
+      "fontCount": 1,
+      "avgVariantCount": 4,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "takri",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "tamil-supplement",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "tangsa",
+      "fontCount": 1,
+      "avgVariantCount": 4,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "thaana",
+      "fontCount": 1,
+      "avgVariantCount": 9,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "tirhuta",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "ugaritic",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "vai",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "wancho",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "warang-citi",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "zanabazar-square",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    },
+    {
+      "subset": "ahom",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 0,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "dives-akuru",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 0,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "dogra",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 0,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "kana-extended",
+      "fontCount": 1,
+      "avgVariantCount": 8,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 0,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "khitan-small-script",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 0,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "makasar",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 0,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "nyiakeng-puachue-hmong",
+      "fontCount": 1,
+      "avgVariantCount": 4,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 0,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "old-uyghur",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 0,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "ottoman-siyaq-numbers",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 0,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "tangut",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 0,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "todhri",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 0,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "toto",
+      "fontCount": 1,
+      "avgVariantCount": 4,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 0,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "yezidi",
+      "fontCount": 1,
+      "avgVariantCount": 4,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 0,
+        "serif": 1
+      }
+    },
+    {
+      "subset": "znamenny",
+      "fontCount": 1,
+      "avgVariantCount": 1,
+      "categoryMix": {
+        "display": 0,
+        "handwriting": 0,
+        "monospace": 0,
+        "sansSerif": 1,
+        "serif": 0
+      }
+    }
+  ],
+  "stats": {
+    "totalFamilies": 1938,
+    "latinFamilies": 1923,
+    "latinExtFamilies": 1508,
+    "thirdTierSubset": "vietnamese",
+    "thirdTierFamilies": 511,
+    "nonLatinOnlyFamilies": 15,
+    "singleSubsetFamilies": 327
+  }
+}

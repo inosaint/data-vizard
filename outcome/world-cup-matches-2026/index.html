@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Shot Burst Field</title>
+  <meta name="description" content="A dark field of World Cup finishing efficiency, where compact finishers and wasteful high-volume attacks separate across goals per shot and shot volume.">
+  <meta name="theme-color" content="#0f1116">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Shot Burst Field">
+  <meta property="og:description" content="A dark field of World Cup finishing efficiency, where compact finishers and wasteful high-volume attacks separate across goals per shot and shot volume.">
+  <meta property="og:image" content="favicon.svg">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Shot Burst Field">
+  <meta name="twitter:description" content="A dark field of World Cup finishing efficiency, where compact finishers and wasteful high-volume attacks separate across goals per shot and shot volume.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page-shell">
+    <header class="masthead">
+      <div class="title-block">
+        <p class="kicker">World Cup finishing efficiency</p>
+        <h1>Shot Burst Field</h1>
+        <p class="caption">A short-sample read of who turned shots into goals and who left volume on the floor.</p>
+      </div>
+      <button class="notes-button" type="button" id="open-notes" aria-haspopup="dialog" aria-controls="notes-dialog">
+        Notes
+      </button>
+    </header>
+
+    <section class="chart-stage" aria-label="World Cup team finishing efficiency field">
+      <div class="field-frame">
+        <div class="zone zone-clinical">clinical</div>
+        <div class="zone zone-waste">waste</div>
+        <div class="axis-label axis-y">Goals per shot</div>
+        <div class="axis-label axis-x">Shots taken</div>
+        <div class="tick tick-y tick-y-top">.25</div>
+        <div class="tick tick-y tick-y-mid">.15</div>
+        <div class="tick tick-y tick-y-low">.05</div>
+        <div class="tick tick-x tick-x-left">20</div>
+        <div class="tick tick-x tick-x-mid">45</div>
+        <div class="tick tick-x tick-x-right">70</div>
+        <div class="mark-layer" id="mark-layer"></div>
+      </div>
+      <div class="tooltip" id="tooltip" role="status" aria-live="polite" hidden>
+        <p class="tooltip-code" id="tooltip-code"></p>
+        <h2 id="tooltip-team">Netherlands</h2>
+        <dl class="tooltip-stats">
+          <div>
+            <dt>Goals per shot</dt>
+            <dd id="tooltip-efficiency">.250</dd>
+          </div>
+          <div>
+            <dt>Shots</dt>
+            <dd id="tooltip-shots">40</dd>
+          </div>
+          <div>
+            <dt>Goals</dt>
+            <dd id="tooltip-goals">10</dd>
+          </div>
+          <div>
+            <dt>Possession</dt>
+            <dd id="tooltip-possession">61%</dd>
+          </div>
+        </dl>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="notes-dialog" id="notes-dialog">
+    <form method="dialog" class="notes-card">
+      <div class="notes-top">
+        <p class="notes-label">Source note</p>
+        <button class="notes-close" type="submit" aria-label="Close notes">Close</button>
+      </div>
+      <h2>Short sample.</h2>
+      <p>This field uses teams with at least three matches from the local `matches.csv` snapshot.</p>
+      <p>Most rows come from the group stage, so the rates show this short run of finishing rather than stable overall team quality.</p>
+    </form>
+  </dialog>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

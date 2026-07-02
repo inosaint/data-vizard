@@ -1,16 +1,15 @@
 # Data Vizard Plugin
 
-Data Vizard is an agent plugin for staged data visualization work. It bundles skills for dataset intake, curation, exploratory analysis, narrative framing, and HTML visualization design.
-
-![Data Vizard workflow](assets/screenshot-workflow.png)
+Data Vizard is an agent plugin for staged data visualization work. It bundles skills for dataset intake, curation, exploratory analysis, adaptive narration, critique, and HTML visualization design.
 
 ## What This Plugin Provides
 
-- `data-vizard:data-vizard` - Orchestrates the full workflow and keeps user decision gates explicit.
+- `data-vizard:data-vizard` - Orchestrates the full workflow, delegates role work, and keeps user decision gates explicit.
 - `data-vizard:data-curator` - Profiles, cleans, reshapes, joins, enriches, and documents datasets.
 - `data-vizard:data-analyst` - Finds patterns, caveats, comparisons, anomalies, and evidence-backed story directions.
-- `data-vizard:narrator` - Turns analysis into audience-facing structure, copy, titles, annotations, and caveats.
-- `data-vizard:designer` - Designs and builds HTML visualization artifacts with chart, layout, accessibility, interaction, and motion guidance.
+- `data-vizard:narrator` - Decides how much language the visualization actually needs and produces restrained story briefs.
+- `data-vizard:critic` - Reviews briefs and artifacts for editorial rigor, visual craft, restraint, and anti-default quality.
+- `data-vizard:designer` - Designs and builds HTML visualization artifacts with chart, layout, accessibility, interaction, motion, and data-art guidance.
 
 ## Install From npm
 
@@ -126,13 +125,12 @@ Or call a role skill directly when you already know the stage:
 ```text
 Use $data-vizard:data-curator to profile and clean this dataset.
 Use $data-vizard:data-analyst to find story directions in this curated CSV.
-Use $data-vizard:narrator to turn this analysis into a story brief.
+Use $data-vizard:narrator to decide how much language this visualization actually needs.
+Use $data-vizard:critic to review a visualization brief or artifact before signoff.
 Use $data-vizard:designer to build the HTML visualization.
 ```
 
-The orchestrator confirms where project artifacts should live in the active workspace before creating or changing files.
-
-![Data Vizard output example](assets/screenshot-output.png)
+The orchestrator confirms where project artifacts should live in the active workspace before creating or changing files, asks early about explanatory versus data-art posture, and uses critique passes before final signoff.
 
 ## Privacy And Data
 
@@ -148,9 +146,10 @@ After pulling plugin updates:
 cd /path/to/data-vizard
 codex plugin add data-vizard@data-vizard
 claude plugin install data-vizard@data-vizard
+gemini extensions install "$(pwd)/extensions/data-vizard" --consent --skip-settings
 ```
 
-Then start a new Codex thread or Claude Code session. If Codex or Claude Code still shows an older version, confirm that the plugin manifests under `plugins/data-vizard/` have a new version, then reinstall again.
+Then start a new Codex thread, Claude Code session, or Gemini CLI session. If Codex, Claude Code, or Gemini CLI still shows an older version, confirm that the manifests under `plugins/data-vizard/` and `extensions/data-vizard/` have a new version, then reinstall again.
 
 ## Release Checks
 
@@ -165,9 +164,9 @@ Published-package smoke test:
 
 ```bash
 cd /tmp
-NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.3 --version
-NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.3 install --dry-run --root /tmp/data-vizard-published-smoke
-NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.3 install --root /tmp/data-vizard-published-stage --no-codex --no-claude --no-gemini
+NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.4 --version
+NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.4 install --dry-run --root /tmp/data-vizard-published-smoke
+NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.4 install --root /tmp/data-vizard-published-stage --no-codex --no-claude --no-gemini
 ```
 
 Claude Code compatibility check:

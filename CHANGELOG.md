@@ -2,6 +2,12 @@
 
 All notable changes to Data Vizard will be documented here.
 
+## 0.1.4 - 2026-07-02
+
+- Added the `critic` workflow skill across packaged plugin and Gemini extension surfaces.
+- Refreshed release and uninstall documentation so Codex, Claude Code, and Gemini CLI update paths stay aligned.
+- Updated npm verification examples and release metadata for the `0.1.4` publish.
+
 ## 0.1.3 - 2026-06-30
 
 - Clarified npm install prerequisites for Codex CLI, Claude Code CLI, and Gemini CLI users.
