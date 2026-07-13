@@ -1,6 +1,6 @@
 {
   "name": "data-vizard",
-  "version": "0.1.6",
+  "version": "0.1.5",
   "description": "Installer for the Data Vizard agent workflow plugin and Gemini CLI extension.",
   "license": "MIT",
   "author": {

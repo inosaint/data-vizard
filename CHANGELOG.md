@@ -2,7 +2,7 @@
 
 All notable changes to Data Vizard will be documented here.
 
-## 0.1.6 - 2026-07-13
+## 0.1.5 - 2026-07-13
 
 - Added the `de-slop` skill across root, packaged plugin, and Gemini extension surfaces for repairing bad or misleading charts without changing the evidence.
 - Added Designer, Critic, and Data Vizard guardrails for image-option diversity, control honesty, record reachability, file-structure discipline, artifact signoff notes, and precise ledger statuses.
