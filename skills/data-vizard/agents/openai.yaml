@@ -1,4 +1,4 @@
 interface:
   display_name: "Data Vizard"
   short_description: "Orchestrate delegated data visualization workflows"
-  default_prompt: "Use $data-vizard to guide me through a delegated data visualization project from dataset to critique-reviewed HTML artifact."
+  default_prompt: "Use $data-vizard to guide me through a delegated data visualization project from dataset to image-optioned, critique-reviewed HTML artifact."

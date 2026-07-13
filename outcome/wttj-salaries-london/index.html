@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The London Salary Rat Race</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="race-sequence">
+        <div class="viz-panel">
+          <div class="screen-matte">
+            <div class="viz-frame">
+              <div class="hud-panel">
+                <div class="hud-toprow">
+                  <div class="hud-cluster">
+                    <p class="hud-label">Hi Score</p>
+                    <p class="hud-value">142360</p>
+                    <p class="hud-sub">1P LDN</p>
+                  </div>
+                  <div class="hud-cluster hud-cluster--wide">
+                    <p class="hud-label">Round</p>
+                    <p class="hud-stage" id="stage-title"></p>
+                    <p class="hud-sub">Year <span id="stage-year"></span></p>
+                  </div>
+                  <div class="hud-cluster">
+                    <p class="hud-label">Source</p>
+                    <a id="hud-source-link" target="_blank" rel="noreferrer">Welcome to the Jungle salaries</a>
+                    <p class="hud-sub">hover to inspect</p>
+                  </div>
+                </div>
+
+                <div class="ranking-board" id="ranking-board"></div>
+                <div class="state-strip" id="state-strip"></div>
+              </div>
+
+              <div class="track-wrap">
+                <div class="track-sky" aria-hidden="true"></div>
+                <div class="track-stands" aria-hidden="true"></div>
+                <div class="track-crowd" aria-hidden="true"></div>
+                <div class="track-infield" aria-hidden="true"></div>
+                <svg
+                  id="race-chart"
+                  viewBox="0 0 1100 720"
+                  role="img"
+                  aria-labelledby="chart-title chart-desc"
+                >
+                  <title id="chart-title">Salary race replay</title>
+                  <desc id="chart-desc">
+                    A pixel-inspired race-track salary visualization that replays nine London
+                    roles across years of experience.
+                  </desc>
+                </svg>
+                <div class="tooltip" id="tooltip" hidden></div>
+              </div>
+
+              <div class="ticker-bar">
+                <p class="ticker-step" id="story-kicker"></p>
+                <p class="ticker-title" id="story-title"></p>
+                <p class="ticker-body" id="story-body"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="story-rail" id="story-rail"></div>
+      </section>
+    </main>
+
+    <script src="../../node_modules/d3/dist/d3.min.js"></script>
+    <script src="./data.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>

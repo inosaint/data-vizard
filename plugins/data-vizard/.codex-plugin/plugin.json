@@ -1,6 +1,6 @@
 {
   "name": "data-vizard",
-  "version": "0.1.4",
+  "version": "0.1.5+codex.20260708174149",
   "description": "A staged data visualization workshop for moving from dataset intake to analysis, adaptive narration, critique, design, and an HTML artifact.",
   "author": {
     "name": "inosaint",
@@ -18,7 +18,7 @@
   "interface": {
     "displayName": "Data Vizard",
     "shortDescription": "Guide data visualization projects from dataset to critique-reviewed HTML story.",
-    "longDescription": "Data Vizard bundles six Codex skills for a complete data visualization workflow: orchestration, data curation, exploratory analysis, adaptive narration, critique, and HTML visualization design.",
+    "longDescription": "Data Vizard bundles seven Codex skills for a complete data visualization workflow: orchestration, data curation, exploratory analysis, adaptive narration, critique, chart cleanup, and HTML visualization design.",
     "developerName": "inosaint",
     "category": "Productivity",
     "capabilities": [

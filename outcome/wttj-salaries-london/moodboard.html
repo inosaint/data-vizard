@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Olympic Race Moodboard</title>
+    <link rel="stylesheet" href="./moodboard.css" />
+  </head>
+  <body>
+    <main class="board">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Moodboard direction</p>
+          <h1>Olympic race</h1>
+          <p class="lede">
+            Cobalt-violet track, hard white lane geometry, neon coral shoes,
+            saturated national-kit colors, and a pack-to-breakaway feeling that
+            reads like a sports photo before it reads like a chart.
+          </p>
+        </div>
+        <aside class="notes">
+          <p><strong>Selected race field:</strong> Underdog breakaway</p>
+          <p><strong>Interaction rule:</strong> hover states are required</p>
+          <p>
+            <strong>Source link:</strong>
+            <a href="https://app.welcometothejungle.com/salaries" target="_blank" rel="noreferrer">
+              Welcome to the Jungle salaries
+            </a>
+          </p>
+        </aside>
+      </header>
+
+      <section class="grid">
+        <article class="panel reference">
+          <p class="panel-label">Reference image</p>
+          <img
+            src="./assets/olympic-race-reference.png"
+            alt="Olympic sprint finish reference"
+          />
+          <p class="caption">
+            The key transferable move is not “sports photography” by itself. It
+            is the tension between a dense pack, rigid lane geometry, and
+            intensely local color accents.
+          </p>
+        </article>
+
+        <article class="panel palette">
+          <p class="panel-label">Palette logic</p>
+          <div class="swatches">
+            <div class="swatch"><span style="background:#7878f0"></span><code>#7878F0</code><small>Track cobalt</small></div>
+            <div class="swatch"><span style="background:#ffffff"></span><code>#FFFFFF</code><small>Lane line white</small></div>
+            <div class="swatch"><span style="background:#ff6a3d"></span><code>#FF6A3D</code><small>Sprint coral</small></div>
+            <div class="swatch"><span style="background:#f3d338"></span><code>#F3D338</code><small>Jersey yellow</small></div>
+            <div class="swatch"><span style="background:#0b8b63"></span><code>#0B8B63</code><small>Deep green</small></div>
+            <div class="swatch"><span style="background:#0f49c7"></span><code>#0F49C7</code><small>Signal blue</small></div>
+            <div class="swatch"><span style="background:#d81f33"></span><code>#D81F33</code><small>Finish red</small></div>
+            <div class="swatch"><span style="background:#08111f"></span><code>#08111F</code><small>Night ink</small></div>
+          </div>
+          <p class="caption">
+            The color attitude should stay athletic and high-contrast, not warm
+            editorial. White geometry and lane-blue surfaces do the heavy
+            lifting; hot accents only puncture the field.
+          </p>
+        </article>
+
+        <article class="panel texture">
+          <p class="panel-label">Surface & geometry</p>
+          <div class="track-card">
+            <div class="lane lane-a"></div>
+            <div class="lane lane-b"></div>
+            <div class="lane lane-c"></div>
+            <div class="runner runner-a"></div>
+            <div class="runner runner-b"></div>
+            <div class="runner runner-c"></div>
+          </div>
+          <ul>
+            <li>Track lanes suggest comparative structure.</li>
+            <li>Curving white guides can imply separation over time.</li>
+            <li>Breakaway should feel spatial before it feels textual.</li>
+          </ul>
+        </article>
+
+        <article class="panel ui">
+          <p class="panel-label">Interaction cues</p>
+          <div class="chip-row">
+            <button class="chip active">Product Management</button>
+            <button class="chip">Corporate Finance</button>
+            <button class="chip">Generalist Marketing</button>
+          </div>
+          <div class="tooltip-demo">
+            <p class="tooltip-kicker">Hover state</p>
+            <p><strong>Sales Operations</strong></p>
+            <p>Year 5 median: GBP 74k</p>
+            <p>Gain from year 0: GBP 44k</p>
+          </div>
+          <p class="caption">
+            Hover should expose lane, year, salary, and gain. That is a project
+            rule, not a later polish pass.
+          </p>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

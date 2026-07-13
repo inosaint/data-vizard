@@ -40,6 +40,7 @@ $data-vizard:data-curator
 $data-vizard:data-analyst
 $data-vizard:narrator
 $data-vizard:critic
+$data-vizard:de-slop
 $data-vizard:designer
 ```
 

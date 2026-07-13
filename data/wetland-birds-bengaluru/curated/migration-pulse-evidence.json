@@ -1,0 +1,1878 @@
+{
+  "title": "Bengaluru seasonal migrant-sighting pulse evidence",
+  "accessed": "2026-07-07",
+  "claim_boundary": "Supports a sourced seasonal sighting-pulse layer for selected migrant, winter-visitor, or seasonal wetland species around Bengaluru. It does not measure live migration traffic, flight paths, abundance, or true absence.",
+  "recommended_copy": "Seasonal sightings of selected migrant and winter-associated wetland birds peak around Bengaluru lakes from October through February. The pulses are public observation records, not radar or route data.",
+  "bbox": {
+    "west": 77.35,
+    "south": 12.75,
+    "east": 77.9,
+    "north": 13.25
+  },
+  "geometry_wkt": "POLYGON((77.35 12.75,77.9 12.75,77.9 13.25,77.35 13.25,77.35 12.75))",
+  "years": "2014,2026",
+  "selected_species": [
+    {
+      "common_name": "Great Cormorant",
+      "scientific_name": "Phalacrocorax carbo",
+      "gbif_taxon_key": 2481890,
+      "rationale": "wintering/seasonal component in southern Indian wetlands; included as seasonal sighting pulse",
+      "total_observations": 43700,
+      "winter_share_oct_mar": 0.57,
+      "monthly_counts": {
+        "1": 4441,
+        "2": 4330,
+        "3": 3599,
+        "4": 3160,
+        "5": 2962,
+        "6": 2670,
+        "7": 2788,
+        "8": 3309,
+        "9": 3905,
+        "10": 4664,
+        "11": 4124,
+        "12": 3748
+      },
+      "gbif_query_url": "https://api.gbif.org/v1/occurrence/search?country=IN&geometry=POLYGON%28%2877.35+12.75%2C77.9+12.75%2C77.9+13.25%2C77.35+13.25%2C77.35+12.75%29%29&hasCoordinate=true&hasGeospatialIssue=false&basisOfRecord=HUMAN_OBSERVATION&year=2014%2C2026&taxonKey=2481890"
+    },
+    {
+      "common_name": "River Tern",
+      "scientific_name": "Sterna aurantia",
+      "gbif_taxon_key": 5229239,
+      "rationale": "seasonal wetland/river tern sightings; included as seasonal presence, not long-distance route evidence",
+      "total_observations": 3098,
+      "winter_share_oct_mar": 0.915,
+      "monthly_counts": {
+        "1": 867,
+        "2": 477,
+        "3": 186,
+        "4": 72,
+        "5": 43,
+        "6": 27,
+        "7": 22,
+        "8": 15,
+        "9": 85,
+        "10": 200,
+        "11": 477,
+        "12": 627
+      },
+      "gbif_query_url": "https://api.gbif.org/v1/occurrence/search?country=IN&geometry=POLYGON%28%2877.35+12.75%2C77.9+12.75%2C77.9+13.25%2C77.35+13.25%2C77.35+12.75%29%29&hasCoordinate=true&hasGeospatialIssue=false&basisOfRecord=HUMAN_OBSERVATION&year=2014%2C2026&taxonKey=5229239"
+    },
+    {
+      "common_name": "Spot-billed Pelican",
+      "scientific_name": "Pelecanus philippensis",
+      "gbif_taxon_key": 5229163,
+      "rationale": "local Madiwala Lake reference describes winter arrival/migration; included with lake-specific caveat",
+      "total_observations": 15142,
+      "winter_share_oct_mar": 0.559,
+      "monthly_counts": {
+        "1": 1452,
+        "2": 1159,
+        "3": 873,
+        "4": 679,
+        "5": 786,
+        "6": 865,
+        "7": 1123,
+        "8": 1436,
+        "9": 1788,
+        "10": 1954,
+        "11": 1724,
+        "12": 1303
+      },
+      "gbif_query_url": "https://api.gbif.org/v1/occurrence/search?country=IN&geometry=POLYGON%28%2877.35+12.75%2C77.9+12.75%2C77.9+13.25%2C77.35+13.25%2C77.35+12.75%29%29&hasCoordinate=true&hasGeospatialIssue=false&basisOfRecord=HUMAN_OBSERVATION&year=2014%2C2026&taxonKey=5229163"
+    },
+    {
+      "common_name": "Black-winged Stilt",
+      "scientific_name": "Himantopus himantopus",
+      "gbif_taxon_key": 5229126,
+      "rationale": "waterbird with migrant and resident populations; included as seasonal wetland sighting pulse",
+      "total_observations": 12253,
+      "winter_share_oct_mar": 0.649,
+      "monthly_counts": {
+        "1": 1643,
+        "2": 1700,
+        "3": 1388,
+        "4": 955,
+        "5": 742,
+        "6": 545,
+        "7": 651,
+        "8": 682,
+        "9": 725,
+        "10": 895,
+        "11": 1037,
+        "12": 1290
+      },
+      "gbif_query_url": "https://api.gbif.org/v1/occurrence/search?country=IN&geometry=POLYGON%28%2877.35+12.75%2C77.9+12.75%2C77.9+13.25%2C77.35+13.25%2C77.35+12.75%29%29&hasCoordinate=true&hasGeospatialIssue=false&basisOfRecord=HUMAN_OBSERVATION&year=2014%2C2026&taxonKey=5229126"
+    },
+    {
+      "common_name": "Common Sandpiper",
+      "scientific_name": "Actitis hypoleucos",
+      "gbif_taxon_key": 2481800,
+      "rationale": "winter migrant wader in South India; included as a checklist species with a winter sighting pulse",
+      "total_observations": 10095,
+      "winter_share_oct_mar": 0.855,
+      "monthly_counts": {
+        "1": 2166,
+        "2": 1561,
+        "3": 1025,
+        "4": 562,
+        "5": 41,
+        "6": 0,
+        "7": 61,
+        "8": 267,
+        "9": 535,
+        "10": 1003,
+        "11": 1360,
+        "12": 1514
+      },
+      "gbif_query_url": "https://api.gbif.org/v1/occurrence/search?country=IN&geometry=POLYGON%28%2877.35+12.75%2C77.9+12.75%2C77.9+13.25%2C77.35+13.25%2C77.35+12.75%29%29&hasCoordinate=true&hasGeospatialIssue=false&basisOfRecord=HUMAN_OBSERVATION&year=2014%2C2026&taxonKey=2481800"
+    },
+    {
+      "common_name": "Green Sandpiper",
+      "scientific_name": "Tringa ochropus",
+      "gbif_taxon_key": 2481728,
+      "rationale": "Bengaluru bird list labels Green Sandpiper as a winter migrant",
+      "total_observations": 9932,
+      "winter_share_oct_mar": 0.931,
+      "monthly_counts": {
+        "1": 2199,
+        "2": 2096,
+        "3": 1095,
+        "4": 266,
+        "5": 5,
+        "6": 1,
+        "7": 81,
+        "8": 113,
+        "9": 216,
+        "10": 797,
+        "11": 1469,
+        "12": 1594
+      },
+      "gbif_query_url": "https://api.gbif.org/v1/occurrence/search?country=IN&geometry=POLYGON%28%2877.35+12.75%2C77.9+12.75%2C77.9+13.25%2C77.35+13.25%2C77.35+12.75%29%29&hasCoordinate=true&hasGeospatialIssue=false&basisOfRecord=HUMAN_OBSERVATION&year=2014%2C2026&taxonKey=2481728"
+    },
+    {
+      "common_name": "Pheasant-tailed Jacana",
+      "scientific_name": "Hydrophasianus chirurgus",
+      "gbif_taxon_key": 2481840,
+      "rationale": "wetland species with seasonal/local movement and plumage; included as seasonal sightings, not long-distance migration",
+      "total_observations": 5014,
+      "winter_share_oct_mar": 0.613,
+      "monthly_counts": {
+        "1": 618,
+        "2": 689,
+        "3": 525,
+        "4": 396,
+        "5": 438,
+        "6": 397,
+        "7": 312,
+        "8": 211,
+        "9": 184,
+        "10": 186,
+        "11": 436,
+        "12": 622
+      },
+      "gbif_query_url": "https://api.gbif.org/v1/occurrence/search?country=IN&geometry=POLYGON%28%2877.35+12.75%2C77.9+12.75%2C77.9+13.25%2C77.35+13.25%2C77.35+12.75%29%29&hasCoordinate=true&hasGeospatialIssue=false&basisOfRecord=HUMAN_OBSERVATION&year=2014%2C2026&taxonKey=2481840"
+    },
+    {
+      "common_name": "Eurasian Coot",
+      "scientific_name": "Fulica atra",
+      "gbif_taxon_key": 2474377,
+      "rationale": "Bengaluru lake literature treats coot among common wetland birds; included as winter-associated pulse, not a route claim",
+      "total_observations": 28941,
+      "winter_share_oct_mar": 0.615,
+      "monthly_counts": {
+        "1": 3838,
+        "2": 3122,
+        "3": 2094,
+        "4": 1568,
+        "5": 1469,
+        "6": 1536,
+        "7": 2023,
+        "8": 2167,
+        "9": 2387,
+        "10": 2898,
+        "11": 2992,
+        "12": 2847
+      },
+      "gbif_query_url": "https://api.gbif.org/v1/occurrence/search?country=IN&geometry=POLYGON%28%2877.35+12.75%2C77.9+12.75%2C77.9+13.25%2C77.35+13.25%2C77.35+12.75%29%29&hasCoordinate=true&hasGeospatialIssue=false&basisOfRecord=HUMAN_OBSERVATION&year=2014%2C2026&taxonKey=2474377"
+    },
+    {
+      "common_name": "Booted Eagle",
+      "scientific_name": "Hieraaetus pennatus",
+      "gbif_taxon_key": 2480685,
+      "rationale": "wintering raptor / seasonal visitor in the region; included with cautious wording",
+      "total_observations": 9364,
+      "winter_share_oct_mar": 0.978,
+      "monthly_counts": {
+        "1": 1785,
+        "2": 1974,
+        "3": 1038,
+        "4": 136,
+        "5": 3,
+        "6": 1,
+        "7": 1,
+        "8": 7,
+        "9": 57,
+        "10": 1348,
+        "11": 1543,
+        "12": 1471
+      },
+      "gbif_query_url": "https://api.gbif.org/v1/occurrence/search?country=IN&geometry=POLYGON%28%2877.35+12.75%2C77.9+12.75%2C77.9+13.25%2C77.35+13.25%2C77.35+12.75%29%29&hasCoordinate=true&hasGeospatialIssue=false&basisOfRecord=HUMAN_OBSERVATION&year=2014%2C2026&taxonKey=2480685"
+    },
+    {
+      "common_name": "Oriental Honey Buzzard",
+      "scientific_name": "Pernis ptilorhynchus",
+      "gbif_taxon_key": 5793241,
+      "rationale": "raptor with migratory populations; included with cautious seasonal wording",
+      "total_observations": 11381,
+      "winter_share_oct_mar": 0.673,
+      "monthly_counts": {
+        "1": 1326,
+        "2": 1263,
+        "3": 904,
+        "4": 752,
+        "5": 444,
+        "6": 578,
+        "7": 533,
+        "8": 619,
+        "9": 801,
+        "10": 1510,
+        "11": 1342,
+        "12": 1309
+      },
+      "gbif_query_url": "https://api.gbif.org/v1/occurrence/search?country=IN&geometry=POLYGON%28%2877.35+12.75%2C77.9+12.75%2C77.9+13.25%2C77.35+13.25%2C77.35+12.75%29%29&hasCoordinate=true&hasGeospatialIssue=false&basisOfRecord=HUMAN_OBSERVATION&year=2014%2C2026&taxonKey=5793241"
+    }
+  ],
+  "aggregate_total_observations": 148920,
+  "aggregate_monthly_counts": {
+    "1": 20335,
+    "2": 18371,
+    "3": 12727,
+    "4": 8546,
+    "5": 6933,
+    "6": 6620,
+    "7": 7595,
+    "8": 8826,
+    "9": 10683,
+    "10": 15455,
+    "11": 16504,
+    "12": 16325
+  },
+  "top_source_datasets": [
+    {
+      "dataset_key": "4fa7b334-ce0d-4e88-aaae-2e0c138d049e",
+      "count": 147178,
+      "title": "EOD - eBird Observation Dataset",
+      "doi": "10.15468/aomfnb",
+      "homepage": "https://ebird.org/"
+    },
+    {
+      "dataset_key": "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+      "count": 1695,
+      "title": "iNaturalist Research-grade Observations",
+      "doi": "10.15468/ab3s5x",
+      "homepage": "https://www.inaturalist.org/observations"
+    },
+    {
+      "dataset_key": "c6b86c40-ff71-4e5e-902c-111f400d0d56",
+      "count": 21,
+      "title": "India Biodiversity Portal publication grade dataset",
+      "doi": "10.15468/rs5upd",
+      "homepage": "https://indiabiodiversity.org"
+    },
+    {
+      "dataset_key": "8a863029-f435-446a-821e-275f4f641165",
+      "count": 13
+    },
+    {
+      "dataset_key": "6ff8b3b0-ef0f-4f79-a310-5a5615c6aa0b",
+      "count": 11
+    },
+    {
+      "dataset_key": "b1047888-ae52-4179-9dd5-5448ea342a24",
+      "count": 2
+    }
+  ],
+  "top_localities_raw": [
+    {
+      "name": "Saul Kere / Sowl Kere",
+      "count": 14297
+    },
+    {
+      "name": "Hoskote / Hosakote Kere",
+      "count": 11593
+    },
+    {
+      "name": "Hessaraghatta Kere",
+      "count": 7140
+    },
+    {
+      "name": "Doddanekundi Kere",
+      "count": 5384
+    },
+    {
+      "name": "Jakkur Kere",
+      "count": 5204
+    },
+    {
+      "name": "GKVK Campus",
+      "count": 4962
+    },
+    {
+      "name": "Muthanallur Kere",
+      "count": 4945
+    },
+    {
+      "name": "Varthur Kere",
+      "count": 3815
+    },
+    {
+      "name": "Byatarayana Doddi Kere",
+      "count": 3239
+    },
+    {
+      "name": "Dodda Begur Kere",
+      "count": 2923
+    },
+    {
+      "name": "Kaikondrahalli Kere / Kaikondanahalli Kere",
+      "count": 2755
+    },
+    {
+      "name": "Lalbagh Botanical Gardens",
+      "count": 2691
+    },
+    {
+      "name": "Yelahanka Kere",
+      "count": 2643
+    },
+    {
+      "name": "Doddabommasandra Kere",
+      "count": 2492
+    },
+    {
+      "name": "Prestige Ferns Residency, Harlur Road, Bangalore",
+      "count": 2278
+    },
+    {
+      "name": "Valley School",
+      "count": 2115
+    },
+    {
+      "name": "Hennagara Lake",
+      "count": 1869
+    },
+    {
+      "name": "Madhure Kere",
+      "count": 1610
+    },
+    {
+      "name": "Harohalli Kere (North)",
+      "count": 1600
+    },
+    {
+      "name": "Madivala Kere",
+      "count": 1515
+    },
+    {
+      "name": "Kalkere Kere",
+      "count": 1461
+    },
+    {
+      "name": "Arjun Aura Apartment",
+      "count": 1455
+    },
+    {
+      "name": "Jigani Kere",
+      "count": 1152
+    },
+    {
+      "name": "Thubarahalli Lake",
+      "count": 1139
+    },
+    {
+      "name": "Dore Kere",
+      "count": 1023
+    },
+    {
+      "name": "Kommaghatta Kere",
+      "count": 992
+    },
+    {
+      "name": "Kasavanahalli Kere",
+      "count": 988
+    },
+    {
+      "name": "Allalasandra Kere",
+      "count": 917
+    },
+    {
+      "name": "Hulimavu Kere",
+      "count": 875
+    },
+    {
+      "name": "Kogilu Kere",
+      "count": 845
+    },
+    {
+      "name": "Bettakote Kere",
+      "count": 807
+    },
+    {
+      "name": "Singanayakanahalli (Nagadasanahalli) Kere",
+      "count": 807
+    },
+    {
+      "name": "Lalbagh Botanical Gardens--Lalbagh Lake",
+      "count": 760
+    },
+    {
+      "name": "IISc Bangalore",
+      "count": 749
+    },
+    {
+      "name": "Puttenahalli Kere (South, Puttakere)",
+      "count": 716
+    },
+    {
+      "name": "Agara Kere (HSR Layout)",
+      "count": 711
+    },
+    {
+      "name": "Gulakamale Kere",
+      "count": 707
+    },
+    {
+      "name": "Rachenahalli Kere",
+      "count": 698
+    },
+    {
+      "name": "Kannahalli Kere",
+      "count": 689
+    },
+    {
+      "name": "Aagara-BM Kaval Kere (near Valley School)",
+      "count": 652
+    },
+    {
+      "name": "Puttenahalli Kere (North)",
+      "count": 627
+    },
+    {
+      "name": "GKVK Campus--Botanical Garden",
+      "count": 581
+    },
+    {
+      "name": "Hoskote Kere (western path only)",
+      "count": 570
+    },
+    {
+      "name": "Hebbal Kere",
+      "count": 507
+    },
+    {
+      "name": "Hinnaki Kere",
+      "count": 498
+    },
+    {
+      "name": "Hulimangala, Bangalore",
+      "count": 485
+    },
+    {
+      "name": "Anjanapura Temple",
+      "count": 471
+    },
+    {
+      "name": "Jarakebande Kavalu Butterfly Park/ Avalahalli State Forest",
+      "count": 453
+    },
+    {
+      "name": "Kelavarapalli Reservoir",
+      "count": 444
+    },
+    {
+      "name": "Kalkere State Forest",
+      "count": 433
+    }
+  ],
+  "top_wetland_area_points": [
+    {
+      "name": "Saul Kere / Sowl Kere",
+      "count": 14297,
+      "representative_lat": 12.91838,
+      "representative_lon": 77.68036,
+      "representative_gbif_id": 5296368193,
+      "monthly_counts": {
+        "1": 1280,
+        "2": 1742,
+        "3": 1518,
+        "4": 1137,
+        "5": 703,
+        "6": 630,
+        "7": 917,
+        "8": 789,
+        "9": 719,
+        "10": 1412,
+        "11": 2013,
+        "12": 1437
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 14297
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 14297
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 14297
+        },
+        {
+          "gbif_taxon_key": "1493",
+          "count": 3992
+        },
+        {
+          "gbif_taxon_key": "2474376",
+          "count": 3992
+        },
+        {
+          "gbif_taxon_key": "2474377",
+          "count": 3992
+        },
+        {
+          "gbif_taxon_key": "9342",
+          "count": 3992
+        },
+        {
+          "gbif_taxon_key": "7192402",
+          "count": 3887
+        }
+      ]
+    },
+    {
+      "name": "Hoskote / Hosakote Kere",
+      "count": 11593,
+      "representative_lat": 13.06802,
+      "representative_lon": 77.76926,
+      "representative_gbif_id": 5295903053,
+      "monthly_counts": {
+        "1": 1628,
+        "2": 1201,
+        "3": 970,
+        "4": 526,
+        "5": 437,
+        "6": 367,
+        "7": 502,
+        "8": 639,
+        "9": 1048,
+        "10": 1578,
+        "11": 1250,
+        "12": 1447
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 11593
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 11593
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 11593
+        },
+        {
+          "gbif_taxon_key": "7192402",
+          "count": 3993
+        },
+        {
+          "gbif_taxon_key": "2481854",
+          "count": 2472
+        },
+        {
+          "gbif_taxon_key": "2481890",
+          "count": 2472
+        },
+        {
+          "gbif_taxon_key": "5268",
+          "count": 2472
+        },
+        {
+          "gbif_taxon_key": "7192775",
+          "count": 2472
+        }
+      ]
+    },
+    {
+      "name": "Hessaraghatta Kere",
+      "count": 7140,
+      "representative_lat": 13.14865,
+      "representative_lon": 77.4879,
+      "representative_gbif_id": 5297735670,
+      "monthly_counts": {
+        "1": 1250,
+        "2": 781,
+        "3": 376,
+        "4": 267,
+        "5": 132,
+        "6": 56,
+        "7": 124,
+        "8": 233,
+        "9": 272,
+        "10": 841,
+        "11": 1575,
+        "12": 1233
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 7140
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 7140
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 7140
+        },
+        {
+          "gbif_taxon_key": "7192402",
+          "count": 3808
+        },
+        {
+          "gbif_taxon_key": "5282",
+          "count": 2027
+        },
+        {
+          "gbif_taxon_key": "1493",
+          "count": 1272
+        },
+        {
+          "gbif_taxon_key": "2474376",
+          "count": 1272
+        },
+        {
+          "gbif_taxon_key": "2474377",
+          "count": 1272
+        }
+      ]
+    },
+    {
+      "name": "Doddanekundi Kere",
+      "count": 5384,
+      "representative_lat": 12.97562,
+      "representative_lon": 77.68783,
+      "representative_gbif_id": 5296506569,
+      "monthly_counts": {
+        "1": 1008,
+        "2": 633,
+        "3": 286,
+        "4": 317,
+        "5": 298,
+        "6": 257,
+        "7": 330,
+        "8": 335,
+        "9": 423,
+        "10": 647,
+        "11": 471,
+        "12": 379
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 5384
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 5384
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 5384
+        },
+        {
+          "gbif_taxon_key": "2481854",
+          "count": 1653
+        },
+        {
+          "gbif_taxon_key": "2481890",
+          "count": 1653
+        },
+        {
+          "gbif_taxon_key": "5268",
+          "count": 1653
+        },
+        {
+          "gbif_taxon_key": "7192775",
+          "count": 1653
+        },
+        {
+          "gbif_taxon_key": "1493",
+          "count": 1599
+        }
+      ]
+    },
+    {
+      "name": "Jakkur Kere",
+      "count": 5204,
+      "representative_lat": 13.08422,
+      "representative_lon": 77.61144,
+      "representative_gbif_id": 5299941113,
+      "monthly_counts": {
+        "1": 735,
+        "2": 722,
+        "3": 466,
+        "4": 322,
+        "5": 276,
+        "6": 251,
+        "7": 275,
+        "8": 283,
+        "9": 365,
+        "10": 664,
+        "11": 456,
+        "12": 389
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 5204
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 5204
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 5204
+        },
+        {
+          "gbif_taxon_key": "10650925",
+          "count": 1428
+        },
+        {
+          "gbif_taxon_key": "5229163",
+          "count": 1428
+        },
+        {
+          "gbif_taxon_key": "7190953",
+          "count": 1428
+        },
+        {
+          "gbif_taxon_key": "9329",
+          "count": 1428
+        },
+        {
+          "gbif_taxon_key": "2481854",
+          "count": 1402
+        }
+      ]
+    },
+    {
+      "name": "GKVK Campus",
+      "count": 4962,
+      "representative_lat": 13.08573,
+      "representative_lon": 77.57133,
+      "representative_gbif_id": 5310362962,
+      "monthly_counts": {
+        "1": 530,
+        "2": 830,
+        "3": 463,
+        "4": 228,
+        "5": 113,
+        "6": 50,
+        "7": 45,
+        "8": 150,
+        "9": 237,
+        "10": 1041,
+        "11": 734,
+        "12": 541
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 4962
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 4962
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 4962
+        },
+        {
+          "gbif_taxon_key": "2877",
+          "count": 2761
+        },
+        {
+          "gbif_taxon_key": "7191147",
+          "count": 2761
+        },
+        {
+          "gbif_taxon_key": "2480683",
+          "count": 1802
+        },
+        {
+          "gbif_taxon_key": "2480685",
+          "count": 1802
+        },
+        {
+          "gbif_taxon_key": "2481854",
+          "count": 1306
+        }
+      ]
+    },
+    {
+      "name": "Muthanallur Kere",
+      "count": 4945,
+      "representative_lat": 12.81984,
+      "representative_lon": 77.72672,
+      "representative_gbif_id": 5303406407,
+      "monthly_counts": {
+        "1": 651,
+        "2": 401,
+        "3": 458,
+        "4": 300,
+        "5": 152,
+        "6": 293,
+        "7": 237,
+        "8": 384,
+        "9": 229,
+        "10": 476,
+        "11": 678,
+        "12": 686
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 4945
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 4945
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 4945
+        },
+        {
+          "gbif_taxon_key": "2481854",
+          "count": 1623
+        },
+        {
+          "gbif_taxon_key": "2481890",
+          "count": 1623
+        },
+        {
+          "gbif_taxon_key": "5268",
+          "count": 1623
+        },
+        {
+          "gbif_taxon_key": "7192775",
+          "count": 1623
+        },
+        {
+          "gbif_taxon_key": "2877",
+          "count": 1269
+        }
+      ]
+    },
+    {
+      "name": "Varthur Kere",
+      "count": 3815,
+      "representative_lat": 12.94887,
+      "representative_lon": 77.73798,
+      "representative_gbif_id": 5295757022,
+      "monthly_counts": {
+        "1": 517,
+        "2": 259,
+        "3": 337,
+        "4": 13,
+        "5": 8,
+        "6": 20,
+        "7": 52,
+        "8": 69,
+        "9": 290,
+        "10": 465,
+        "11": 840,
+        "12": 945
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 3815
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 3815
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 3815
+        },
+        {
+          "gbif_taxon_key": "7192402",
+          "count": 2354
+        },
+        {
+          "gbif_taxon_key": "5282",
+          "count": 1262
+        },
+        {
+          "gbif_taxon_key": "2481797",
+          "count": 694
+        },
+        {
+          "gbif_taxon_key": "2481800",
+          "count": 694
+        },
+        {
+          "gbif_taxon_key": "2480217",
+          "count": 682
+        }
+      ]
+    },
+    {
+      "name": "Byatarayana Doddi Kere",
+      "count": 3239,
+      "representative_lat": 12.81774,
+      "representative_lon": 77.55012,
+      "representative_gbif_id": 5303576453,
+      "monthly_counts": {
+        "1": 314,
+        "2": 276,
+        "3": 283,
+        "4": 215,
+        "5": 299,
+        "6": 279,
+        "7": 238,
+        "8": 313,
+        "9": 257,
+        "10": 192,
+        "11": 243,
+        "12": 330
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 3239
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 3239
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 3239
+        },
+        {
+          "gbif_taxon_key": "2481854",
+          "count": 1254
+        },
+        {
+          "gbif_taxon_key": "2481890",
+          "count": 1254
+        },
+        {
+          "gbif_taxon_key": "5268",
+          "count": 1254
+        },
+        {
+          "gbif_taxon_key": "7192775",
+          "count": 1254
+        },
+        {
+          "gbif_taxon_key": "2877",
+          "count": 837
+        }
+      ]
+    },
+    {
+      "name": "Dodda Begur Kere",
+      "count": 2923,
+      "representative_lat": 12.8744,
+      "representative_lon": 77.63034,
+      "representative_gbif_id": 5316540289,
+      "monthly_counts": {
+        "1": 340,
+        "2": 462,
+        "3": 268,
+        "4": 151,
+        "5": 117,
+        "6": 301,
+        "7": 97,
+        "8": 92,
+        "9": 143,
+        "10": 379,
+        "11": 264,
+        "12": 309
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 2923
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 2923
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 2923
+        },
+        {
+          "gbif_taxon_key": "7192402",
+          "count": 1202
+        },
+        {
+          "gbif_taxon_key": "1493",
+          "count": 644
+        },
+        {
+          "gbif_taxon_key": "2474376",
+          "count": 644
+        },
+        {
+          "gbif_taxon_key": "2474377",
+          "count": 644
+        },
+        {
+          "gbif_taxon_key": "9342",
+          "count": 644
+        }
+      ]
+    },
+    {
+      "name": "Kaikondrahalli Kere / Kaikondanahalli Kere",
+      "count": 2755,
+      "representative_lat": 12.91348,
+      "representative_lon": 77.67353,
+      "representative_gbif_id": 5322084387,
+      "monthly_counts": {
+        "1": 411,
+        "2": 476,
+        "3": 297,
+        "4": 131,
+        "5": 83,
+        "6": 103,
+        "7": 129,
+        "8": 124,
+        "9": 205,
+        "10": 232,
+        "11": 267,
+        "12": 297
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 2755
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 2755
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 2755
+        },
+        {
+          "gbif_taxon_key": "1493",
+          "count": 745
+        },
+        {
+          "gbif_taxon_key": "2474376",
+          "count": 745
+        },
+        {
+          "gbif_taxon_key": "2474377",
+          "count": 745
+        },
+        {
+          "gbif_taxon_key": "9342",
+          "count": 745
+        },
+        {
+          "gbif_taxon_key": "2481854",
+          "count": 735
+        }
+      ]
+    },
+    {
+      "name": "Lalbagh Botanical Gardens",
+      "count": 2691,
+      "representative_lat": 12.95046,
+      "representative_lon": 77.58624,
+      "representative_gbif_id": 5309240154,
+      "monthly_counts": {
+        "1": 286,
+        "2": 356,
+        "3": 217,
+        "4": 140,
+        "5": 90,
+        "6": 124,
+        "7": 153,
+        "8": 194,
+        "9": 250,
+        "10": 250,
+        "11": 345,
+        "12": 286
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 2691
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 2691
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 2691
+        },
+        {
+          "gbif_taxon_key": "2481854",
+          "count": 1547
+        },
+        {
+          "gbif_taxon_key": "2481890",
+          "count": 1547
+        },
+        {
+          "gbif_taxon_key": "5268",
+          "count": 1547
+        },
+        {
+          "gbif_taxon_key": "7192775",
+          "count": 1547
+        },
+        {
+          "gbif_taxon_key": "10650925",
+          "count": 587
+        }
+      ]
+    },
+    {
+      "name": "Yelahanka Kere",
+      "count": 2643,
+      "representative_lat": 13.11091,
+      "representative_lon": 77.5953,
+      "representative_gbif_id": 5299063320,
+      "monthly_counts": {
+        "1": 287,
+        "2": 285,
+        "3": 127,
+        "4": 179,
+        "5": 99,
+        "6": 184,
+        "7": 319,
+        "8": 266,
+        "9": 259,
+        "10": 287,
+        "11": 160,
+        "12": 191
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 2643
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 2643
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 2643
+        },
+        {
+          "gbif_taxon_key": "2481854",
+          "count": 787
+        },
+        {
+          "gbif_taxon_key": "2481890",
+          "count": 787
+        },
+        {
+          "gbif_taxon_key": "5268",
+          "count": 787
+        },
+        {
+          "gbif_taxon_key": "7192775",
+          "count": 787
+        },
+        {
+          "gbif_taxon_key": "1493",
+          "count": 605
+        }
+      ]
+    },
+    {
+      "name": "Doddabommasandra Kere",
+      "count": 2492,
+      "representative_lat": 13.06825,
+      "representative_lon": 77.56055,
+      "representative_gbif_id": 5300450557,
+      "monthly_counts": {
+        "1": 416,
+        "2": 503,
+        "3": 220,
+        "4": 77,
+        "5": 130,
+        "6": 96,
+        "7": 82,
+        "8": 157,
+        "9": 180,
+        "10": 242,
+        "11": 171,
+        "12": 218
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 2492
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 2492
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 2492
+        },
+        {
+          "gbif_taxon_key": "7192402",
+          "count": 1172
+        },
+        {
+          "gbif_taxon_key": "1493",
+          "count": 633
+        },
+        {
+          "gbif_taxon_key": "2474376",
+          "count": 633
+        },
+        {
+          "gbif_taxon_key": "2474377",
+          "count": 633
+        },
+        {
+          "gbif_taxon_key": "9342",
+          "count": 633
+        }
+      ]
+    },
+    {
+      "name": "Valley School",
+      "count": 2115,
+      "representative_lat": 12.85369,
+      "representative_lon": 77.50947,
+      "representative_gbif_id": 5297923855,
+      "monthly_counts": {
+        "1": 206,
+        "2": 305,
+        "3": 213,
+        "4": 124,
+        "5": 133,
+        "6": 144,
+        "7": 103,
+        "8": 113,
+        "9": 219,
+        "10": 247,
+        "11": 135,
+        "12": 173
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 2115
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 2115
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 2115
+        },
+        {
+          "gbif_taxon_key": "2877",
+          "count": 1478
+        },
+        {
+          "gbif_taxon_key": "7191147",
+          "count": 1478
+        },
+        {
+          "gbif_taxon_key": "2480419",
+          "count": 1335
+        },
+        {
+          "gbif_taxon_key": "5793241",
+          "count": 1335
+        },
+        {
+          "gbif_taxon_key": "2481854",
+          "count": 447
+        }
+      ]
+    },
+    {
+      "name": "Hennagara Lake",
+      "count": 1869,
+      "representative_lat": 12.77725,
+      "representative_lon": 77.66112,
+      "representative_gbif_id": 5431588934,
+      "monthly_counts": {
+        "1": 311,
+        "2": 195,
+        "3": 265,
+        "4": 114,
+        "5": 30,
+        "6": 84,
+        "7": 79,
+        "8": 39,
+        "9": 89,
+        "10": 135,
+        "11": 351,
+        "12": 177
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 1869
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 1869
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 1869
+        },
+        {
+          "gbif_taxon_key": "7192402",
+          "count": 828
+        },
+        {
+          "gbif_taxon_key": "1493",
+          "count": 429
+        },
+        {
+          "gbif_taxon_key": "2474376",
+          "count": 429
+        },
+        {
+          "gbif_taxon_key": "2474377",
+          "count": 429
+        },
+        {
+          "gbif_taxon_key": "9342",
+          "count": 429
+        }
+      ]
+    },
+    {
+      "name": "Madhure Kere",
+      "count": 1610,
+      "representative_lat": 13.21461,
+      "representative_lon": 77.44546,
+      "representative_gbif_id": 5310474725,
+      "monthly_counts": {
+        "1": 358,
+        "2": 243,
+        "3": 220,
+        "4": 32,
+        "5": 35,
+        "6": 20,
+        "7": 21,
+        "8": 60,
+        "9": 177,
+        "10": 178,
+        "11": 115,
+        "12": 151
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 1610
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 1610
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 1610
+        },
+        {
+          "gbif_taxon_key": "7192402",
+          "count": 865
+        },
+        {
+          "gbif_taxon_key": "5282",
+          "count": 510
+        },
+        {
+          "gbif_taxon_key": "2481797",
+          "count": 304
+        },
+        {
+          "gbif_taxon_key": "2481800",
+          "count": 304
+        },
+        {
+          "gbif_taxon_key": "2480217",
+          "count": 294
+        }
+      ]
+    },
+    {
+      "name": "Harohalli Kere (North)",
+      "count": 1600,
+      "representative_lat": 13.13804,
+      "representative_lon": 77.57713,
+      "representative_gbif_id": 5323220831,
+      "monthly_counts": {
+        "1": 109,
+        "2": 386,
+        "3": 73,
+        "4": 90,
+        "5": 139,
+        "6": 36,
+        "7": 115,
+        "8": 171,
+        "9": 218,
+        "10": 94,
+        "11": 57,
+        "12": 112
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 1600
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 1600
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 1600
+        },
+        {
+          "gbif_taxon_key": "7192402",
+          "count": 538
+        },
+        {
+          "gbif_taxon_key": "1493",
+          "count": 436
+        },
+        {
+          "gbif_taxon_key": "2474376",
+          "count": 436
+        },
+        {
+          "gbif_taxon_key": "2474377",
+          "count": 436
+        },
+        {
+          "gbif_taxon_key": "9342",
+          "count": 436
+        }
+      ]
+    },
+    {
+      "name": "Madivala Kere",
+      "count": 1515,
+      "representative_lat": 12.90662,
+      "representative_lon": 77.61654,
+      "representative_gbif_id": 5423224574,
+      "monthly_counts": {
+        "1": 300,
+        "2": 218,
+        "3": 224,
+        "4": 106,
+        "5": 84,
+        "6": 58,
+        "7": 89,
+        "8": 71,
+        "9": 94,
+        "10": 84,
+        "11": 110,
+        "12": 77
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 1515
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 1515
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 1515
+        },
+        {
+          "gbif_taxon_key": "10650925",
+          "count": 471
+        },
+        {
+          "gbif_taxon_key": "5229163",
+          "count": 471
+        },
+        {
+          "gbif_taxon_key": "7190953",
+          "count": 471
+        },
+        {
+          "gbif_taxon_key": "9329",
+          "count": 471
+        },
+        {
+          "gbif_taxon_key": "2481854",
+          "count": 458
+        }
+      ]
+    },
+    {
+      "name": "Kalkere Kere",
+      "count": 1461,
+      "representative_lat": 13.04767,
+      "representative_lon": 77.66663,
+      "representative_gbif_id": 5296855978,
+      "monthly_counts": {
+        "1": 204,
+        "2": 174,
+        "3": 203,
+        "4": 112,
+        "5": 77,
+        "6": 65,
+        "7": 57,
+        "8": 57,
+        "9": 72,
+        "10": 110,
+        "11": 171,
+        "12": 159
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 1461
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 1461
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 1461
+        },
+        {
+          "gbif_taxon_key": "7192402",
+          "count": 543
+        },
+        {
+          "gbif_taxon_key": "2481854",
+          "count": 412
+        },
+        {
+          "gbif_taxon_key": "2481890",
+          "count": 412
+        },
+        {
+          "gbif_taxon_key": "5268",
+          "count": 412
+        },
+        {
+          "gbif_taxon_key": "7192775",
+          "count": 412
+        }
+      ]
+    },
+    {
+      "name": "Jigani Kere",
+      "count": 1152,
+      "representative_lat": 12.79452,
+      "representative_lon": 77.6345,
+      "representative_gbif_id": 5323149053,
+      "monthly_counts": {
+        "1": 82,
+        "2": 243,
+        "3": 114,
+        "4": 60,
+        "5": 77,
+        "6": 42,
+        "7": 40,
+        "8": 65,
+        "9": 168,
+        "10": 78,
+        "11": 88,
+        "12": 95
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 1152
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 1152
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 1152
+        },
+        {
+          "gbif_taxon_key": "2481854",
+          "count": 509
+        },
+        {
+          "gbif_taxon_key": "2481890",
+          "count": 509
+        },
+        {
+          "gbif_taxon_key": "5268",
+          "count": 509
+        },
+        {
+          "gbif_taxon_key": "7192775",
+          "count": 509
+        },
+        {
+          "gbif_taxon_key": "7192402",
+          "count": 280
+        }
+      ]
+    },
+    {
+      "name": "Thubarahalli Lake",
+      "count": 1139,
+      "representative_lat": 12.95825,
+      "representative_lon": 77.72558,
+      "representative_gbif_id": 5297349402,
+      "monthly_counts": {
+        "1": 77,
+        "2": 92,
+        "3": 126,
+        "4": 102,
+        "5": 74,
+        "6": 73,
+        "7": 135,
+        "8": 99,
+        "9": 100,
+        "10": 75,
+        "11": 95,
+        "12": 91
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 1139
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 1139
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 1139
+        },
+        {
+          "gbif_taxon_key": "1493",
+          "count": 423
+        },
+        {
+          "gbif_taxon_key": "2474376",
+          "count": 423
+        },
+        {
+          "gbif_taxon_key": "2474377",
+          "count": 423
+        },
+        {
+          "gbif_taxon_key": "9342",
+          "count": 423
+        },
+        {
+          "gbif_taxon_key": "7192402",
+          "count": 388
+        }
+      ]
+    },
+    {
+      "name": "Dore Kere",
+      "count": 1023,
+      "representative_lat": 12.90272,
+      "representative_lon": 77.55061,
+      "representative_gbif_id": 5299050343,
+      "monthly_counts": {
+        "1": 159,
+        "2": 177,
+        "3": 125,
+        "4": 65,
+        "5": 29,
+        "6": 28,
+        "7": 34,
+        "8": 40,
+        "9": 25,
+        "10": 165,
+        "11": 64,
+        "12": 112
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 1023
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 1023
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 1023
+        },
+        {
+          "gbif_taxon_key": "7192402",
+          "count": 514
+        },
+        {
+          "gbif_taxon_key": "2481854",
+          "count": 331
+        },
+        {
+          "gbif_taxon_key": "2481890",
+          "count": 331
+        },
+        {
+          "gbif_taxon_key": "5268",
+          "count": 331
+        },
+        {
+          "gbif_taxon_key": "7192775",
+          "count": 331
+        }
+      ]
+    },
+    {
+      "name": "Kommaghatta Kere",
+      "count": 992,
+      "representative_lat": 12.93044,
+      "representative_lon": 77.46757,
+      "representative_gbif_id": 5301971742,
+      "monthly_counts": {
+        "1": 131,
+        "2": 157,
+        "3": 98,
+        "4": 87,
+        "5": 63,
+        "6": 26,
+        "7": 19,
+        "8": 26,
+        "9": 42,
+        "10": 88,
+        "11": 129,
+        "12": 126
+      },
+      "top_taxa": [
+        {
+          "gbif_taxon_key": "1",
+          "count": 992
+        },
+        {
+          "gbif_taxon_key": "212",
+          "count": 992
+        },
+        {
+          "gbif_taxon_key": "44",
+          "count": 992
+        },
+        {
+          "gbif_taxon_key": "2481854",
+          "count": 296
+        },
+        {
+          "gbif_taxon_key": "2481890",
+          "count": 296
+        },
+        {
+          "gbif_taxon_key": "5268",
+          "count": 296
+        },
+        {
+          "gbif_taxon_key": "7192775",
+          "count": 296
+        },
+        {
+          "gbif_taxon_key": "1493",
+          "count": 295
+        }
+      ]
+    },
+    {
+      "name": "Kasavanahalli Kere",
+      "count": 988,
+      "representative_lat": 12.90408,
+      "representative_lon": 77.6674,
+      "representative_gbif_id": 5315043819
+    },
+    {
+      "name": "Allalasandra Kere",
+      "count": 917,
+      "representative_lat": 13.09072,
+      "representative_lon": 77.58787,
+      "representative_gbif_id": 5348940781
+    },
+    {
+      "name": "Hulimavu Kere",
+      "count": 875,
+      "representative_lat": 12.8713,
+      "representative_lon": 77.60429,
+      "representative_gbif_id": 5595148181
+    },
+    {
+      "name": "Kogilu Kere",
+      "count": 845,
+      "representative_lat": 13.10786,
+      "representative_lon": 77.61843,
+      "representative_gbif_id": 5297425431
+    },
+    {
+      "name": "Bettakote Kere",
+      "count": 807,
+      "representative_lat": 13.21383,
+      "representative_lon": 77.72814,
+      "representative_gbif_id": 5297947770
+    },
+    {
+      "name": "Singanayakanahalli (Nagadasanahalli) Kere",
+      "count": 807,
+      "representative_lat": 13.15581,
+      "representative_lon": 77.57332,
+      "representative_gbif_id": 5384351586
+    }
+  ],
+  "source_urls": {
+    "gbif_selected_occurrence_query": "https://api.gbif.org/v1/occurrence/search?country=IN&geometry=POLYGON%28%2877.35+12.75%2C77.9+12.75%2C77.9+13.25%2C77.35+13.25%2C77.35+12.75%29%29&hasCoordinate=true&hasGeospatialIssue=false&basisOfRecord=HUMAN_OBSERVATION&year=2014%2C2026&taxonKey=2481890&taxonKey=5229239&taxonKey=5229163&taxonKey=5229126&taxonKey=2481800&taxonKey=2481728&taxonKey=2481840&taxonKey=2474377&taxonKey=2480685&taxonKey=5793241&limit=0",
+    "gbif_species_match": "https://api.gbif.org/v1/species/match",
+    "wikidata_taxon_names": "https://www.wikidata.org/wiki/Property:P225",
+    "wikipedia_bengaluru_bird_list": "https://en.wikipedia.org/wiki/List_of_birds_of_Bengaluru",
+    "madiwala_lake_context": "https://en.wikipedia.org/wiki/Madiwala_Lake",
+    "bengaluru_lake_bird_context": "https://en.wikipedia.org/wiki/Lakes_in_Bengaluru",
+    "birdcast_live_maps_inspiration": "https://birdcast.org/migration-tools/live-migration-maps/"
+  },
+  "design_implications": [
+    "Use a Bangalore map as context, not as a route map.",
+    "Animate monthly pulses by area and species group; avoid arrows or directional tracks.",
+    "Label the layer as seasonal sightings or winter pulse, not live migration.",
+    "Use strongest months Oct-Feb as the visual rhythm; March/September can appear as shoulders if needed.",
+    "Expose sources and caveats through a compact disclosure surface."
+  ]
+}

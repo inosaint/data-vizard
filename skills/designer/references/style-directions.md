@@ -174,6 +174,19 @@ Color cue: misty lavenders, peach, cloud blue, pale mint, and one clearer anchor
 
 Use for workshop explanation. Favor simple encodings, visible steps, annotations, and language that names the design reasoning.
 
+## Artifact Polish Checklist
+
+Run this before final HTML signoff, especially after browser-comment feedback.
+
+- Control alignment: every visible control should sit on a deliberate edge, rail, or title line. A play/pause button, filter, or toggle floating between helper text and chart marks is a layout defect.
+- Typography economy: avoid sudden all-caps, bold-everywhere, novelty fonts, and multiple display voices unless they are part of the selected aesthetic system. Eyebrows should be quiet or absent unless they add orientation.
+- Chart-mark sobriety: default bars, points, lines, and areas should be simple first. Add glow, gradients, thick halos, oversized radii, or shadows only when they encode meaning or solve a legibility problem.
+- Component-shape variety: do not stack rounded panel inside rounded panel inside rounded card. If a section is mainly a list or field-guide shelf, use open layout, separators, or spacing before card chrome.
+- Local detail placement: selected-state text should live beside the selected mark or inside the related detail section. A standalone readout floating between chart and detail often means the interaction model is unresolved.
+- Responsive composition: inspect wide desktop, cramped desktop/tablet, and mobile separately. Multi-column layouts must keep display titles, chart cards, controls, and gutters from colliding; if a hero word intrudes into the chart, collapse earlier or change the composition.
+- Vertical anchoring: the first screen should make the title feel like the title. Avoid centering a short hero column beside a much taller chart/card when that pushes the title into the middle of the viewport without a deliberate poster concept.
+- Copy-design fit: if a title, section header, or readout sounds like a placeholder, ask Narrator for a rewrite before styling around it.
+
 ## Motion
 
 Motion should support:

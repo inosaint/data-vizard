@@ -14,6 +14,7 @@ Run this pass before handing visualization copy to the user, Critic, or Designer
 - Repeated sentence scaffolds: "This is not just X. It is Y."
 - Poetic obviousness that restates what the viewer already sees
 - Decorative headers, taglines, or hover copy that add mood but no meaning
+- Placeholder chart language: "high point", "prominent", "quieter months", "what this shows", "present signal", "leading signal", and "clear pattern" unless the phrase is the most precise evidence-backed wording
 
 ## Prefer This Instead
 
@@ -65,3 +66,31 @@ Use:
 "Hover for title and year."
 
 Or remove entirely if the interaction is already obvious.
+
+## Visualization Copy Examples
+
+Instead of:
+"January is the high point."
+
+Use:
+"Bengaluru's wetland-bird records lean winter."
+
+Instead of:
+"Birds prominent in January"
+
+Use:
+"Closest to their own peak in January"
+
+Instead of:
+"July is one of the quieter months."
+
+Use:
+"July sits below the winter cluster."
+
+Instead of:
+"4 species are at a monthly high in January."
+
+Use:
+"Four selected species reach their monthly high here."
+
+If a phrase sounds like a UI placeholder, do not rescue it with bigger type. Rewrite it, move it into assistive text, or delete it.

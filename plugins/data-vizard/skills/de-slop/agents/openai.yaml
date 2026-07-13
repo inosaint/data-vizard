@@ -1,0 +1,4 @@
+interface:
+  display_name: "De-Slop"
+  short_description: "Clean up bad charts without changing the evidence"
+  default_prompt: "Use $de-slop to diagnose this chart and redesign it with clearer, more honest visualization choices."

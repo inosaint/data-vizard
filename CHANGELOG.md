@@ -2,6 +2,18 @@
 
 All notable changes to Data Vizard will be documented here.
 
+## 0.1.5 - 2026-07-13
+
+- Added the `de-slop` skill across root, packaged plugin, and Gemini extension surfaces for repairing bad or misleading charts without changing the evidence.
+- Added Designer, Critic, and Data Vizard guardrails for image-option diversity, control honesty, record reachability, file-structure discipline, artifact signoff notes, and precise ledger statuses.
+- Added pre-build wireframe/fidelity planning and richer rendering decision gates for immersive, scene-led, spatial, animated, map-led, and data-art concepts.
+- Added `Model` column to the project ledger table in the data-vizard orchestrator skill so each stage records the active model identifier.
+- Added "The Field" (Paraguay FIFA 2026 data-art piece) and London Salaries to the landing-page showcase; updated all showcase cards with dual version and model tags.
+- Converted Plugin README and Changelog from Markdown links to styled HTML pages (`faq.html`, `changelog.html`) with breadcrumbs and matched footer.
+- Added `llms.txt` at repo root for agent discoverability.
+- Added SEO and AEO structured data (JSON-LD `FAQPage`, `SoftwareApplication`, `WebPage`) and Open Graph / Twitter Card meta across all pages.
+- Deleted unused `docs.html`.
+
 ## 0.1.4 - 2026-07-02
 
 - Added the `critic` workflow skill across packaged plugin and Gemini extension surfaces.

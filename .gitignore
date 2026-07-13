@@ -11,6 +11,7 @@ Thumbs.db
 .claude/
 .codex/
 .impeccable/
+.herenow/
 
 # Dependencies and local caches
 node_modules/

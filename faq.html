@@ -1,0 +1,670 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FAQ — Data Vizard</title>
+  <meta name="description" content="Answers to common questions about installing, using, and troubleshooting the Data Vizard agent plugin for Codex, Claude Code, and Gemini CLI.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#f6f2ff">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Data Vizard">
+  <meta property="og:title" content="FAQ — Data Vizard">
+  <meta property="og:description" content="Answers to common questions about installing, using, and troubleshooting the Data Vizard agent plugin for Codex, Claude Code, and Gemini CLI.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="FAQ — Data Vizard">
+  <meta name="twitter:description" content="Answers to common questions about installing, using, and troubleshooting the Data Vizard agent plugin for Codex, Claude Code, and Gemini CLI.">
+  <link rel="icon" href="plugins/data-vizard/assets/logo.png" type="image/png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "FAQPage",
+        "name": "Data Vizard FAQ",
+        "description": "Common questions about the Data Vizard agent plugin for data visualization workflows.",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is Data Vizard?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Data Vizard is an agent workflow plugin for Codex, Claude Code, and Gemini CLI. It provides seven specialist skills (curator, analyst, narrator, critic, de-slop, designer, and an orchestrator) that guide you from a raw dataset to a polished, self-contained HTML visualization, with every decision made explicit."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which agent hosts does Data Vizard support?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Data Vizard supports Codex (app and CLI), Claude Code CLI, and Gemini CLI. It installs automatically into whichever hosts are available when you run npx data-vizard install."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I install Data Vizard?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Run npx data-vizard install in your terminal. You need Node.js 18 or newer. The installer detects Codex, Claude Code, and Gemini CLI automatically and registers the plugin with each one. Then open a new session in your agent of choice so the skills load."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I invoke Data Vizard in Claude Code?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Type /data-vizard:data-vizard followed by your request, for example: /data-vizard:data-vizard Build a visualization from this CSV. You can also call individual skills directly, such as /data-vizard:data-curator to profile a dataset."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I invoke Data Vizard in Codex?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use $data-vizard:data-vizard in your message, for example: Use $data-vizard:data-vizard to build a visualization from this CSV."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I invoke Data Vizard in Gemini CLI?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Type /data-vizard followed by your request, for example: /data-vizard Build a visualization from this CSV."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What skills does the plugin include?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Seven skills: data-vizard (orchestrator), data-curator (dataset intake and cleaning), data-analyst (pattern finding and story directions), narrator (language and copy decisions), critic (editorial and visual quality review), de-slop (chart cleanup without changing the evidence), and designer (HTML visualization artifact production)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Data Vizard collect any data or phone home?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Data Vizard works entirely on files in your active workspace. It adds no server, background sync, analytics, or external connector. Your agent host's own settings control model access, file permissions, and network access."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I update Data Vizard?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Run npx data-vizard install again. Then start a new session in your agent so the updated skills load. If your agent still shows an older version, confirm the manifests under plugins/data-vizard/ have the new version, then reinstall."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Codex says the plugin was not found in the marketplace. What do I do?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Register the repository marketplace first: run codex plugin marketplace add \"$(pwd)\" from the repo root, then run codex plugin add data-vizard@data-vizard."
+            }
+          }
+        ]
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "Data Vizard",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "macOS, Linux, Windows",
+        "description": "An agent workflow plugin for Codex, Claude Code, and Gemini CLI that guides you from raw data to a polished HTML visualization through specialist skills: curator, analyst, narrator, critic, de-slop, and designer.",
+        "softwareVersion": "0.1.5",
+        "downloadUrl": "https://www.npmjs.com/package/data-vizard",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        }
+      }
+    ]
+  }
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f2ff;
+      --bg-2: #ffffff;
+      --ink: #1e1633;
+      --muted: #5f5872;
+      --line: #ded6f3;
+      --purple: #6c3df0;
+      --purple-deep: #4a1fb8;
+      --purple-soft: #eee7ff;
+      --shadow: 0 6px 14px rgba(73, 31, 184, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 18% 14%, rgba(108, 61, 240, 0.14), transparent 22%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 56%, #fbfaff 100%);
+      color: var(--ink);
+      font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    a { color: var(--purple-deep); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .page {
+      width: min(720px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 64px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      margin-bottom: 48px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    .brand img {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 16px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .breadcrumb a { color: var(--muted); }
+    .breadcrumb a:hover { color: var(--purple-deep); text-decoration: none; }
+    .breadcrumb span { color: var(--ink); font-weight: 600; }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      text-wrap: balance;
+    }
+
+    .subtitle {
+      margin: 0 0 52px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .faq-group {
+      margin-bottom: 48px;
+    }
+
+    .faq-group-label {
+      margin: 0 0 24px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .faq-item {
+      background: rgba(255, 255, 255, 0.68);
+      border: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .faq-list { display: grid; }
+
+    .faq-item + .faq-item {
+      margin-top: -1px;
+    }
+
+    .faq-list .faq-item:first-child { border-radius: 14px 14px 0 0; }
+    .faq-list .faq-item:last-child  { border-radius: 0 0 14px 14px; }
+    .faq-list .faq-item:only-child  { border-radius: 14px; }
+
+    .faq-q {
+      margin: 0;
+      padding: 16px 18px;
+      font-size: 0.97rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--ink);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .faq-a {
+      padding: 16px 18px 18px;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .faq-a p { margin: 0 0 10px; max-width: 66ch; }
+    .faq-a p:last-child { margin-bottom: 0; }
+
+    code {
+      padding: 1px 5px;
+      border-radius: 5px;
+      background: var(--purple-soft);
+      color: var(--purple-deep);
+      font: 0.88em/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    .code-wrap {
+      position: relative;
+      margin: 10px 0;
+    }
+
+    .code-wrap:last-child { margin-bottom: 0; }
+
+    pre {
+      margin: 0;
+      padding: 14px 44px 14px 16px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--line);
+      overflow-x: auto;
+    }
+
+    pre code {
+      padding: 0;
+      background: none;
+      color: var(--purple-deep);
+      font-size: 0.88rem;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      border: 0;
+      border-radius: 7px;
+      background: var(--purple-soft);
+      color: var(--purple-deep);
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 160ms ease, background-color 160ms ease;
+    }
+
+    .code-wrap:hover .copy-btn,
+    .copy-btn:focus-visible { opacity: 1; outline: none; }
+
+    .copy-btn:hover { background: #e5dcff; }
+
+    .copy-btn svg {
+      width: 14px;
+      height: 14px;
+      display: block;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .skill-list {
+      display: grid;
+      gap: 6px;
+      margin: 8px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .skill-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--line);
+    }
+
+    .skill-name {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--purple-deep);
+      white-space: nowrap;
+      padding-top: 1px;
+    }
+
+    .skill-desc {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .compat-list {
+      display: grid;
+      gap: 0;
+      margin-top: 8px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .compat-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.9rem;
+    }
+
+    .compat-row:last-child { border-bottom: none; }
+
+    .compat-host { color: var(--muted); }
+
+    .status-supported {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-weight: 600;
+      color: #1a6b3a;
+      white-space: nowrap;
+    }
+
+    .status-supported::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #2dab5f;
+      flex-shrink: 0;
+    }
+
+    .footer {
+      margin-top: 38px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .footer strong { color: var(--ink); }
+
+    .footer-links {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+    }
+
+    @media (max-width: 600px) {
+      .skill-item { grid-template-columns: 1fr; }
+      table { font-size: 0.8rem; }
+      th, td { padding: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="Data Vizard home">
+        <img src="plugins/data-vizard/assets/logo.png" alt="Data Vizard logo">
+        <span>Data Vizard</span>
+      </a>
+    </header>
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Data Vizard</a>
+      <span aria-hidden="true">›</span>
+      <span>FAQ</span>
+    </nav>
+    <h1>FAQ</h1>
+    <p class="subtitle">Common questions about installing, using, and troubleshooting Data Vizard.</p>
+
+    <section class="faq-group">
+      <p class="faq-group-label">About</p>
+      <div class="faq-list">
+
+      <div class="faq-item">
+        <p class="faq-q">What is Data Vizard?</p>
+        <div class="faq-a">
+          <p>Data Vizard is an agent workflow plugin for Codex, Claude Code, and Gemini CLI. It provides seven specialist skills that guide you from a raw dataset to a polished, self-contained HTML visualization, with every decision made explicit and auditable.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">What skills does the plugin include?</p>
+        <div class="faq-a">
+          <ul class="skill-list">
+            <li class="skill-item">
+              <span class="skill-name">data-vizard</span>
+              <span class="skill-desc">Orchestrates the full workflow and keeps decision gates explicit.</span>
+            </li>
+            <li class="skill-item">
+              <span class="skill-name">data-curator</span>
+              <span class="skill-desc">Profiles, cleans, reshapes, joins, and documents datasets.</span>
+            </li>
+            <li class="skill-item">
+              <span class="skill-name">data-analyst</span>
+              <span class="skill-desc">Finds patterns, caveats, and evidence-backed story directions.</span>
+            </li>
+            <li class="skill-item">
+              <span class="skill-name">narrator</span>
+              <span class="skill-desc">Decides how much language the visualization actually needs.</span>
+            </li>
+            <li class="skill-item">
+              <span class="skill-name">critic</span>
+              <span class="skill-desc">Reviews briefs and artifacts for rigor, craft, and anti-default quality.</span>
+            </li>
+            <li class="skill-item">
+              <span class="skill-name">de-slop</span>
+              <span class="skill-desc">Cleans up bad or misleading charts without changing the evidence.</span>
+            </li>
+            <li class="skill-item">
+              <span class="skill-name">designer</span>
+              <span class="skill-desc">Designs and builds HTML visualization artifacts.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Which agent hosts are supported?</p>
+        <div class="faq-a">
+          <div class="compat-list">
+            <div class="compat-row"><span class="compat-host">Codex app and CLI</span><span class="status-supported">Supported</span></div>
+            <div class="compat-row"><span class="compat-host">Claude Code CLI</span><span class="status-supported">Supported</span></div>
+            <div class="compat-row"><span class="compat-host">Gemini CLI</span><span class="status-supported">Supported</span></div>
+            <div class="compat-row"><span class="compat-host">npm</span><span class="status-supported">Supported</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Does Data Vizard collect any data or phone home?</p>
+        <div class="faq-a">
+          <p>No. Data Vizard works entirely on files in your active workspace. It adds no server, background sync, analytics, or external connector. Your agent host's own settings control model access, file permissions, and network access.</p>
+          <p>For sensitive datasets: review source rights before importing, keep private raw files out of commits, and document caveats close to any public-facing claims.</p>
+        </div>
+      </div>
+
+      </div>
+    </section>
+
+    <section class="faq-group">
+      <p class="faq-group-label">Installing</p>
+      <div class="faq-list">
+
+      <div class="faq-item">
+        <p class="faq-q">How do I install Data Vizard?</p>
+        <div class="faq-a">
+          <p>You need Node.js 18 or newer.</p>
+          <pre><code>npx data-vizard install</code></pre>
+          <p>The installer detects Codex, Claude Code, and Gemini CLI automatically and registers the plugin with each one. Then open a new session in your agent so the skills load.</p>
+          <p>Equivalent: <code>pnpm dlx data-vizard install</code> or <code>bunx data-vizard install</code>.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I update to the latest version?</p>
+        <div class="faq-a">
+          <pre><code>npx data-vizard install</code></pre>
+          <p>Then start a new session. If your agent still shows an older version, confirm that the manifests under <code>plugins/data-vizard/</code> have the new version number and reinstall.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Can I install from a local clone instead of npm?</p>
+        <div class="faq-a">
+          <p>Yes, for development only. From the repository root:</p>
+          <pre><code># Claude Code
+claude plugin marketplace add "$(pwd)"
+claude plugin install data-vizard@data-vizard
+
+# Codex
+codex plugin marketplace add "$(pwd)"
+codex plugin add data-vizard@data-vizard
+
+# Gemini CLI
+gemini extensions install "$(pwd)/extensions/data-vizard" --consent --skip-settings</code></pre>
+        </div>
+      </div>
+
+      </div>
+    </section>
+
+    <section class="faq-group">
+      <p class="faq-group-label">Using</p>
+      <div class="faq-list">
+
+      <div class="faq-item">
+        <p class="faq-q">How do I invoke Data Vizard in Claude Code?</p>
+        <div class="faq-a">
+          <pre><code>/data-vizard:data-vizard Build a visualization from this CSV.</code></pre>
+          <p>Call individual skills directly when you already know the stage:</p>
+          <pre><code>/data-vizard:data-curator Profile and clean this dataset.
+/data-vizard:critic Review this visualization brief.
+/data-vizard:de-slop Clean up this chart without changing the evidence.</code></pre>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I invoke Data Vizard in Codex?</p>
+        <div class="faq-a">
+          <pre><code>Use $data-vizard:data-vizard to build a visualization from this CSV.</code></pre>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">How do I invoke Data Vizard in Gemini CLI?</p>
+        <div class="faq-a">
+          <pre><code>/data-vizard Build a visualization from this CSV.</code></pre>
+        </div>
+      </div>
+
+      </div>
+    </section>
+
+    <section class="faq-group">
+      <p class="faq-group-label">Troubleshooting</p>
+      <div class="faq-list">
+
+      <div class="faq-item">
+        <p class="faq-q">Codex says the plugin was not found in the marketplace.</p>
+        <div class="faq-a">
+          <p>Register the repository marketplace first, then add the plugin:</p>
+          <pre><code>codex plugin marketplace add "$(pwd)"
+codex plugin add data-vizard@data-vizard</code></pre>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Codex itself fails because it can't find a native vendor binary.</p>
+        <div class="faq-a">
+          <pre><code>npm uninstall -g @openai/codex
+npm install -g @openai/codex@latest
+codex --version</code></pre>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <p class="faq-q">Plugin validation fails with ModuleNotFoundError: No module named 'yaml'.</p>
+        <div class="faq-a">
+          <p>This only applies to development validation, not normal installation:</p>
+          <pre><code>python3 -m venv .venv-validator
+.venv-validator/bin/python -m pip install --upgrade pip PyYAML
+.venv-validator/bin/python /path/to/plugin-creator/scripts/validate_plugin.py plugins/data-vizard</code></pre>
+        </div>
+      </div>
+
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div><strong>Data Vizard 0.1.5</strong> ships Codex, Claude Code, and Gemini surfaces together.</div>
+      <div class="footer-links"><a href="https://www.npmjs.com/package/data-vizard">npm package</a> <a href="faq.html">FAQ</a> <a href="changelog.html">Changelog</a></div>
+    </footer>
+  </main>
+  <script>
+    const copyIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="10" height="10" rx="2"/><path d="M7 15H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v1"/></svg>';
+    const checkIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>';
+
+    document.querySelectorAll("pre").forEach(pre => {
+      const wrap = document.createElement("div");
+      wrap.className = "code-wrap";
+      pre.parentNode.insertBefore(wrap, pre);
+      wrap.appendChild(pre);
+
+      const btn = document.createElement("button");
+      btn.className = "copy-btn";
+      btn.setAttribute("aria-label", "Copy code");
+      btn.innerHTML = copyIcon;
+      wrap.appendChild(btn);
+
+      btn.addEventListener("click", async () => {
+        const text = pre.querySelector("code")?.innerText ?? pre.innerText;
+        try {
+          if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(text);
+          } else {
+            const ta = Object.assign(document.createElement("textarea"), {
+              value: text, readOnly: true
+            });
+            ta.style.cssText = "position:fixed;opacity:0";
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand("copy");
+            ta.remove();
+          }
+          btn.innerHTML = checkIcon;
+          btn.setAttribute("aria-label", "Copied!");
+          setTimeout(() => {
+            btn.innerHTML = copyIcon;
+            btn.setAttribute("aria-label", "Copy code");
+          }, 1600);
+        } catch {}
+      });
+    });
+  </script>
+</body>
+</html>
