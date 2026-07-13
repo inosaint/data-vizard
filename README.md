@@ -66,15 +66,15 @@ Published-package smoke test:
 
 ```bash
 cd /tmp
-NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.4 --version
-NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.4 install --dry-run --root /tmp/data-vizard-published-smoke
-NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.4 install --root /tmp/data-vizard-published-stage --no-codex --no-claude --no-gemini
+NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.5 --version
+NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.5 install --dry-run --root /tmp/data-vizard-published-smoke
+NPM_CONFIG_CACHE=/tmp/data-vizard-npm-cache npx --yes data-vizard@0.1.5 install --root /tmp/data-vizard-published-stage --no-codex --no-claude --no-gemini
 ```
 
 Full install verification:
 
 ```bash
-npx --yes data-vizard@0.1.4 install
+npx --yes data-vizard@0.1.5 install
 codex plugin list --available --json
 claude plugin list
 gemini extensions list
