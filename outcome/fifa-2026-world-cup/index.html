@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>FIFA World Cup 2026</title>
-  <meta name="description" content="A pitch-grid explorer for all 72 group-stage matches in a 2026 FIFA World Cup dataset, comparing match metrics with outcomes.">
+  <meta name="description" content="A pitch-grid explorer for the available 2026 FIFA World Cup matches in an updated dataset, comparing match metrics with outcomes.">
   <meta property="og:title" content="FIFA World Cup 2026">
-  <meta property="og:description" content="Toggle possession, shots, discipline, and pressure metrics across all 72 group-stage matches.">
+  <meta property="og:description" content="Toggle possession, shots, discipline, and pressure metrics across group-stage and knockout matches.">
   <meta property="og:type" content="website">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="FIFA World Cup 2026">
-  <meta name="twitter:description" content="A pitch-grid explorer for the 2026 FIFA World Cup group stage.">
+  <meta name="twitter:description" content="A pitch-grid explorer for the available 2026 FIFA World Cup matches.">
   <meta name="theme-color" content="oklch(0.48 0.16 250)">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -112,6 +112,11 @@
     }
 
     .page-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px 16px;
       margin: 0 0 12px;
     }
 
@@ -122,6 +127,45 @@
       font-size: 1.18rem;
       line-height: 1.1;
       font-weight: 400;
+    }
+
+    .stage-filter {
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .stage-filter::after {
+      content: "▾";
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      color: var(--muted);
+      font-size: 0.72rem;
+      pointer-events: none;
+      transform: translateY(-50%);
+    }
+
+    .stage-filter select {
+      min-height: 34px;
+      border: 1px solid var(--line-strong);
+      border-radius: 0;
+      appearance: none;
+      background: var(--surface);
+      color: var(--ink);
+      padding: 0 28px 0 11px;
+      font-size: 0.82rem;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+      padding: 0;
+      margin: -1px;
     }
 
     .segments {
@@ -474,6 +518,10 @@
         padding-bottom: 10px;
       }
 
+      .page-title {
+        align-items: flex-start;
+      }
+
       .group-header {
         display: grid;
         gap: 5px;
@@ -503,6 +551,15 @@
   <main class="shell">
     <header class="page-title">
       <h1>FIFA World Cup 2026</h1>
+      <label class="stage-filter">
+        <span class="sr-only">Match stage</span>
+        <select id="stageSelect" aria-label="Match stage">
+          <option value="all">All Matches</option>
+          <option value="Group stage">Group stage</option>
+          <option value="Round of 32">Round of 32</option>
+          <option value="Round of 16">Round of 16</option>
+        </select>
+      </label>
     </header>
 
     <section class="controls" aria-label="Visualization controls">
@@ -511,83 +568,103 @@
 
     <div class="groups" id="groups"></div>
 
-    <p class="caveat">Scope note: this artifact uses only the 72 group-stage rows from the <a href="https://www.kaggle.com/datasets/swaptr/fifa-wc-2026-matches/data" target="_blank" rel="noreferrer">Kaggle FIFA WC 2026 Matches dataset</a>. Groups are inferred from the match graph because the source data does not include a group column. Possession is rounded, and offsides are missing for three matches.</p>
+    <p class="caveat">Scope note: this artifact uses the 92 available rows from the <a href="https://www.kaggle.com/datasets/swaptr/fifa-wc-2026-matches/data" target="_blank" rel="noreferrer">Kaggle FIFA WC 2026 Matches dataset</a>: 72 group-stage matches, 16 Round of 32 matches, and 4 Round of 16 matches. Group labels are inferred from the group-stage match graph. Possession is rounded, the Round of 16 is partial, and offsides are missing for four matches.</p>
   </main>
 
   <script>
-    const rawData = `id	group	gameweek	day	date	time	home	away	score	homeScore	awayScore	attendance	venue	homeFormation	awayFormation	homeManager	awayManager	homePoss	awayPoss	homeSot	awaySot	homeShots	awayShots	homeSaves	awaySaves	homeYellow	awayYellow	homeRed	awayRed	homeFouls	awayFouls	homeCorners	awayCorners	homeCrosses	awayCrosses	homeInterceptions	awayInterceptions	homeOffsides	awayOffsides	winner	margin	totalGoals
-1	A	1	Thu	2026-06-11	13:00	Mexico	South Africa	2–0	2	0	80824	Estadio Banorte, Coyoacán	4-1-4-1	5-3-2	Javier Aguirre	Hugo Broos	61	40	4	2	16	3	2	2	1	2	1	2	12	11	3	1	12	8	8	7	1	1	home	2	2
-2	A	1	Thu	2026-06-11	20:00	Korea Republic	Czechia	2–1	2	1	44985	Estadio Akron, Zapopan	3-4-3	3-4-3	Hong Myung-bo	Miroslav Koubek	62	38	6	4	15	7	3	4	1	0	0	0	9	16	4	5	12	15	11	7	2	2	home	1	3
-3	B	1	Fri	2026-06-12	15:00	Canada	Bosnia & Herz.	1–1	1	1	43002	BMO Field, Toronto	4-2-2-2	4-2-2-2	Jesse Marsch	Sergej Barbarez	61	39	4	3	13	8	2	1	2	3	0	0	10	20	9	4	24	10	4	10	1	0	draw	0	2
-4	C	1	Fri	2026-06-12	18:00	United States	Paraguay	4–1	4	1	70492	SoFi Stadium, Inglewood	4-2-3-1	4-2-2-2	Mauricio Pochettino	Gustavo Alfaro	65	35	6	1	16	9	0	3	1	5	0	0	13	17	3	1	17	5	11	9	2	1	home	3	5
-5	B	1	Sat	2026-06-13	12:00	Qatar	Switzerland	1–1	1	1	67966	Levi's Stadium, Santa Clara	4-1-4-1	4-2-3-1	Julen Lopetegui	Murat Yakin	32	68	4	7	7	26	5	3	2	1	0	0	12	11	3	10	8	35	10	7	0	1	draw	0	2
-6	D	1	Sat	2026-06-13	18:00	Brazil	Morocco	1–1	1	1	80663	MetLife Stadium, East Rutherford	4-2-2-2	4-2-3-1	Carlo Ancelotti	Mohamed Ouahbi	51	49	5	3	12	14	2	4	2	0	0	0	16	14	6	2	16	15	5	4	0	1	draw	0	2
-7	C	1	Sat	2026-06-13	21:00	Australia	Türkiye	2–0	2	0	52497	BC Place Stadium, Vancouver	5-4-1	4-2-3-1	Tony Popovic	Vincenzo Montella	28	72	4	8	9	30	8	2	0	1	0	0	12	4	5	8	14	26	6	4	1	3	home	2	2
-8	D	1	Sat	2026-06-13	21:00	Haiti	Scotland	0–1	0	1	64146	Gillette Stadium, Foxborough	4-2-2-2	4-2-2-2	Sébastien Migné	Steve Clarke	54	46	2	2	15	9	1	2	1	3	0	0	23	21	4	3	23	14	6	6	3	1	away	1	1
-9	E	1	Sun	2026-06-14	12:00	Germany	Curaçao	7–1	7	1	68021	Reliant Stadium, Houston	4-2-3-1	4-3-1-2	Julian Nagelsmann	Dick Advocaat	65	35	12	2	26	8	1	4	0	0	0	0	18	11	8	1	12	7	10	16	0	1	home	6	8
-10	F	1	Sun	2026-06-14	15:00	Netherlands	Japan	2–2	2	2	69285	AT&T Stadium, Arlington	4-1-4-1	3-4-3	Ronald Koeman	Hajime Moriyasu	60	40	6	3	10	10	1	4	3	0	0	0	7	7	5	4	21	23	7	4	1	0	draw	0	4
-11	E	1	Sun	2026-06-14	19:00	Côte d'Ivoire	Ecuador	1–0	1	0	68274	Lincoln Financial Field, Philadelphia	4-2-2-2	4-2-2-2	Emerse Faé	Sebastián Becaccece	48	52	4	1	15	12	1	3	3	1	0	0	10	13	3	5	7	14	11	13			home	1	1
-12	F	1	Sun	2026-06-14	20:00	Sweden	Tunisia	5–1	5	1	50987	Estadio BBVA Bancomer, Guadalupe	3-4-1-2	5-3-2	Graham Potter	Sabri Lamouchi	49	51	7	2	13	6	1	1	0	1	0	0	10	8	4	2	12	13	8	5	3	6	home	4	6
-13	G	1	Mon	2026-06-15	12:00	Belgium	Egypt	1–1	1	1	66775	Lumen Field, Seattle	4-2-3-1	4-2-3-1	Rudi Garcia	Hossam Hassan	54	46	3	3	15	14	2	3	2	2	0	0	15	15	2	7	16	13	10	12	0	1	draw	0	2
-14	H	1	Mon	2026-06-15	12:00	Spain	Cabo Verde	0–0	0	0	67640	Mercedes-Benz Stadium, Atlanta	4-1-4-1	4-1-4-1	Luis de la Fuente	Bubista	74	26	7	1	27	6	1	7	1	1	0	0	10	1	11	1	36	4	6	16	2	3	draw	0	0
-15	H	1	Mon	2026-06-15	18:00	Saudi Arabia	Uruguay	1–1	1	1	62764	Hard Rock Stadium, Miami Gardens	4-2-2-2	4-2-2-2	Georgios Donis	Marcelo Bielsa	33	67	3	10	7	27	9	2	1	0	0	0	11	6	4	14	7	47	7	10	0	6	draw	0	2
-16	G	1	Mon	2026-06-15	18:00	IR Iran	New Zealand	2–2	2	2	70108	SoFi Stadium, Inglewood	4-2-2-2	4-2-3-1	Amir Ghalehnoy	Darren Bazeley	48	52	4	8	17	14	6	2	1	0	0	0	10	8	4	1	19	12	11	13	2	0	draw	0	4
-17	I	1	Tue	2026-06-16	15:00	France	Senegal	3–1	3	1	80545	MetLife Stadium, East Rutherford	4-2-3-1	4-2-3-1	Didier Deschamps	Pape Thiaw	54	46	8	2	11	6	2	5	0	0	0	0	5	9	6	4	9	9	7	8	1	3	home	2	4
-18	I	1	Tue	2026-06-16	18:00	Iraq	Norway	1–4	1	4	63106	Gillette Stadium, Foxborough	4-2-2-2	4-1-4-1	Graham Arnold	Ståle Solbakken	39	61	1	5	11	12	2	0	1	0	0	0	12	13	2	5	13	17	5	3	1	0	away	3	5
-19	J	1	Tue	2026-06-16	20:00	Argentina	Algeria	3–0	3	0	69045	GEHA Field at Arrowhead Stadium, Kansas City	4-2-2-2	4-2-3-1	Lionel Scaloni	Vladimir Petković	48	52	6	0	10	7	0	3	0	0	0	0	13	8	2	2	5	8	12	8	3	1	home	3	3
-20	J	1	Tue	2026-06-16	21:00	Austria	Jordan	3–1	3	1	68527	Levi's Stadium, Santa Clara	4-2-3-1	5-4-1	Ralf Rangnick	Jamal Sellami	63	37	4	4	11	11	3	1	1	0	0	0	12	7	4	3	17	15	15	12	3	1	home	2	4
-21	K	1	Wed	2026-06-17	12:00	Portugal	Congo DR	1–1	1	1	68777	Reliant Stadium, Houston	4-2-3-1	5-3-2	Roberto Martínez	Sébastien Desabre	75	25	1	2	7	8	1	0	3	1	0	0	9	10	5	4	23	9	2	5	3	2	draw	0	2
-22	L	1	Wed	2026-06-17	15:00	England	Croatia	4–2	4	2	70389	AT&T Stadium, Arlington	4-2-3-1	3-4-3	Thomas Tuchel	Zlatko Dalić	52	48	11	5	22	10	3	7	0	0	0	0	10	12	8	2	13	13	7	7	0	1	home	2	6
-23	L	1	Wed	2026-06-17	19:00	Ghana	Panama	1–0	1	0	42942	BMO Field, Toronto	4-2-3-1	3-4-3	Carlos Queiroz	Thomas Christiansen	38	62	2	4	8	11	4	2	1	2	0	0	9	11	2	2	16	21	8	5	4	1	home	1	1
-24	K	1	Wed	2026-06-17	20:00	Uzbekistan	Colombia	1–3	1	3	80824	Estadio Banorte, Coyoacán	5-4-1	4-1-4-1	Fabio Cannavaro	Néstor Lorenzo	39	62	2	4	8	15	1	1	1	1	0	0	14	11	3	4	13	15	7	6	0	3	away	2	4
-25	B	2	Thu	2026-06-18	12:00	Switzerland	Bosnia & Herz.	4–1	4	1	70026	SoFi Stadium, Inglewood	4-1-4-1	4-2-2-2	Murat Yakin	Sergej Barbarez	62	38	7	3	13	5	2	3	1	2	0	1	7	18	7	3	22	12	4	12	3	1	home	3	5
-26	A	2	Thu	2026-06-18	12:00	Czechia	South Africa	1–1	1	1	67442	Mercedes-Benz Stadium, Atlanta	5-3-2	4-1-4-1	Miroslav Koubek	Hugo Broos	38	62	3	4	14	17	3	2	1	2	0	0	12	10	5	5	16	17	9	9	2	3	draw	0	2
-27	B	2	Thu	2026-06-18	15:00	Canada	Qatar	6–0	6	0	52497	BC Place Stadium, Vancouver	4-2-2-2	4-3-2-1	Jesse Marsch	Julen Lopetegui	79	21	10	0	32	2	0	4	1	1	0	2	9	10	19	1	55	3	6	11	1	1	home	6	6
-28	A	2	Thu	2026-06-18	19:00	Mexico	Korea Republic	1–0	1	0	45522	Estadio Akron, Zapopan	4-1-4-1	3-4-3	Javier Aguirre	Hong Myung-bo	42	58	4	2	8	9	2	3	0	2	0	0	9	7	0	2	5	9	7	5	3	6	home	1	1
-29	C	2	Fri	2026-06-19	12:00	United States	Australia	2–0	2	0	66925	Lumen Field, Seattle	3-5-2	5-4-1	Mauricio Pochettino	Tony Popovic	62	38	2	2	10	5	2	1	3	4	0	0	12	16	7	4	14	19	21	7	1	0	home	2	2
-30	D	2	Fri	2026-06-19	18:00	Scotland	Morocco	0–1	0	1	64146	Gillette Stadium, Foxborough	4-1-4-1	4-2-3-1	Steve Clarke	Mohamed Ouahbi	41	59	0	2	6	12	1	0	1	1	0	0	11	8	2	5	13	10	9	5	1	0	away	1	1
-31	C	2	Fri	2026-06-19	20:00	Türkiye	Paraguay	0–1	0	1	68827	Levi's Stadium, Santa Clara	4-2-3-1	4-2-2-2	Vincenzo Montella	Gustavo Alfaro	79	22	5	2	32	7	1	5	2	1	0	1	14	15	12	0	42	6	6	9	2	3	away	1	1
-32	D	2	Fri	2026-06-19	20:30	Brazil	Haiti	3–0	3	0	68324	Lincoln Financial Field, Philadelphia	4-1-4-1	3-4-3	Carlo Ancelotti	Sébastien Migné	57	43	5	3	8	7	3	2	1	3	0	0	13	14	4	4	9	11	10	9	8	4	home	3	3
-33	F	2	Sat	2026-06-20	12:00	Netherlands	Sweden	5–1	5	1	68777	Reliant Stadium, Houston	4-1-4-1	3-1-4-2	Ronald Koeman	Graham Potter	51	49	7	8	10	16	7	2	0	3	0	0	9	12	2	5	15	21	8	6	3	3	home	4	6
-34	E	2	Sat	2026-06-20	16:00	Germany	Côte d'Ivoire	2–1	2	1	43036	BMO Field, Toronto	4-2-3-1	4-1-4-1	Julian Nagelsmann	Emerse Faé	59	41	7	2	16	9	1	5	0	0	0	0	5	7	8	3	21	9	7	13	0	1	home	1	3
-35	E	2	Sat	2026-06-20	19:00	Ecuador	Curaçao	0–0	0	0	68598	GEHA Field at Arrowhead Stadium, Kansas City	3-1-4-2	5-4-1	Sebastián Becaccece	Dick Advocaat	75	25	15	3	27	10	3	15	1	5	0	0	7	10	9	0	32	1	7	8	1	2	draw	0	0
-36	F	2	Sat	2026-06-20	22:00	Tunisia	Japan	0–4	0	4	51243	Estadio BBVA, Guadalupe	5-4-1	3-4-3	Hervé Renard	Hajime Moriyasu	38	62	0	5	2	11	1	0	0	0	0	0	8	15	3	5	10	11	14	6	1	1	away	4	4
-37	G	2	Sun	2026-06-21	12:00	Belgium	IR Iran	0–0	0	0	70317	SoFi Stadium, Inglewood	4-2-3-1	5-4-1	Rudi Garcia	Amir Ghalehnoy	70	30	7	3	23	7	3	7	1	1	1	0	7	9	4	2	32	8	3	13	3	4	draw	0	0
-38	H	2	Sun	2026-06-21	12:00	Spain	Saudi Arabia	4–0	4	0	68239	Mercedes-Benz Stadium, Atlanta	4-1-4-1	5-4-1	Luis de la Fuente	Georgios Donis	67	33	8	1	22	3	1	5	0	2	0	0	10	2	6	1	25	5	16	12	2	3	home	4	4
-39	H	2	Sun	2026-06-21	18:00	Uruguay	Cabo Verde	2–2	2	2	64003	Hard Rock Stadium, Miami Gardens	4-1-4-1	4-1-4-1	Marcelo Bielsa	Bubista	65	35	2	4	17	12	2	0	2	2	0	0	11	4	11	4	29	7	8	13	3	0	draw	0	4
-40	G	2	Sun	2026-06-21	18:00	New Zealand	Egypt	1–3	1	3	52497	BC Place Stadium, Vancouver	4-2-3-1	4-2-2-2	Darren Bazeley	Hossam Hassan	44	56	5	7	11	19	4	4	2	1	0	0	14	8	4	3	15	22	5	7	3	0	away	2	4
-41	J	2	Mon	2026-06-22	12:00	Argentina	Austria	2–0	2	0	70649	AT&T Stadium, Arlington	4-2-2-2	4-2-3-1	Lionel Scaloni	Ralf Rangnick	54	46	5	1	12	6	1	2	2	2	0	0	13	13	1	3	4	16	8	9	2	0	home	2	2
-42	I	2	Mon	2026-06-22	17:00	France	Iraq	3–0	3	0	68324	Lincoln Financial Field, Philadelphia	4-2-3-1	4-1-4-1	Didier Deschamps	Graham Arnold	56	45	5	0	19	4	0	2	0	1	0	0	8	4	4	2	14	9	5	11	1	0	home	3	3
-43	I	2	Mon	2026-06-22	20:00	Norway	Senegal	3–2	3	2	80663	MetLife Stadium, East Rutherford	4-1-4-1	4-2-3-1	Ståle Solbakken	Pape Thiaw	42	58	7	4	13	16	2	3	0	0	0	0	13	5	5	4	10	23	8	10	0	4	home	1	5
-44	J	2	Mon	2026-06-22	20:00	Jordan	Algeria	1–2	1	2	68371	Levi's Stadium, Santa Clara	5-4-1	4-2-3-1	Jamal Sellami	Vladimir Petković	28	72	4	8	8	17	6	3	1	1	0	0	11	6	1	10	5	21	2	10	1	0	away	1	3
-45	K	2	Tue	2026-06-23	12:00	Portugal	Uzbekistan	5–0	5	0	68777	Reliant Stadium, Houston	4-2-3-1	5-4-1	Roberto Martínez	Fabio Cannavaro	66	34	9	2	17	7	2	4	1	1	0	0	14	15	3	2	22	8	5	14	2	2	home	5	5
-46	L	2	Tue	2026-06-23	16:00	England	Ghana	0–0	0	0	63983	Gillette Stadium, Foxborough	4-2-3-1	4-1-4-1	Thomas Tuchel	Carlos Queiroz	79	21	3	1	19	2	0	3	1	1	0	0	14	24	9	2	30	5	1	8	2	2	draw	0	0
-47	L	2	Tue	2026-06-23	19:00	Panama	Croatia	0–1	0	1	43036	BMO Field, Toronto	5-4-1	4-2-3-1	Thomas Christiansen	Zlatko Dalić	42	58	1	2	8	6	1	1	1	1	0	0	19	12	7	2	29	17	4	5	1	2	away	1	1
-48	K	2	Tue	2026-06-23	20:00	Colombia	Congo DR	1–0	1	0	45358	Estadio Akron, Zapopan	4-1-4-1	5-3-2	Néstor Lorenzo	Sébastien Desabre	64	37	9	1	20	7	1	8	2	1	0	0	12	16	5	4	12	14	10	7	7	0	home	1	1
-49	B	3	Wed	2026-06-24	12:00	Bosnia & Herz.	Qatar	3–1	3	1	66925	Lumen Field, Seattle	4-2-2-2	4-3-2-1	Sergej Barbarez	Julen Lopetegui	55	46	5	3	14	9	2	3	1	1	0	0	9	14	5	5	22	17	4	4	1	3	home	2	4
-50	B	3	Wed	2026-06-24	12:00	Switzerland	Canada	2–1	2	1	52497	BC Place Stadium, Vancouver	4-2-2-2	4-2-2-2	Murat Yakin	Jesse Marsch	55	45	4	7	6	13	6	2	1	2	0	0	19	13	2	7	6	26	5	13	1	3	home	1	3
-51	D	3	Wed	2026-06-24	18:00	Morocco	Haiti	4–2	4	2	68239	Mercedes-Benz Stadium, Atlanta	4-2-2-2	4-2-2-2	Mohamed Ouahbi	Sébastien Migné	69	31	11	2	22	9	1	8	0	3	0	0	10	18	9	1	22	3	7	14	5	0	home	2	6
-52	D	3	Wed	2026-06-24	18:00	Scotland	Brazil	0–3	0	3	64478	Hard Rock Stadium, Miami Gardens	4-2-3-1	4-1-4-1	Steve Clarke	Carlo Ancelotti	46	54	5	9	14	21	5	5	1	2	0	0	10	11	7	6	23	12	2	13	0	1	away	3	3
-53	A	3	Wed	2026-06-24	19:00	Czechia	Mexico	0–3	0	3	80824	Estadio Banorte, Coyoacán	3-4-3	4-1-4-1	Miroslav Koubek	Javier Aguirre	52	48	1	5	13	11	2	1	0	1	0	0	9	13	5	1	26	13	3	7	1	0	away	3	3
-54	A	3	Wed	2026-06-24	19:00	South Africa	Korea Republic	1–0	1	0	51243	Estadio BBVA, Guadalupe	4-2-3-1	3-4-3	Hugo Broos	Hong Myung-bo	32	69	4	3	13	8	2	3	1	1	0	0	7	9	4	6	8	33	15	4	3	0	home	1	1
-55	E	3	Thu	2026-06-25	16:00	Ecuador	Germany	2–1	2	1	80663	MetLife Stadium, East Rutherford	4-2-2-2	4-2-3-1	Sebastián Becaccece	Julian Nagelsmann	39	61	3	3	7	11	2	1	3	1	0	0	15	10	3	2	12	16	12	4			home	1	3
-56	E	3	Thu	2026-06-25	16:00	Curaçao	Côte d'Ivoire	0–2	0	2	68324	Lincoln Financial Field, Philadelphia	5-4-1	4-2-2-2	Dick Advocaat	Emerse Faé	37	63	2	3	11	7	1	2	2	1	0	0	11	6	4	6	15	16	15	12	2	1	away	2	2
-57	F	3	Thu	2026-06-25	18:00	Japan	Sweden	1–1	1	1	70137	AT&T Stadium, Arlington	3-4-3	3-4-3	Hajime Moriyasu	Graham Potter	52	48	3	5	8	11	4	2	1	2	0	0	20	11	2	8	13	16	4	5	3	2	draw	0	2
-58	F	3	Thu	2026-06-25	18:00	Tunisia	Netherlands	1–3	1	3	68391	GEHA Field at Arrowhead Stadium, Kansas City	5-4-1	4-1-4-1	Hervé Renard	Ronald Koeman	29	72	4	7	10	20	4	3	0	0	0	0	11	10	4	6	13	28	8	10	2	1	away	2	4
-59	C	3	Thu	2026-06-25	19:00	Paraguay	Australia	0–0	0	0	68827	Levi's Stadium, Santa Clara	5-3-2	3-4-3	Gustavo Alfaro	Tony Popovic	44	56	2	5	7	12	5	2	1	1	0	0	9	6	1	3	7	13	8	7			draw	0	0
-60	C	3	Thu	2026-06-25	19:00	Türkiye	United States	3–2	3	2	70492	SoFi Stadium, Inglewood	5-4-1	4-2-3-1	Vincenzo Montella	Mauricio Pochettino	48	53	3	7	9	18	5	0	0	1	0	0	13	13	2	9	11	18	8	11	2	5	home	1	5
-61	I	3	Fri	2026-06-26	15:00	Norway	France	1–4	1	4	64146	Gillette Stadium, Foxborough	4-1-4-1	4-2-3-1	Ståle Solbakken	Guy Stéphan	43	57	4	9	10	18	5	2	1	1	0	0	9	11	4	5	9	9	13	11	1	2	away	3	5
-62	I	3	Fri	2026-06-26	15:00	Senegal	Iraq	5–0	5	0	43036	BMO Field, Toronto	4-1-4-1	4-2-3-1	Pape Thiaw	Graham Arnold	69	31	12	1	28	6	1	7	2	2	0	1	10	11	12	3	25	6	2	7	1	0	home	5	5
-63	H	3	Fri	2026-06-26	18:00	Uruguay	Spain	0–1	0	1	45065	Estadio Akron, Zapopan	4-1-4-1	4-1-4-1	Marcelo Bielsa	Luis de la Fuente	33	67	1	1	5	6	0	1	3	1	1	0	14	14	1	6	16	12	14	9	5	2	away	1	1
-64	H	3	Fri	2026-06-26	19:00	Cabo Verde	Saudi Arabia	0–0	0	0	68278	Reliant Stadium, Houston	4-1-4-1	4-2-3-1	Bubista	Georgios Donis	51	49	2	3	15	7	3	2	1	3	0	0	10	16	4	2	18	10	13	10	2	0	draw	0	0
-65	G	3	Fri	2026-06-26	20:00	Egypt	IR Iran	1–1	1	1	66925	Lumen Field, Seattle	4-2-2-2	5-4-1	Hossam Hassan	Amir Ghalehnoy	61	39	3	4	15	13	1	2	3	4	0	0	11	16	8	2	15	10	7	8	0	3	draw	0	2
-66	G	3	Fri	2026-06-26	20:00	New Zealand	Belgium	1–5	1	5	52497	BC Place Stadium, Vancouver	4-2-3-1	4-2-3-1	Darren Bazeley	Rudi Garcia	45	55	2	10	6	35	5	1	2	0	0	0	10	7	5	8	17	16	6	10	1	1	away	4	6
-67	L	3	Sat	2026-06-27	17:00	Panama	England	0–2	0	2	80663	MetLife Stadium, East Rutherford	5-4-1	4-2-3-1	Thomas Christiansen	Thomas Tuchel	33	67	2	6	13	17	4	2	2	1	0	0	16	13	3	7	9	25	6	5	4	4	away	2	2
-68	L	3	Sat	2026-06-27	17:00	Croatia	Ghana	2–1	2	1	68324	Lincoln Financial Field, Philadelphia	4-2-3-1	4-1-4-1	Zlatko Dalić	Carlos Queiroz	53	47	4	1	8	6	0	2	1	1	0	0	9	13	3	2	15	12	4	10	1	2	home	1	3
-69	K	3	Sat	2026-06-27	19:30	Congo DR	Uzbekistan	3–1	3	1	68239	Mercedes-Benz Stadium, Atlanta	4-2-2-2	3-4-3	Sébastien Desabre	Fabio Cannavaro	58	42	4	1	19	3	1	1	3	2	0	0	6	16	2	4	21	16	7	12	3	1	home	2	4
-70	K	3	Sat	2026-06-27	19:30	Colombia	Portugal	0–0	0	0	64478	Hard Rock Stadium, Miami Gardens	4-1-4-1	4-2-3-1	Néstor Lorenzo	Roberto Martínez	55	45	6	2	24	13	2	6	1	0	0	0	12	6	5	2	10	14	5	11	3	2	draw	0	0
-71	J	3	Sat	2026-06-27	21:00	Jordan	Argentina	1–3	1	3	70649	AT&T Stadium, Arlington	5-4-1	4-1-4-1	Jamal Sellami	Lionel Scaloni	27	73	1	4	5	12	1	0	3	0	0	0	13	7	2	6	7	5	19	12	1	3	away	2	4
-72	J	3	Sat	2026-06-27	21:00	Algeria	Austria	3–3	3	3	69045	GEHA Field at Arrowhead Stadium, Kansas City	4-2-3-1	4-1-3-2	Vladimir Petković	Ralf Rangnick	65	35	5	3	12	10	0	2	0	1	0	0	3	7	0	3	5	13	3	10	1	3	draw	0	6`;
+    const rawData = `id	round	group	gameweek	day	date	time	home	away	score	homeScore	awayScore	attendance	venue	homeFormation	awayFormation	homeManager	awayManager	homePoss	awayPoss	homeSot	awaySot	homeShots	awayShots	homeSaves	awaySaves	homeYellow	awayYellow	homeRed	awayRed	homeFouls	awayFouls	homeCorners	awayCorners	homeCrosses	awayCrosses	homeInterceptions	awayInterceptions	homeOffsides	awayOffsides	winner	margin	totalGoals
+1	Group stage	A	1	Thu	2026-06-11	13:00	Mexico	South Africa	2–0	2	0	80824	Estadio Banorte, Coyoacán	4-1-4-1	5-3-2	Javier Aguirre	Hugo Broos	61	40	4	2	16	3	2	2	1	2	1	2	12	11	3	1	12	8	8	7	1	1	home	2	2
+2	Group stage	A	1	Thu	2026-06-11	20:00	Korea Republic	Czechia	2–1	2	1	44985	Estadio Akron, Zapopan	3-4-3	3-4-3	Hong Myung-bo	Miroslav Koubek	62	38	6	4	15	7	3	4	1	0	0	0	9	16	4	5	12	15	11	7	2	2	home	1	3
+3	Group stage	B	1	Fri	2026-06-12	15:00	Canada	Bosnia–Herz	1–1	1	1	43002	BMO Field, Toronto	4-2-2-2	4-2-2-2	Jesse Marsch	Sergej Barbarez	61	39	4	3	13	8	2	1	2	3	0	0	10	20	9	4	24	10	4	10	1	0	draw	0	2
+4	Group stage	C	1	Fri	2026-06-12	18:00	United States	Paraguay	4–1	4	1	70492	SoFi Stadium, Inglewood	4-2-3-1	4-2-2-2	Mauricio Pochettino	Gustavo Alfaro	65	35	6	1	16	9	0	3	1	5	0	0	13	17	3	1	17	5	11	9	2	1	home	3	5
+5	Group stage	B	1	Sat	2026-06-13	12:00	Qatar	Switzerland	1–1	1	1	67966	Levi's Stadium, Santa Clara	4-1-4-1	4-2-3-1	Julen Lopetegui	Murat Yakin	32	68	4	7	7	26	5	3	2	1	0	0	12	11	3	10	8	35	10	7	0	1	draw	0	2
+6	Group stage	D	1	Sat	2026-06-13	18:00	Brazil	Morocco	1–1	1	1	80663	MetLife Stadium, East Rutherford	4-2-2-2	4-2-3-1	Carlo Ancelotti	Mohamed Ouahbi	51	49	5	3	12	14	2	4	2	0	0	0	16	14	6	2	16	15	5	4	0	1	draw	0	2
+7	Group stage	D	1	Sat	2026-06-13	21:00	Haiti	Scotland	0–1	0	1	64146	Gillette Stadium, Foxborough	4-2-2-2	4-2-2-2	Sébastien Migné	Steve Clarke	54	46	2	2	15	9	1	2	1	3	0	0	23	21	4	3	23	14	6	6	3	1	away	1	1
+8	Group stage	C	1	Sat	2026-06-13	21:00	Australia	Türkiye	2–0	2	0	52497	BC Place Stadium, Vancouver	5-4-1	4-2-3-1	Tony Popovic	Vincenzo Montella	28	72	4	8	9	30	8	2	0	1	0	0	12	4	5	8	14	26	6	4	1	3	home	2	2
+9	Group stage	E	1	Sun	2026-06-14	12:00	Germany	Curaçao	7–1	7	1	68021	Reliant Stadium, Houston	4-2-3-1	4-3-1-2	Julian Nagelsmann	Dick Advocaat	65	35	12	2	26	8	1	4	0	0	0	0	18	11	8	1	12	7	10	16	0	1	home	6	8
+10	Group stage	F	1	Sun	2026-06-14	15:00	Netherlands	Japan	2–2	2	2	69285	AT&T Stadium, Arlington	4-1-4-1	3-4-3	Ronald Koeman	Hajime Moriyasu	60	40	6	3	10	10	1	4	3	0	0	0	7	7	5	4	21	23	7	4	1	0	draw	0	4
+11	Group stage	E	1	Sun	2026-06-14	19:00	Côte d'Ivoire	Ecuador	1–0	1	0	68274	Lincoln Financial Field, Philadelphia	4-2-2-2	4-2-2-2	Emerse Faé	Sebastián Becaccece	48	52	4	1	15	12	1	3	3	1	0	0	10	13	3	5	7	14	11	13			home	1	1
+12	Group stage	F	1	Sun	2026-06-14	20:00	Sweden	Tunisia	5–1	5	1	50987	Estadio BBVA Bancomer, Guadalupe	3-4-1-2	5-3-2	Graham Potter	Sabri Lamouchi	49	51	7	2	13	6	1	1	0	1	0	0	10	8	4	2	12	13	8	5	3	6	home	4	6
+13	Group stage	G	1	Mon	2026-06-15	12:00	Belgium	Egypt	1–1	1	1	66775	Lumen Field, Seattle	4-2-3-1	4-2-3-1	Rudi Garcia	Hossam Hassan	54	46	3	3	15	14	2	3	2	2	0	0	15	15	2	7	16	13	10	12	0	1	draw	0	2
+14	Group stage	H	1	Mon	2026-06-15	12:00	Spain	Cabo Verde	0–0	0	0	67640	Mercedes-Benz Stadium, Atlanta	4-1-4-1	4-1-4-1	Luis de la Fuente	Bubista	74	26	7	1	27	6	1	7	1	1	0	0	10	1	11	1	36	4	6	16	2	3	draw	0	0
+15	Group stage	G	1	Mon	2026-06-15	18:00	IR Iran	New Zealand	2–2	2	2	70108	SoFi Stadium, Inglewood	4-2-2-2	4-2-3-1	Amir Ghalehnoy	Darren Bazeley	48	52	4	8	17	14	6	2	1	0	0	0	10	8	4	1	19	12	11	13	2	0	draw	0	4
+16	Group stage	H	1	Mon	2026-06-15	18:00	Saudi Arabia	Uruguay	1–1	1	1	62764	Hard Rock Stadium, Miami Gardens	4-2-2-2	4-2-2-2	Georgios Donis	Marcelo Bielsa	33	67	3	10	7	27	9	2	1	0	0	0	11	6	4	14	7	47	7	10	0	6	draw	0	2
+17	Group stage	I	1	Tue	2026-06-16	15:00	France	Senegal	3–1	3	1	80545	MetLife Stadium, East Rutherford	4-2-3-1	4-2-3-1	Didier Deschamps	Pape Thiaw	54	46	8	2	11	6	2	5	0	0	0	0	5	9	6	4	9	9	7	8	1	3	home	2	4
+18	Group stage	I	1	Tue	2026-06-16	18:00	Iraq	Norway	1–4	1	4	63106	Gillette Stadium, Foxborough	4-2-2-2	4-1-4-1	Graham Arnold	Ståle Solbakken	39	61	1	5	11	12	2	0	1	0	0	0	12	13	2	5	13	17	5	3	1	0	away	3	5
+19	Group stage	J	1	Tue	2026-06-16	20:00	Argentina	Algeria	3–0	3	0	69045	GEHA Field at Arrowhead Stadium, Kansas City	4-2-2-2	4-2-3-1	Lionel Scaloni	Vladimir Petković	48	52	6	0	10	7	0	3	0	0	0	0	13	8	2	2	5	8	12	8	3	1	home	3	3
+20	Group stage	J	1	Tue	2026-06-16	21:00	Austria	Jordan	3–1	3	1	68527	Levi's Stadium, Santa Clara	4-2-3-1	5-4-1	Ralf Rangnick	Jamal Sellami	63	37	4	4	11	11	3	1	1	0	0	0	12	7	4	3	17	15	15	12	3	1	home	2	4
+21	Group stage	K	1	Wed	2026-06-17	12:00	Portugal	Congo DR	1–1	1	1	68777	Reliant Stadium, Houston	4-2-3-1	5-3-2	Roberto Martínez	Sébastien Desabre	75	25	1	2	7	8	1	0	3	1	0	0	9	10	5	4	23	9	2	5	3	2	draw	0	2
+22	Group stage	L	1	Wed	2026-06-17	15:00	England	Croatia	4–2	4	2	70389	AT&T Stadium, Arlington	4-2-3-1	3-4-3	Thomas Tuchel	Zlatko Dalić	52	48	11	5	22	10	3	7	0	0	0	0	10	12	8	2	13	13	7	7	0	1	home	2	6
+23	Group stage	L	1	Wed	2026-06-17	19:00	Ghana	Panama	1–0	1	0	42942	BMO Field, Toronto	4-2-3-1	3-4-3	Carlos Queiroz	Thomas Christiansen	38	62	2	4	8	11	4	2	1	2	0	0	9	11	2	2	16	21	8	5	4	1	home	1	1
+24	Group stage	K	1	Wed	2026-06-17	20:00	Uzbekistan	Colombia	1–3	1	3	80824	Estadio Banorte, Coyoacán	5-4-1	4-1-4-1	Fabio Cannavaro	Néstor Lorenzo	39	62	2	4	8	15	1	1	1	1	0	0	14	11	3	4	13	15	7	6	0	3	away	2	4
+25	Group stage	A	2	Thu	2026-06-18	12:00	Czechia	South Africa	1–1	1	1	67442	Mercedes-Benz Stadium, Atlanta	5-3-2	4-1-4-1	Miroslav Koubek	Hugo Broos	38	62	3	4	14	17	3	2	1	2	0	0	12	10	5	5	16	17	9	9	2	3	draw	0	2
+26	Group stage	B	2	Thu	2026-06-18	12:00	Switzerland	Bosnia–Herz	4–1	4	1	70026	SoFi Stadium, Inglewood	4-1-4-1	4-2-2-2	Murat Yakin	Sergej Barbarez	62	38	7	3	13	5	2	3	1	2	0	1	7	18	7	3	22	12	4	12	3	1	home	3	5
+27	Group stage	B	2	Thu	2026-06-18	15:00	Canada	Qatar	6–0	6	0	52497	BC Place Stadium, Vancouver	4-2-2-2	4-3-2-1	Jesse Marsch	Julen Lopetegui	79	21	10	0	32	2	0	4	1	1	0	2	9	10	19	1	55	3	6	11	1	1	home	6	6
+28	Group stage	A	2	Thu	2026-06-18	19:00	Mexico	Korea Republic	1–0	1	0	45522	Estadio Akron, Zapopan	4-1-4-1	3-4-3	Javier Aguirre	Hong Myung-bo	42	58	4	2	8	9	2	3	0	2	0	0	9	7	0	2	5	9	7	5	3	6	home	1	1
+29	Group stage	C	2	Fri	2026-06-19	12:00	United States	Australia	2–0	2	0	66925	Lumen Field, Seattle	3-5-2	5-4-1	Mauricio Pochettino	Tony Popovic	62	38	2	2	10	5	2	1	3	4	0	0	12	16	7	4	14	19	21	7	1	0	home	2	2
+30	Group stage	D	2	Fri	2026-06-19	18:00	Scotland	Morocco	0–1	0	1	64146	Gillette Stadium, Foxborough	4-1-4-1	4-2-3-1	Steve Clarke	Mohamed Ouahbi	41	59	0	2	6	12	1	0	1	1	0	0	11	8	2	5	13	10	9	5	1	0	away	1	1
+31	Group stage	C	2	Fri	2026-06-19	20:00	Türkiye	Paraguay	0–1	0	1	68827	Levi's Stadium, Santa Clara	4-2-3-1	4-2-2-2	Vincenzo Montella	Gustavo Alfaro	79	22	5	2	32	7	1	5	2	1	0	1	14	15	12	0	42	6	6	9	2	3	away	1	1
+32	Group stage	D	2	Fri	2026-06-19	20:30	Brazil	Haiti	3–0	3	0	68324	Lincoln Financial Field, Philadelphia	4-1-4-1	3-4-3	Carlo Ancelotti	Sébastien Migné	57	43	5	3	8	7	3	2	1	3	0	0	13	14	4	4	9	11	10	9	8	4	home	3	3
+33	Group stage	F	2	Sat	2026-06-20	12:00	Netherlands	Sweden	5–1	5	1	68777	Reliant Stadium, Houston	4-1-4-1	3-1-4-2	Ronald Koeman	Graham Potter	51	49	7	8	10	16	7	2	0	3	0	0	9	12	2	5	15	21	8	6	3	3	home	4	6
+34	Group stage	E	2	Sat	2026-06-20	16:00	Germany	Côte d'Ivoire	2–1	2	1	43036	BMO Field, Toronto	4-2-3-1	4-1-4-1	Julian Nagelsmann	Emerse Faé	59	41	7	2	16	9	1	5	0	0	0	0	5	7	8	3	21	9	7	13	0	1	home	1	3
+35	Group stage	E	2	Sat	2026-06-20	19:00	Ecuador	Curaçao	0–0	0	0	68598	GEHA Field at Arrowhead Stadium, Kansas City	3-1-4-2	5-4-1	Sebastián Becaccece	Dick Advocaat	75	25	15	3	27	10	3	15	1	5	0	0	7	10	9	0	32	1	7	8	1	2	draw	0	0
+36	Group stage	F	2	Sat	2026-06-20	22:00	Tunisia	Japan	0–4	0	4	51243	Estadio BBVA, Guadalupe	5-4-1	3-4-3	Hervé Renard	Hajime Moriyasu	38	62	0	5	2	11	1	0	0	0	0	0	8	15	3	5	10	11	14	6	1	1	away	4	4
+37	Group stage	H	2	Sun	2026-06-21	12:00	Spain	Saudi Arabia	4–0	4	0	68239	Mercedes-Benz Stadium, Atlanta	4-1-4-1	5-4-1	Luis de la Fuente	Georgios Donis	67	33	8	1	22	3	1	5	0	2	0	0	10	2	6	1	25	5	16	12	2	3	home	4	4
+38	Group stage	G	2	Sun	2026-06-21	12:00	Belgium	IR Iran	0–0	0	0	70317	SoFi Stadium, Inglewood	4-2-3-1	5-4-1	Rudi Garcia	Amir Ghalehnoy	70	30	7	3	23	7	3	7	1	1	1	0	7	9	4	2	32	8	3	13	3	4	draw	0	0
+39	Group stage	H	2	Sun	2026-06-21	18:00	Uruguay	Cabo Verde	2–2	2	2	64003	Hard Rock Stadium, Miami Gardens	4-1-4-1	4-1-4-1	Marcelo Bielsa	Bubista	65	35	2	4	17	12	2	0	2	2	0	0	11	4	11	4	29	7	8	13	3	0	draw	0	4
+40	Group stage	G	2	Sun	2026-06-21	18:00	New Zealand	Egypt	1–3	1	3	52497	BC Place Stadium, Vancouver	4-2-3-1	4-2-2-2	Darren Bazeley	Hossam Hassan	44	56	5	7	11	19	4	4	2	1	0	0	14	8	4	3	15	22	5	7	3	0	away	2	4
+41	Group stage	J	2	Mon	2026-06-22	12:00	Argentina	Austria	2–0	2	0	70649	AT&T Stadium, Arlington	4-2-2-2	4-2-3-1	Lionel Scaloni	Ralf Rangnick	54	46	5	1	12	6	1	2	2	2	0	0	13	13	1	3	4	16	8	9	2	0	home	2	2
+42	Group stage	I	2	Mon	2026-06-22	17:00	France	Iraq	3–0	3	0	68324	Lincoln Financial Field, Philadelphia	4-2-3-1	4-1-4-1	Didier Deschamps	Graham Arnold	56	45	5	0	19	4	0	2	0	1	0	0	8	4	4	2	14	9	5	11	1	0	home	3	3
+43	Group stage	I	2	Mon	2026-06-22	20:00	Norway	Senegal	3–2	3	2	80663	MetLife Stadium, East Rutherford	4-1-4-1	4-2-3-1	Ståle Solbakken	Pape Thiaw	42	58	7	4	13	16	2	3	0	0	0	0	13	5	5	4	10	23	8	10	0	4	home	1	5
+44	Group stage	J	2	Mon	2026-06-22	20:00	Jordan	Algeria	1–2	1	2	68371	Levi's Stadium, Santa Clara	5-4-1	4-2-3-1	Jamal Sellami	Vladimir Petković	28	72	4	8	8	17	6	3	1	1	0	0	11	6	1	10	5	21	2	10	1	0	away	1	3
+45	Group stage	K	2	Tue	2026-06-23	12:00	Portugal	Uzbekistan	5–0	5	0	68777	Reliant Stadium, Houston	4-2-3-1	5-4-1	Roberto Martínez	Fabio Cannavaro	66	34	9	2	17	7	2	4	1	1	0	0	14	15	3	2	22	8	5	14	2	2	home	5	5
+46	Group stage	L	2	Tue	2026-06-23	16:00	England	Ghana	0–0	0	0	63983	Gillette Stadium, Foxborough	4-2-3-1	4-1-4-1	Thomas Tuchel	Carlos Queiroz	79	21	3	1	19	2	0	3	1	1	0	0	14	24	9	2	30	5	1	8	2	2	draw	0	0
+47	Group stage	L	2	Tue	2026-06-23	19:00	Panama	Croatia	0–1	0	1	43036	BMO Field, Toronto	5-4-1	4-2-3-1	Thomas Christiansen	Zlatko Dalić	42	58	1	2	8	6	1	1	1	1	0	0	19	12	7	2	29	17	4	5	1	2	away	1	1
+48	Group stage	K	2	Tue	2026-06-23	20:00	Colombia	Congo DR	1–0	1	0	45358	Estadio Akron, Zapopan	4-1-4-1	5-3-2	Néstor Lorenzo	Sébastien Desabre	64	37	9	1	20	7	1	8	2	1	0	0	12	16	5	4	12	14	10	7	7	0	home	1	1
+49	Group stage	B	3	Wed	2026-06-24	12:00	Switzerland	Canada	2–1	2	1	52497	BC Place Stadium, Vancouver	4-2-2-2	4-2-2-2	Murat Yakin	Jesse Marsch	55	45	4	7	6	13	6	2	1	2	0	0	19	13	2	7	6	26	5	13	1	3	home	1	3
+50	Group stage	B	3	Wed	2026-06-24	12:00	Bosnia–Herz	Qatar	3–1	3	1	66925	Lumen Field, Seattle	4-2-2-2	4-3-2-1	Sergej Barbarez	Julen Lopetegui	55	46	5	3	14	9	2	3	1	1	0	0	9	14	5	5	22	17	4	4	1	3	home	2	4
+51	Group stage	D	3	Wed	2026-06-24	18:00	Scotland	Brazil	0–3	0	3	64478	Hard Rock Stadium, Miami Gardens	4-2-3-1	4-1-4-1	Steve Clarke	Carlo Ancelotti	46	54	5	9	14	21	5	5	1	2	0	0	10	11	7	6	23	12	2	13	0	1	away	3	3
+52	Group stage	D	3	Wed	2026-06-24	18:00	Morocco	Haiti	4–2	4	2	68239	Mercedes-Benz Stadium, Atlanta	4-2-2-2	4-2-2-2	Mohamed Ouahbi	Sébastien Migné	69	31	11	2	22	9	1	8	0	3	0	0	10	18	9	1	22	3	7	14	5	0	home	2	6
+53	Group stage	A	3	Wed	2026-06-24	19:00	South Africa	Korea Republic	1–0	1	0	51243	Estadio BBVA, Guadalupe	4-2-3-1	3-4-3	Hugo Broos	Hong Myung-bo	32	69	4	3	13	8	2	3	1	1	0	0	7	9	4	6	8	33	15	4	3	0	home	1	1
+54	Group stage	A	3	Wed	2026-06-24	19:00	Czechia	Mexico	0–3	0	3	80824	Estadio Banorte, Coyoacán	3-4-3	4-1-4-1	Miroslav Koubek	Javier Aguirre	52	48	1	5	13	11	2	1	0	1	0	0	9	13	5	1	26	13	3	7	1	0	away	3	3
+55	Group stage	E	3	Thu	2026-06-25	16:00	Curaçao	Côte d'Ivoire	0–2	0	2	68324	Lincoln Financial Field, Philadelphia	5-4-1	4-2-2-2	Dick Advocaat	Emerse Faé	37	63	2	3	11	7	1	2	2	1	0	0	11	6	4	6	15	16	15	12	2	1	away	2	2
+56	Group stage	E	3	Thu	2026-06-25	16:00	Ecuador	Germany	2–1	2	1	80663	MetLife Stadium, East Rutherford	4-2-2-2	4-2-3-1	Sebastián Becaccece	Julian Nagelsmann	39	61	3	3	7	11	2	1	3	1	0	0	15	10	3	2	12	16	12	4			home	1	3
+57	Group stage	F	3	Thu	2026-06-25	18:00	Japan	Sweden	1–1	1	1	70137	AT&T Stadium, Arlington	3-4-3	3-4-3	Hajime Moriyasu	Graham Potter	52	48	3	5	8	11	4	2	1	2	0	0	20	11	2	8	13	16	4	5	3	2	draw	0	2
+58	Group stage	F	3	Thu	2026-06-25	18:00	Tunisia	Netherlands	1–3	1	3	68391	GEHA Field at Arrowhead Stadium, Kansas City	5-4-1	4-1-4-1	Hervé Renard	Ronald Koeman	29	72	4	7	10	20	4	3	0	0	0	0	11	10	4	6	13	28	8	10	2	1	away	2	4
+59	Group stage	C	3	Thu	2026-06-25	19:00	Paraguay	Australia	0–0	0	0	68827	Levi's Stadium, Santa Clara	5-3-2	3-4-3	Gustavo Alfaro	Tony Popovic	44	56	2	5	7	12	5	2	1	1	0	0	9	6	1	3	7	13	8	7			draw	0	0
+60	Group stage	C	3	Thu	2026-06-25	19:00	Türkiye	United States	3–2	3	2	70492	SoFi Stadium, Inglewood	5-4-1	4-2-3-1	Vincenzo Montella	Mauricio Pochettino	48	53	3	7	9	18	5	0	0	1	0	0	13	13	2	9	11	18	8	11	2	5	home	1	5
+61	Group stage	I	3	Fri	2026-06-26	15:00	Norway	France	1–4	1	4	64146	Gillette Stadium, Foxborough	4-1-4-1	4-2-3-1	Ståle Solbakken	Guy Stéphan	43	57	4	9	10	18	5	2	1	1	0	0	9	11	4	5	9	9	13	11	1	2	away	3	5
+62	Group stage	I	3	Fri	2026-06-26	15:00	Senegal	Iraq	5–0	5	0	43036	BMO Field, Toronto	4-1-4-1	4-2-3-1	Pape Thiaw	Graham Arnold	69	31	12	1	28	6	1	7	2	2	0	1	10	11	12	3	25	6	2	7	1	0	home	5	5
+63	Group stage	H	3	Fri	2026-06-26	18:00	Uruguay	Spain	0–1	0	1	45065	Estadio Akron, Zapopan	4-1-4-1	4-1-4-1	Marcelo Bielsa	Luis de la Fuente	33	67	1	1	5	6	0	1	3	1	1	0	14	14	1	6	16	12	14	9	5	2	away	1	1
+64	Group stage	H	3	Fri	2026-06-26	19:00	Cabo Verde	Saudi Arabia	0–0	0	0	68278	Reliant Stadium, Houston	4-1-4-1	4-2-3-1	Bubista	Georgios Donis	51	49	2	3	15	7	3	2	1	3	0	0	10	16	4	2	18	10	13	10	2	0	draw	0	0
+65	Group stage	G	3	Fri	2026-06-26	20:00	Egypt	IR Iran	1–1	1	1	66925	Lumen Field, Seattle	4-2-2-2	5-4-1	Hossam Hassan	Amir Ghalehnoy	61	39	3	4	15	13	1	2	3	4	0	0	11	16	8	2	15	10	7	8	0	3	draw	0	2
+66	Group stage	G	3	Fri	2026-06-26	20:00	New Zealand	Belgium	1–5	1	5	52497	BC Place Stadium, Vancouver	4-2-3-1	4-2-3-1	Darren Bazeley	Rudi Garcia	45	55	2	10	6	35	5	1	2	0	0	0	10	7	5	8	17	16	6	10	1	1	away	4	6
+67	Group stage	L	3	Sat	2026-06-27	17:00	Croatia	Ghana	2–1	2	1	68324	Lincoln Financial Field, Philadelphia	4-2-3-1	4-1-4-1	Zlatko Dalić	Carlos Queiroz	53	47	4	1	8	6	0	2	1	1	0	0	9	13	3	2	15	12	4	10	1	2	home	1	3
+68	Group stage	L	3	Sat	2026-06-27	17:00	Panama	England	0–2	0	2	80663	MetLife Stadium, East Rutherford	5-4-1	4-2-3-1	Thomas Christiansen	Thomas Tuchel	33	67	2	6	13	17	4	2	2	1	0	0	16	13	3	7	9	25	6	5	4	4	away	2	2
+69	Group stage	K	3	Sat	2026-06-27	19:30	Colombia	Portugal	0–0	0	0	64478	Hard Rock Stadium, Miami Gardens	4-1-4-1	4-2-3-1	Néstor Lorenzo	Roberto Martínez	55	45	6	2	24	13	2	6	1	0	0	0	12	6	5	2	10	14	5	11	3	2	draw	0	0
+70	Group stage	K	3	Sat	2026-06-27	19:30	Congo DR	Uzbekistan	3–1	3	1	68239	Mercedes-Benz Stadium, Atlanta	4-2-2-2	3-4-3	Sébastien Desabre	Fabio Cannavaro	58	42	4	1	19	3	1	1	3	2	0	0	6	16	2	4	21	16	7	12	3	1	home	2	4
+71	Group stage	J	3	Sat	2026-06-27	21:00	Jordan	Argentina	1–3	1	3	70649	AT&T Stadium, Arlington	5-4-1	4-1-4-1	Jamal Sellami	Lionel Scaloni	27	73	1	4	5	12	1	0	3	0	0	0	13	7	2	6	7	5	19	12	1	3	away	2	4
+72	Group stage	J	3	Sat	2026-06-27	21:00	Algeria	Austria	3–3	3	3	69045	GEHA Field at Arrowhead Stadium, Kansas City	4-2-3-1	4-1-3-2	Vladimir Petković	Ralf Rangnick	65	35	5	3	12	10	0	2	0	1	0	0	3	7	0	3	5	13	3	10	1	3	draw	0	6
+73	Round of 32			Sun	2026-06-28	12:00	South Africa	Canada	0–1	0	1	69237	SoFi Stadium, Inglewood	4-2-3-1	4-2-2-2	Hugo Broos	Jesse Marsch	58	42	1	7	6	12	5	1	0	2	0	0	10	16	1	4	8	12	16	8	1	0	away	1	1
+74	Round of 32			Mon	2026-06-29	12:00	Brazil	Japan	2–1	2	1	68777	Reliant Stadium, Houston	4-1-4-1	3-4-3	Carlo Ancelotti	Hajime Moriyasu	69	31	7	2	19	5	1	4	2	3	0	0	4	13	6	2	40	10	9	5	1	0	home	1	3
+75	Round of 32			Mon	2026-06-29	16:30	Germany	Paraguay	(3)1–1(4)	1	1	63945	Gillette Stadium, Foxborough	4-2-2-2	4-1-4-1	Julian Nagelsmann	Gustavo Alfaro	75	25	6	3	21	7	2	6	3	3	0	0	18	12	16	6	56	21	4	13	4	1	away	0	2
+76	Round of 32			Mon	2026-06-29	19:00	Netherlands	Morocco	(2)1–1(3)	1	1	51243	Estadio BBVA, Guadalupe	3-4-3	4-2-3-1	Ronald Koeman	Mohamed Ouahbi	30	70	2	5	6	11	5	1	0	1	0	0	18	15	5	8	10	18	11	10	3	0	away	0	2
+77	Round of 32			Tue	2026-06-30	12:00	Côte d'Ivoire	Norway	1–2	1	2	69665	AT&T Stadium, Arlington	4-1-4-1	4-1-4-1	Emerse Faé	Ståle Solbakken	47	53	5	4	14	9	1	4	0	1	0	0	6	7	14	3	29	10	4	6	2	2	away	1	3
+78	Round of 32			Tue	2026-06-30	17:00	France	Sweden	3–0	3	0	80663	MetLife Stadium, East Rutherford	4-2-3-1	4-2-2-2	Didier Deschamps	Graham Potter	61	39	12	3	25	8	3	9	0	0	0	0	14	10	9	1	16	10	5	12	3	1	home	3	3
+79	Round of 32			Tue	2026-06-30	20:00	Mexico	Ecuador	2–0	2	0	80824	Estadio Banorte, Coyoacán	4-1-4-1	4-2-2-2	Javier Aguirre	Sebastián Becaccece	43	57	3	1	15	7	1	1	0	3	0	1	10	14	3	8	7	25	7	6	0	1	home	2	2
+80	Round of 32			Wed	2026-07-01	12:00	England	Congo DR	2–1	2	1	68239	Mercedes-Benz Stadium, Atlanta	4-2-3-1	4-1-4-1	Thomas Tuchel	Sébastien Desabre	60	40	7	2	16	7	1	5	1	1	0	0	10	12	5	3	43	13	7	3	0	4	home	1	3
+81	Round of 32			Wed	2026-07-01	13:00	Belgium	Senegal	3–2	3	2	66925	Lumen Field, Seattle	4-2-3-1	4-1-4-1	Rudi Garcia	Pape Thiaw	52	48	5	5	19	19	3	3	2	1	0	0	22	12	4	2	26	22	8	11	2	2	home	1	5
+82	Round of 32			Wed	2026-07-01	17:00	United States	Bosnia–Herz	2–0	2	0	68827	Levi's Stadium, Santa Clara	4-1-4-1	5-3-2	Mauricio Pochettino	Sergej Barbarez	48	52	2	3	8	10	3	0	0	2	1	0	7	13	4	3	14	13	8	8	3	0	home	2	2
+83	Round of 32			Thu	2026-07-02	12:00	Spain	Austria	3–0	3	0	70492	SoFi Stadium, Inglewood	4-2-3-1	4-2-3-1	Luis de la Fuente	Ralf Rangnick	65	36	10	0	23	5	0	6	0	1	0	0	8	15	9	0	22	13	6	7	2	5	home	3	3
+84	Round of 32			Thu	2026-07-02	19:00	Portugal	Croatia	2–1	2	1	43036	BMO Field, Toronto	4-2-3-1	4-2-3-1	Roberto Martínez	Zlatko Dalić	61	40	3	6	15	13	5	2	1	2	0	0	6	12	9	5	20	22	5	9	1	4	home	1	3
+85	Round of 32			Thu	2026-07-02	20:00	Switzerland	Algeria	2–0	2	0	52497	BC Place Stadium, Vancouver	4-2-3-1	4-1-4-1	Murat Yakin	Vladimir Petković	45	55	5	2	11	8	2	2	0	2	0	0	10	12	4	2	14	6	17	9	0	2	home	2	2
+86	Round of 32			Fri	2026-07-03	13:00	Australia	Egypt	(2)1–1(4)	1	1	70244	AT&T Stadium, Arlington	3-4-3	4-2-2-2	Tony Popovic	Hossam Hassan	42	58	1	3	16	14	3	1	0	2	0	0	12	14	4	7	24	24	9	8	0	3	away	0	2
+87	Round of 32			Fri	2026-07-03	18:00	Argentina	Cabo Verde	3–2	3	2	64478	Hard Rock Stadium, Miami Gardens	4-2-2-2	4-1-4-1	Lionel Scaloni	Bubista	64	37	10	5	22	16	3	8	1	1	0	0	13	12	8	8	15	21	9	10	3	2	home	1	5
+88	Round of 32			Fri	2026-07-03	20:30	Colombia	Ghana	1–0	1	0	69045	GEHA Field at Arrowhead Stadium, Kansas City	4-1-4-1	4-1-4-1	Néstor Lorenzo	Carlos Queiroz	61	39	8	0	20	8	0	7	2	3	0	0	14	10	3	2	15	15	5	5	2	0	home	1	1
+89	Round of 16			Sat	2026-07-04	12:00	Canada	Morocco	0–3	0	3	68777	Reliant Stadium, Houston	4-2-2-2	4-2-3-1	Jesse Marsch	Mohamed Ouahbi	45	55	3	4	10	5	1	3	4	4	0	0	24	14	11	1	29	5	5	8	2	3	away	3	3
+90	Round of 16			Sat	2026-07-04	17:00	Paraguay	France	0–1	0	1	68324	Lincoln Financial Field, Philadelphia	5-4-1	4-2-3-1	Gustavo Alfaro	Didier Deschamps	24	76	0	5	5	15	4	0	0	3	0	0	13	11	2	12	4	23	14	10			away	1	1
+91	Round of 16			Sun	2026-07-05	16:00	Brazil	Norway	1–2	1	2	80663	MetLife Stadium, East Rutherford	4-2-2-2	4-1-4-1	Carlo Ancelotti	Ståle Solbakken	34	66	4	5	14	9	3	3	1	0	0	0	7	6	5	5	16	13	11	6	1	1	away	1	3
+92	Round of 16			Sun	2026-07-05	19:00	Mexico	England	2–3	2	3	80824	Estadio Banorte, Coyoacán	4-1-4-1	4-2-3-1	Javier Aguirre	Thomas Tuchel	67	33	5	5	20	6	2	3	2	4	0	1	14	7	12	2	49	4	7	4	1	0	away	1	5`;
 
     const numericFields = new Set([
       "id", "gameweek", "homeScore", "awayScore", "attendance", "homePoss", "awayPoss",
@@ -607,7 +684,7 @@
       { id: "yellow", label: "Yellow cards", short: "Yellow", home: "homeYellow", away: "awayYellow", unit: "yellow", mode: "count", leader: "more yellow cards", note: "Many matches are tied on yellow cards." },
       { id: "red", label: "Red cards", short: "Red", home: "homeRed", away: "awayRed", unit: "red", mode: "count", leader: "more red cards", note: "Sparse metric: most matches have no red-card difference." },
       { id: "interceptions", label: "Interceptions", short: "Int.", home: "homeInterceptions", away: "awayInterceptions", unit: "int.", mode: "count", leader: "more interceptions", note: "A defensive activity signal." },
-      { id: "offsides", label: "Offsides", short: "Offside", home: "homeOffsides", away: "awayOffsides", unit: "offsides", mode: "count", leader: "more offsides", note: "Missing for three group-stage matches." }
+      { id: "offsides", label: "Offsides", short: "Offside", home: "homeOffsides", away: "awayOffsides", unit: "offsides", mode: "count", leader: "more offsides", note: "Missing for four matches in the updated file." }
     ];
 
     const teamCodes = new Map([
@@ -617,6 +694,7 @@
       ["Austria", "AUT"],
       ["Belgium", "BEL"],
       ["Bosnia & Herz.", "BIH"],
+      ["Bosnia–Herz", "BIH"],
       ["Brazil", "BRA"],
       ["Cabo Verde", "CPV"],
       ["Canada", "CAN"],
@@ -691,12 +769,16 @@
     });
 
     const metricButtons = document.querySelector("#metricButtons");
+    const stageSelect = document.querySelector("#stageSelect");
     const groupsEl = document.querySelector("#groups");
 
     let activeMetric = metrics[0];
+    let activeStage = "all";
     let selectedId = matches[0].id;
 
-    const groups = [...new Set(matches.map((match) => match.group))].sort();
+    const knockoutRounds = ["Round of 32", "Round of 16"];
+    const groupStageMatches = matches.filter((match) => match.round === "Group stage");
+    const groups = [...new Set(groupStageMatches.map((match) => match.group))].sort();
 
     function value(match, metric, side) {
       return match[side === "home" ? metric.home : metric.away];
@@ -750,13 +832,14 @@
 
     const groupTables = new Map(groups.map((group) => [
       group,
-      groupStandings(matches.filter((match) => match.group === group))
+      groupStandings(groupStageMatches.filter((match) => match.group === group))
     ]));
 
     const qualifiedTeams = new Set([
       ...[...groupTables.values()].flatMap((table) => table.slice(0, 2).map((row) => row.team)),
       ...[...groupTables.values()]
         .map((table) => table[2])
+        .filter(Boolean)
         .sort((a, b) => b.points - a.points || b.gd - a.gd || b.gf - a.gf || a.team.localeCompare(b.team))
         .slice(0, 8)
         .map((row) => row.team)
@@ -771,7 +854,8 @@
     }
 
     function visibleMatches() {
-      return matches;
+      if (activeStage === "all") return matches;
+      return matches.filter((match) => match.round === activeStage);
     }
 
     function cardStyle(match, metric) {
@@ -861,14 +945,36 @@
       `;
     }
 
+    function sectionId(label) {
+      return label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    }
+
+    function renderSection(entry) {
+      const standings = entry.type === "group" ? groupTables.get(entry.key) : null;
+      const header = entry.type === "group" ? `
+            <header class="group-header">
+              <h2>Group ${entry.key}</h2>
+              <p class="group-teams">${standings.map((row) => qualifiedTeams.has(row.team) ? `<b title="${escapeHtml(row.team)} advanced">${teamMarkup(row.team)}</b>` : teamMarkup(row.team)).join(" · ")}</p>
+            </header>
+      ` : `
+            <header class="group-header">
+              <h2>${entry.key}</h2>
+            </header>
+      `;
+      return `
+          <section class="group-section" id="${sectionId(entry.key)}">
+            ${header}
+            <div class="match-grid">
+              ${entry.matches.map(renderCard).join("")}
+            </div>
+          </section>
+      `;
+    }
+
     function renderGroups() {
       const filtered = visibleMatches();
-      const grouped = groups.map((group) => ({
-        group,
-        matches: filtered.filter((match) => match.group === group)
-      })).filter((entry) => entry.matches.length > 0);
 
-      if (!grouped.length) {
+      if (!filtered.length) {
         groupsEl.innerHTML = `<div class="empty-state">No matches match the current filters.</div>`;
         return;
       }
@@ -877,20 +983,20 @@
         selectedId = filtered[0].id;
       }
 
-      groupsEl.innerHTML = grouped.map((entry) => {
-        const standings = groupTables.get(entry.group);
-        return `
-          <section class="group-section" id="group-${entry.group}">
-            <header class="group-header">
-              <h2>Group ${entry.group}</h2>
-              <p class="group-teams">${standings.map((row) => qualifiedTeams.has(row.team) ? `<b title="${escapeHtml(row.team)} advanced">${teamMarkup(row.team)}</b>` : teamMarkup(row.team)).join(" · ")}</p>
-            </header>
-            <div class="match-grid">
-              ${entry.matches.map(renderCard).join("")}
-            </div>
-          </section>
-        `;
-      }).join("");
+      const sections = [];
+      if (activeStage === "all" || activeStage === "Group stage") {
+        groups.forEach((group) => {
+          const groupMatches = filtered.filter((match) => match.round === "Group stage" && match.group === group);
+          if (groupMatches.length) sections.push({ type: "group", key: group, matches: groupMatches });
+        });
+      }
+      knockoutRounds.forEach((round) => {
+        if (activeStage !== "all" && activeStage !== round) return;
+        const roundMatches = filtered.filter((match) => match.round === round);
+        if (roundMatches.length) sections.push({ type: "round", key: round, matches: roundMatches });
+      });
+
+      groupsEl.innerHTML = sections.map(renderSection).join("");
     }
 
     function selectMatch(id) {
@@ -911,6 +1017,11 @@
       const button = event.target.closest("button[data-metric]");
       if (!button) return;
       activeMetric = metrics.find((metric) => metric.id === button.dataset.metric);
+      update();
+    });
+
+    stageSelect.addEventListener("change", (event) => {
+      activeStage = event.target.value;
       update();
     });
 

@@ -1,7 +1,7 @@
 {
   "name": "data-vizard",
   "displayName": "Data Vizard",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Guide data visualization projects from dataset intake to analysis, adaptive narration, critique, design, and HTML story output.",
   "author": {
     "name": "inosaint",

@@ -77,6 +77,8 @@ For collection-like datasets with strong visual source material, preserve both a
 6. Run an anti-trope edit.
    Remove common AI writing habits before showing copy to the user or handing it to Designer. Prefer concrete nouns, active verbs, specific evidence, and human editorial rhythm. Read `references/anti-ai-tropes.md` when writing or revising visible copy.
 
+   Run a title and label rewrite pass for generic lines. Placeholder phrases such as `high point`, `prominent`, `quieter months`, `what this shows`, or `clear pattern` are banned unless they are demonstrably the most precise wording. If a line could fit another dataset with only the noun swapped, rewrite it or cut it.
+
 7. Handoff to Critic and Designer.
    Provide a concise handoff with:
    - `posture`
@@ -85,11 +87,15 @@ For collection-like datasets with strong visual source material, preserve both a
    - `visible_text_inventory`
    - `must_keep_text`
    - `optional_text`
+   - `forbidden_phrases`
+   - `final_visible_copy`
    - key claim or question, if needed
    - annotation priorities
    - caveats that must remain visible
 
    `visible_text_inventory` should be a flat list of every visible text surface the current brief permits, such as title, caption, note trigger, tooltip label, or detail label. If a visible text surface is not named in the inventory, Designer should treat it as unauthorized by default.
+
+   `forbidden_phrases` should list weak or overused phrasings that must not reappear during design. `final_visible_copy` should include the exact approved title, subtitle, section headers, readouts, button labels, and persistent helper lines, or explicitly say when a surface should be assistive-only.
 
 ## Hard Rules
 

@@ -54,6 +54,7 @@ Default to `dual` unless the user or orchestrator specifies another mode.
    - evidence not strong enough for the proposed claim
    - caveat hidden, missing, or deferred too late
    - option set biased toward one answer without saying so
+   - image option set too similar
    - premature narrowing of plausible directions
    - unnecessary visible text
    - obvious metaphor or decorative framing
@@ -64,15 +65,32 @@ Default to `dual` unless the user or orchestrator specifies another mode.
    - remote selected-state dependency
    - generic color drift
    - same-temperature palette drift
+   - immersive concept flattened into static shell
+   - missing wireframe or fidelity plan
+   - rendering approach underpowered for concept
    - rounded-card overuse
    - accent-rail rescue styling
    - weak focal point
    - hierarchy too flat
    - interaction or annotation not earning its place
+   - decorative or inert controls
+   - incomplete record reachability
+   - missing verification evidence
+   - missing artifact metadata
+   - oversized single-file artifact without justification
    - data-art posture violated by explanatory clutter
+   - misaligned-control-placement
+   - typographic-noise
+   - maximalist-chart-styling
+   - rounded-box-slop
+   - floating-readout
+   - generic-editorial-copy
+   - responsive-breakpoint-blindness
+   - desktop-composition-collision
    - density overflow
    - caveat missing or too far from the claim
    - image-generated concept work being mistaken for final evidence display
+   - selected concept mechanism dropped without approval
 
 5. Return actionable findings.
    For each issue, say:
@@ -87,12 +105,27 @@ Default to `dual` unless the user or orchestrator specifies another mode.
    Treat the following as signoff blockers unless the brief explicitly calls for them:
    - generic dashboard chrome in a non-dashboard piece
    - a narrow option set that keeps the same shell and only swaps chart types
+   - an image-generated option set where the options share the same shell, color mood, camera angle, density, or UI pattern and therefore do not represent distinct design directions
+   - a selected immersive or scene-led concept being flattened into ordinary DOM layout or app chrome without explicit user-approved simplification
+   - missing wireframe, low-fidelity mockup, or fidelity plan before final implementation of a complex spatial/immersive concept
+   - missing rendering/library decision for a concept that appears to require D3/SVG, Canvas, WebGL, Three.js, MapLibre, or another richer rendering approach
    - safe default color palettes that erase the intended character of the piece
    - collection-led work collapsing into generic product-browser utility
+   - a record-by-record explorer where records are not all reachable through the designed visual system
+   - decorative or inert visible controls, including buttons or filters that imply unavailable behavior
    - in any non-dashboard work, visible text surfaces that exceed Narrator's `visible_text_inventory` without strong justification
    - generic shell reuse such as `hero + card block + sidebar detail` without a concept-specific reason
    - detached persistent detail behavior being preserved by relocating it rather than removing or rethinking it
+   - visible controls that are functional but visually misplaced, detached from their title row, or floating between unrelated surfaces
+   - maximalist chart marks, such as glows, thick halos, gradients, oversized corner radii, or shadows, when they do not encode meaning or improve legibility
+   - repeated rounded boxes or nested card stacks used as the default structure for non-dashboard detail content
+   - standalone readout text that floats between a chart and a detail section instead of staying local to the selected mark or related content
+   - generic editorial copy that sounds like a placeholder, especially titles, readouts, or section headers that could fit any dataset
+   - a responsive signoff that verifies only mobile or only the widest desktop state while skipping cramped desktop/tablet widths
+   - desktop or tablet compositions where a hero title, chart card, control, label, or panel crosses a gutter, clips, overlaps, visually competes with another region, or is vertically stranded by centering against a much taller sibling
    - text overflow or density mismatch in repeated small components
+   - missing browser/render verification for a final HTML artifact, unless the status is explicitly `draft built` or `blocked`
+   - missing `SIGNOFF.md` or equivalent verification notes when final signoff is claimed
 
 6. Conclude with a pass state.
    Return one of:
@@ -125,8 +158,24 @@ Default to `dual` unless the user or orchestrator specifies another mode.
 - Rounded-card overuse should be treated as a defect when most major surfaces share the same softened component treatment without conceptual justification.
 - Accent-rail rescue styling should be treated as a defect when a generic box is being “saved” by a colored left edge or stripe instead of a concept-specific form.
 - Controls, cards, panels, and labels must earn their place.
+- For collection-led work, search, filters, rails, footers, and action buttons should support the composition rather than replace it as the main discovery mechanism.
+- Every visible control should be functional, disabled with explanation, or removed.
+- For record-by-record explorers, visible counts should match reachable records.
+- For immersive or scene-led work, the final artifact should preserve the selected concept's core mechanism, such as landscape layering, clipped specimens, parallax depth, custom spatial clustering, map behavior, or animated reveal.
+- When a concept requires custom rendering, ordinary DOM layout is acceptable only if the implementation plan explains how it will still deliver the intended experience.
 - Density overflow is a defect, not a CSS cleanup note. If a component footprint cannot hold its text comfortably, the component contract is wrong.
+- Responsive breakpoint blindness is a defect when verification proves mobile but ignores the desktop/tablet widths where multi-column compositions usually fail.
+- Desktop composition collision is a defect when large type, chart cards, labels, controls, or panels intrude across columns, clip, overlap, sit implausibly low because a short column is centered against a tall one, or depend on `overflow-x: hidden` to hide a layout mistake.
 - Composition, rhythm, motion, and atmosphere may carry meaning, but not at the cost of data faithfulness.
+- Before passing an HTML artifact, explicitly state why these common defects are not present: `misaligned-control-placement`, `typographic-noise`, `maximalist-chart-styling`, `rounded-box-slop`, `floating-readout`, `generic-editorial-copy`, `responsive-breakpoint-blindness`, and `desktop-composition-collision`.
+
+### Artifact Evidence Lens
+
+- Nontrivial HTML artifacts should have a reviewable file structure, usually `index.html`, `styles.css`, `script.js`, data files, assets, favicon, and metadata.
+- A monolithic HTML artifact is acceptable only when it is tiny, disposable, or explicitly justified.
+- Final HTML signoff should include verification evidence: visible-text audit, shell audit, interaction-locality audit, density audit, data completeness audit, control honesty audit, metadata audit, and responsive/browser notes.
+- Complex spatial or immersive artifacts should also include wireframe/fidelity notes and a rendering/library decision.
+- Broken images, missing essential source fields, mojibake, malformed labels, and broken asset paths are content defects, not polish notes.
 
 ## Handoff Output
 

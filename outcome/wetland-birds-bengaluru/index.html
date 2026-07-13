@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bengaluru Wetland Birds by Month</title>
+    <meta name="description" content="A restrained monthly chart of selected Bengaluru wetland-bird observation records, with bird photos and Wikipedia links.">
+    <meta name="theme-color" content="#f4fbf7">
+    <meta property="og:title" content="Bengaluru Wetland Birds by Month">
+    <meta property="og:description" content="Selected Bengaluru wetland-bird records rise from October into January and thin out by June.">
+    <link rel="stylesheet" href="styles.css?v=20260708-top-aligned-desktop">
+  </head>
+  <body>
+    <main class="page" aria-labelledby="title">
+      <section class="intro">
+        <p class="kicker">Bengaluru wetlands · 10 selected species</p>
+        <h1 id="title">Bengaluru’s wetland-bird records lean winter.</h1>
+        <p class="lede">In this selected 2014-2026 GBIF/eBird set, records rise from October into January and thin out by June.</p>
+      </section>
+
+      <section class="chart-card" aria-labelledby="chartTitle">
+        <div class="chart-header">
+          <p class="eyebrow">Monthly pattern</p>
+          <div class="chart-title-row">
+            <h2 id="chartTitle">Observation activity</h2>
+            <button id="playButton" class="play-button" type="button" aria-label="Play through the months" aria-pressed="false">
+              <span class="play-symbol" aria-hidden="true"></span>
+              <span id="playButtonText" class="sr-only">Play</span>
+            </button>
+          </div>
+          <p class="scale-note">Bars are relative to January. Select a month to update the bird list.</p>
+        </div>
+
+        <div id="chart" class="bar-chart" role="img" aria-label="Monthly relative observation activity for 10 selected Bengaluru wetland species.">
+          <p class="loading">Loading chart...</p>
+        </div>
+
+        <div id="chartReadout" class="chart-readout" aria-live="polite"></div>
+
+        <section class="birds-panel" aria-labelledby="birdsPanelTitle">
+          <div class="birds-panel-header">
+            <h3 id="birdsPanelTitle">Closest to their own peak in January</h3>
+            <p id="birdsPanelNote">Four selected species reach their monthly high here.</p>
+          </div>
+          <div id="birdsList" class="birds-list" aria-live="polite"></div>
+        </section>
+
+      </section>
+
+      <details class="source-panel">
+        <summary>Sources and method</summary>
+        <p>How to read: select a month, or press Play, to move month by month and change the bird list. The bars use GBIF occurrence evidence, mostly eBird human observations, for 10 selected wetland, migrant, winter-visitor, or seasonal species in a Bengaluru-area query from 2014-2026. Each bar pools one calendar month across those years; January is the reference month.</p>
+        <p>The bird list ranks species by how close the selected month is to each species' own monthly high. Photos and Wikipedia links are loaded from the project-local Wikipedia/Wikimedia metadata file.</p>
+        <p><a href="../../data/wetland-birds-bengaluru/curated/migration-pulse-evidence.json">Evidence JSON</a> · <a href="../../data/wetland-birds-bengaluru/curated/species-wikipedia.json">Photo metadata</a> · <a href="MIGRATION_RESEARCH.md">Research notes</a> · <a href="https://www.gbif.org/dataset/4fa7b334-ce0d-4e88-aaae-2e0c138d049e">eBird via GBIF</a></p>
+      </details>
+    </main>
+    <script src="script.js?v=20260708-top-aligned-desktop" defer></script>
+  </body>
+</html>

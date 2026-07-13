@@ -1,6 +1,6 @@
 # Data Vizard Plugin
 
-Data Vizard is an agent plugin for staged data visualization work. It bundles skills for dataset intake, curation, exploratory analysis, adaptive narration, critique, and HTML visualization design.
+Data Vizard is an agent plugin for staged data visualization work. It bundles skills for dataset intake, curation, exploratory analysis, adaptive narration, critique, chart cleanup, and HTML visualization design.
 
 ## What This Plugin Provides
 
@@ -9,7 +9,8 @@ Data Vizard is an agent plugin for staged data visualization work. It bundles sk
 - `data-vizard:data-analyst` - Finds patterns, caveats, comparisons, anomalies, and evidence-backed story directions.
 - `data-vizard:narrator` - Decides how much language the visualization actually needs and produces restrained story briefs.
 - `data-vizard:critic` - Reviews briefs and artifacts for editorial rigor, visual craft, restraint, and anti-default quality.
-- `data-vizard:designer` - Designs and builds HTML visualization artifacts with chart, layout, accessibility, interaction, motion, and data-art guidance.
+- `data-vizard:de-slop` - Cleans up bad, cluttered, misleading, default-looking, or hard-to-read charts while preserving the underlying evidence.
+- `data-vizard:designer` - Designs and builds HTML visualization artifacts, plus image-led option comps for data-art directions, with chart, layout, accessibility, interaction, motion, and data-art guidance.
 
 ## Install From npm
 
@@ -127,10 +128,11 @@ Use $data-vizard:data-curator to profile and clean this dataset.
 Use $data-vizard:data-analyst to find story directions in this curated CSV.
 Use $data-vizard:narrator to decide how much language this visualization actually needs.
 Use $data-vizard:critic to review a visualization brief or artifact before signoff.
+Use $data-vizard:de-slop to clean up a bad chart without changing the underlying evidence.
 Use $data-vizard:designer to build the HTML visualization.
 ```
 
-The orchestrator confirms where project artifacts should live in the active workspace before creating or changing files, asks early about explanatory versus data-art posture, and uses critique passes before final signoff.
+The orchestrator confirms where project artifacts should live in the active workspace before creating or changing files, asks early about explanatory versus data-art posture, uses image-led optioning for data-art direction choices in Codex and Gemini, falls back to HTML or static browser-viewable comps in Claude Code, and uses critique passes before final signoff.
 
 ## Privacy And Data
 

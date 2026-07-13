@@ -1,6 +1,6 @@
 ---
 name: data-vizard
-description: Orchestrate an interactive data visualization workflow for workshop participants from dataset discovery or intake through curation, analysis, narrative posture, critique, design direction, and final HTML artifact planning. Use when the user wants end-to-end guidance, invokes Data Vizard, wants help deciding which Data Vizard role skill to use next, or asks to coordinate Data Curator, Data Analyst, Narrator, Critic, and Designer while keeping the user involved in all major decisions.
+description: Orchestrate an interactive data visualization workflow for workshop participants from dataset discovery or intake through curation, analysis, narrative posture, critique, design direction, image-led optioning, and final HTML artifact planning. Use when the user wants end-to-end guidance, invokes Data Vizard, wants help deciding which Data Vizard role skill to use next, or asks to coordinate Data Curator, Data Analyst, Narrator, Critic, and Designer while keeping the user involved in all major decisions.
 ---
 
 # Data Vizard
@@ -88,7 +88,11 @@ The role sequence is still explicit, but the weight of each stage changes by pos
 8. Choose the design direction.
    Use Designer to propose visual directions and style families as button-ready choices. Ask the user to choose before implementing unless the user has explicitly delegated design direction; delegated choices still require a Designer plan before implementation. If the user asks for variants, produce a small set of clearly differentiated options.
 
+   For `data-art-led` work, prefer host-aware optioning. In Codex and Gemini, generate preview images for each direction under `outcome/<project-name>/options/` and summarize them in `options.md`. In Claude Code or any host without image generation, use `options.html` or another browser-viewable static comparison instead.
+
    For collection-like or visually rich datasets, do not accept a design option set that only varies chart type or control layout. At least one option must be explicitly composition-led, and at least one option must name a concrete aesthetic family and color attitude rather than falling back to generic app-shell styling.
+
+   For image-led optioning, require Designer to run an option similarity check before the options reach the user. Reject sets where the concepts share the same shell, palette temperature, typography mood, control placement, image treatment, density, spatial metaphor, or interaction model beyond two shared traits. The options should feel like different directions, not variations of one generated style.
 
 9. Critique design options and plans.
    Use Critic to review Designer options before presenting them to the user. Critique should check focal point, hierarchy, originality, interaction burden, and whether the options are genuinely differentiated. Rework or discard weak options before presenting the set.
@@ -96,10 +100,16 @@ The role sequence is still explicit, but the weight of each stage changes by pos
    If Critic identifies `default-dashboard-grammar`, `utility-ui-collapse`, `option-set-too-narrow`, or generic color drift, Designer should revise before the options reach the user unless the brief explicitly called for a utility-first dashboard.
 
 10. Build or plan the HTML artifact.
-   The final Designer output should be an HTML-based artifact or a precise implementation plan for one. Prefer a single self-contained HTML file unless the user requests a framework. Store completed visualization artifacts under `outcome/<project-name>/`.
+   The final Designer output should be an HTML-based artifact or a precise implementation plan for one. Use `index.html` as the entry point, but do not default to a single-file build. For anything with meaningful styling, interaction logic, reusable components, or nontrivial data handling, prefer separate files such as `index.html`, `styles.css`, and `script.js`. Store completed visualization artifacts under `outcome/<project-name>/`.
+
+   Before implementation signoff, require Designer to identify the actual rendered shell and how composition carries discovery. For collection-led or record-by-record explorers, do not accept an artifact that relies mainly on generic search/filter chrome while only exposing a small subset of records in the visual field.
+
+   For immersive, scene-led, map-led, dense, animated, or spatial concepts, require Designer to produce a simple wireframe or low-fidelity mockup before final build and to state the rendering/library decision. If a concept image shows a specific mechanism such as clipped specimens in an illustrated landscape, parallax depth, custom spatial clustering, or an ecological transect, the implementation plan must preserve it or explicitly ask the user to approve a simpler direction.
 
 11. Critique the final artifact.
    Use Critic again after Designer produces or verifies the HTML artifact. Final signoff requires a concrete critique pass, not just a generic summary. If Critic finds material issues, revise the artifact and re-run Critic before presenting the result as complete.
+
+   Final signoff also requires Designer verification notes or `outcome/<project-name>/SIGNOFF.md` covering file structure, wireframe/fidelity result, rendering/library decision, visible text, shell, interaction locality, density, data completeness, control honesty, metadata, responsive rendering, and remaining caveats. If browser/render verification is unavailable, mark the artifact `Blocked: verification unavailable` or `Draft built`; do not mark it `Completed`.
 
 ## Role Routing
 
@@ -164,12 +174,25 @@ Update the ledger whenever a stage is completed:
 
 Record each skill boundary, files or references loaded, user decision gates, posture, evidence notes, critique notes, and outputs produced. Keep the ledger focused on progress, handoffs, decisions, caveats, and artifacts rather than token accounting.
 
+Use ledger status precisely:
+
+- `Proposed`: options, plans, or direction briefs exist but the user has not chosen.
+- `Draft built`: an artifact exists but verification or critique is incomplete.
+- `Needs revision`: a required audit or critique found material defects.
+- `Blocked`: the workflow cannot continue without user input, missing data, unavailable rendering, or another external condition.
+- `Verified`: Designer audits passed and verification notes or `SIGNOFF.md` exist.
+- `Completed`: the stage is verified where verification is required, Critic has passed it when applicable, and no required revision remains.
+
+Do not write `Completed` for a final HTML artifact just because files were created. The ledger should distinguish build completion from verified signoff.
+
 Use this compact table shape:
 
 ```markdown
-| Stage | Skill | Status | Decisions / Evidence | Outputs |
-| --- | --- | --- | --- | --- |
+| Stage | Skill | Model | Status | Decisions / Evidence | Outputs |
+| --- | --- | --- | --- | --- | --- |
 ```
+
+The `Model` column records the active model identifier for each stage (e.g. `claude-sonnet-4-6`, `gemini-2.5-pro`, `gpt-4o`). Curator records the model for its own stage; subsequent skills record their own model if it differs.
 
 ## Project Storage
 
@@ -205,7 +228,7 @@ outcome/<project-name>/assets/
 
 Do not store source snapshots, raw datasets, or reusable curated tables in `outcome/`; those belong under `data/<project-name>/`.
 
-For the default workshop path, prefer a single self-contained HTML file named `index.html`. After Designer verifies the artifact and Critic completes the final pass, update `project-ledgers/<project-name>.md` with the final outcome path and verification notes.
+For the default workshop path, prefer `index.html` as the main entry file, with separate `styles.css` and `script.js` alongside it whenever the artifact is more than tiny or disposable. Use a single self-contained HTML file only when the piece is genuinely small and keeping everything together improves speed or portability. After Designer verifies the artifact and Critic completes the final pass, update `project-ledgers/<project-name>.md` with the final outcome path and verification notes.
 
 ## Reference
 

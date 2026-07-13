@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Salary Race Wireframe</title>
+    <style>
+      body { margin: 0; font-family: monospace; background: #11131a; color: #f3f5f9; }
+      .frame { max-width: 1360px; margin: 0 auto; padding: 24px; }
+      .hero, .step, .chart, .notes, .mini { border: 3px solid #7de6de; background: #181b24; box-shadow: 0 0 0 3px #2e3244 inset; padding: 16px; }
+      .hero { margin-bottom: 18px; }
+      .layout { display: grid; grid-template-columns: 340px 1fr; gap: 18px; align-items: start; }
+      .step { min-height: 180px; margin-bottom: 18px; }
+      .chart { min-height: 760px; position: sticky; top: 20px; background: #0f1015; }
+      .hud { border: 3px solid #7de6de; background: #0a0c10; padding: 12px; margin-bottom: 14px; }
+      .hud-top { display: grid; grid-template-columns: 1.1fr 1fr 0.9fr; gap: 10px; margin-bottom: 12px; }
+      .hud-box { border: 3px solid #ffb2a2; padding: 8px; min-height: 62px; }
+      .hud-rankings { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .rank-col { border: 3px solid #666f88; padding: 8px; min-height: 122px; }
+      .rank-line { margin-top: 6px; color: #f7d04a; font-size: 12px; }
+      .track-shell { border: 3px solid #b6bac7; background: #4e8611; padding: 10px 10px 14px; }
+      .crowd { height: 26px; background:
+        repeating-linear-gradient(
+          90deg,
+          #f94144 0 4px,
+          #f9c74f 4px 8px,
+          #43aa8b 8px 12px,
+          #577590 12px 16px,
+          #f3722c 16px 20px
+        );
+        border-bottom: 4px solid #8f939f;
+      }
+      .infield { height: 52px; background: #538d15; border-bottom: 6px solid #e7e9ef; }
+      .track-wrap { position: relative; background: #8a3200; padding: 14px 12px 12px; }
+      .track-grid { position: absolute; inset: 14px 12px 12px 168px; pointer-events: none; }
+      .lane-line { height: 48px; border-top: 4px solid #f4f6fb; }
+      .pack-zone, .break-zone { position: absolute; top: 18px; bottom: 18px; border: 3px dashed #7de6de; }
+      .pack-zone { left: 190px; width: 112px; }
+      .break-zone { right: 78px; width: 126px; }
+      .track-list { position: relative; z-index: 1; }
+      .lane-row { display: grid; grid-template-columns: 144px 1fr; align-items: center; height: 48px; }
+      .lane-label { color: #f2f4fb; font-size: 12px; padding-right: 12px; }
+      .lane-run { position: relative; height: 36px; }
+      .sprite { position: absolute; width: 20px; height: 20px; background: #ff6b35; box-shadow:
+        0 0 0 3px #14161e,
+        8px 0 0 0 currentColor,
+        4px 8px 0 0 #f5f6fa,
+        12px 12px 0 0 #f5f6fa;
+        color: #ffd23f;
+        top: 6px;
+      }
+      .sprite.p2 { left: 120px; color: #7de6de; }
+      .sprite.p3 { left: 170px; color: #ff8fab; }
+      .sprite.p4 { left: 225px; color: #a3f7bf; }
+      .sprite.p5 { left: 290px; color: #ffd23f; }
+      .sprite.p6 { left: 360px; color: #7aa2ff; }
+      .sprite.p7 { left: 430px; color: #ffb703; }
+      .sprite.p8 { left: 520px; color: #ef476f; }
+      .sprite.p9 { left: 610px; color: #f4f1de; }
+      .sprite.p10 { left: 700px; color: #7de6de; }
+      .state-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; }
+      .mini { font-size: 12px; }
+      .notes { margin-top: 14px; font-size: 13px; line-height: 1.4; }
+      .small { font-size: 12px; color: #9da6bd; }
+      @media (max-width: 980px) {
+        .layout { grid-template-columns: 1fr; }
+        .chart { position: relative; top: auto; }
+        .lane-row { grid-template-columns: 110px 1fr; }
+        .track-grid { inset: 14px 12px 12px 134px; }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="frame">
+      <section class="hero">
+        <strong>Hero (not sticky)</strong>: title, deck, linked source, and one short note explaining that the salaries are being staged as a retro race replay.
+        Reader scrolls past this once, then the same sticky broadcast frame stays pinned while the HUD rankings and runner positions update.
+      </section>
+      <section class="layout">
+        <div>
+          <div class="step"><strong>Step 1: packed start</strong><br><br>The HUD ranking board shows a tight early order while all nine runner sprites stay clustered near the left edge of the track.</div>
+          <div class="step"><strong>Step 2: first bend</strong><br><br>The same sticky frame stays pinned. A few roles begin separating and the HUD reorders to reflect the first real salary gap.</div>
+          <div class="step"><strong>Step 3: breakaway</strong><br><br>The top earners pull clear into a visible front group. The ranking board and the lane sprites now tell the same story at a glance.</div>
+          <div class="step"><strong>Step 4: finish</strong><br><br>The final ordering locks in. Hover still reveals the exact year, salary, and gain for any runner.</div>
+        </div>
+        <div class="chart">
+          <strong>Sticky broadcast frame</strong>
+          <div class="hud">
+            <div class="hud-top">
+              <div class="hud-box"><strong>RAT RACE</strong><br><span class="small">London salary replay</span></div>
+              <div class="hud-box"><strong>ROUND</strong><br><span class="small">Packed start / Year 0</span></div>
+              <div class="hud-box"><strong>SOURCE</strong><br><span class="small">Linked WTTJ salaries</span></div>
+            </div>
+            <div class="hud-rankings">
+              <div class="rank-col"><strong>1-3</strong><div class="rank-line">1 Backend Eng. 45k</div><div class="rank-line">2 Product Mgmt 44k</div><div class="rank-line">3 Legal 42k</div></div>
+              <div class="rank-col"><strong>4-6</strong><div class="rank-line">4 Corp Finance 40k</div><div class="rank-line">5 Data & BI 39k</div><div class="rank-line">6 Sales Ops 37k</div></div>
+              <div class="rank-col"><strong>7-9</strong><div class="rank-line">7 Risk & Comp 36k</div><div class="rank-line">8 Fin Ops 35k</div><div class="rank-line">9 Gen Marketing 32k</div></div>
+            </div>
+          </div>
+          <div class="track-shell">
+            <div class="crowd"></div>
+            <div class="infield"></div>
+            <div class="track-wrap">
+              <div class="track-grid">
+                <div class="pack-zone"></div>
+                <div class="break-zone"></div>
+                <div class="lane-line"></div>
+                <div class="lane-line"></div>
+                <div class="lane-line"></div>
+                <div class="lane-line"></div>
+                <div class="lane-line"></div>
+                <div class="lane-line"></div>
+                <div class="lane-line"></div>
+                <div class="lane-line"></div>
+                <div class="lane-line"></div>
+              </div>
+              <div class="track-list">
+                <div class="lane-row"><div class="lane-label">Backend Engineer</div><div class="lane-run"><span class="sprite p10"></span></div></div>
+                <div class="lane-row"><div class="lane-label">Product Management</div><div class="lane-run"><span class="sprite p8"></span></div></div>
+                <div class="lane-row"><div class="lane-label">Legal</div><div class="lane-run"><span class="sprite p7"></span></div></div>
+                <div class="lane-row"><div class="lane-label">Corporate Finance</div><div class="lane-run"><span class="sprite p6"></span></div></div>
+                <div class="lane-row"><div class="lane-label">Data Analysis &amp; BI</div><div class="lane-run"><span class="sprite p5"></span></div></div>
+                <div class="lane-row"><div class="lane-label">Sales Operations</div><div class="lane-run"><span class="sprite p4"></span></div></div>
+                <div class="lane-row"><div class="lane-label">Risk &amp; Compliance</div><div class="lane-run"><span class="sprite p3"></span></div></div>
+                <div class="lane-row"><div class="lane-label">Finance Operations</div><div class="lane-run"><span class="sprite p2"></span></div></div>
+                <div class="lane-row"><div class="lane-label">Generalist Marketing</div><div class="lane-run"><span class="sprite"></span></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="state-row">
+            <div class="mini"><strong>Packed</strong><br>tight cluster + close rankings</div>
+            <div class="mini"><strong>First bend</strong><br>first reorder in HUD</div>
+            <div class="mini"><strong>Breakaway</strong><br>front group pulls clear</div>
+            <div class="mini"><strong>Finish</strong><br>final order + hover detail</div>
+          </div>
+          <div class="notes">
+            The hero is not sticky. The HUD and track are sticky together as one broadcast frame. What changes on scroll is the ranking board, the runner spacing, and the pack versus breakaway relationship.
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

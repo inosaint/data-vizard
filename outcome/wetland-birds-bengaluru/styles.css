@@ -1,0 +1,558 @@
+:root {
+  color-scheme: light;
+  --ink: #173139;
+  --text: rgba(23, 49, 57, 0.78);
+  --muted: rgba(23, 49, 57, 0.58);
+  --quiet: rgba(23, 49, 57, 0.34);
+  --paper: #fbfdf9;
+  --wash: #eef8f1;
+  --line: rgba(23, 49, 57, 0.14);
+  --line-strong: rgba(23, 49, 57, 0.24);
+  --bar: #3d9aa6;
+  --bar-selected: #d89a3d;
+  --green: #2f7f63;
+  --display: "Iowan Old Style", "Charter", Georgia, serif;
+  --body: "Avenir Next", "Gill Sans", "Trebuchet MS", Verdana, sans-serif;
+  font-family: var(--body);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  background: linear-gradient(180deg, #f4fbf7 0%, var(--paper) 58%, #eef7ef 100%);
+  color: var(--ink);
+}
+
+a {
+  color: #176d7c;
+  font-weight: 700;
+  text-underline-offset: 0.16em;
+}
+
+a:hover {
+  color: #0f4f5b;
+}
+
+.page {
+  display: grid;
+  grid-template-columns: minmax(420px, 0.74fr) minmax(640px, 1.26fr);
+  gap: clamp(32px, 4vw, 64px);
+  min-height: 100vh;
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: clamp(30px, 5vw, 76px);
+}
+
+.intro {
+  align-self: start;
+  max-width: 620px;
+}
+
+.kicker,
+.eyebrow {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 520;
+  letter-spacing: 0;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--display);
+  font-weight: 650;
+  letter-spacing: -0.026em;
+}
+
+h1 {
+  max-width: 9.8ch;
+  font-size: clamp(3.2rem, 4.8vw, 5.6rem);
+  line-height: 0.95;
+}
+
+.lede {
+  max-width: 35rem;
+  margin: 26px 0 0;
+  color: var(--text);
+  font-size: clamp(1rem, 1.18vw, 1.2rem);
+  font-weight: 520;
+  line-height: 1.55;
+}
+
+.chart-card {
+  align-self: start;
+  display: grid;
+  gap: 26px;
+  min-width: 0;
+  max-width: 900px;
+  padding: clamp(22px, 3.2vw, 42px);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.chart-header {
+  display: grid;
+  gap: 10px;
+}
+
+.chart-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.chart-header h2 {
+  font-size: clamp(2rem, 3vw, 3.4rem);
+  line-height: 1;
+}
+
+.scale-note {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+  font-weight: 500;
+  line-height: 1.38;
+}
+
+.play-button {
+  position: relative;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+.play-button:hover,
+.play-button:focus-visible {
+  border-color: var(--ink);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.play-button:focus-visible {
+  outline: 2px solid rgba(216, 154, 61, 0.68);
+  outline-offset: 3px;
+}
+
+.play-button.is-playing {
+  background: #f8efd9;
+}
+
+.play-symbol {
+  width: 0;
+  height: 0;
+  margin-left: 3px;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 13px solid currentColor;
+}
+
+.play-button.is-playing .play-symbol {
+  width: 14px;
+  height: 16px;
+  margin-left: 0;
+  border: 0;
+  background: linear-gradient(90deg, currentColor 0 4px, transparent 4px 10px, currentColor 10px 14px);
+}
+
+.sr-only,
+.chart-readout {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+
+.bar-chart {
+  min-width: 0;
+  min-height: 332px;
+}
+
+.chart-grid {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 14px;
+  min-width: 0;
+  min-height: 332px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.axis-labels {
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  align-items: start;
+  color: var(--quiet);
+  font-size: 0.72rem;
+  font-weight: 560;
+}
+
+.bars {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(30px, 1fr));
+  gap: clamp(7px, 0.9vw, 12px);
+  align-items: end;
+  min-width: 0;
+  min-height: 300px;
+  padding: 0 0 38px;
+}
+
+.bars::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 38px;
+  background:
+    linear-gradient(to bottom, rgba(23, 49, 57, 0.065) 1px, transparent 1px) 0 0 / 100% 25%,
+    linear-gradient(to top, rgba(23, 49, 57, 0.18) 1px, transparent 1px);
+  pointer-events: none;
+}
+
+.month-column {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-end;
+  gap: 9px;
+  height: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+}
+
+.month-column:focus-visible {
+  outline: 2px solid rgba(216, 154, 61, 0.72);
+  outline-offset: 5px;
+}
+
+.month-bar {
+  display: block;
+  flex: 0 0 auto;
+  width: 100%;
+  height: var(--height-px);
+  min-height: 22px;
+  border-radius: 5px 5px 0 0;
+  background: var(--bar);
+  transform-origin: bottom;
+  animation: rise 520ms cubic-bezier(0.22, 0.78, 0.2, 1) both;
+  transition: background-color 160ms ease;
+}
+
+.month-column:hover .month-bar,
+.month-column:focus-visible .month-bar {
+  background: #2f8390;
+}
+
+.month-column.is-selected .month-bar {
+  background: var(--bar-selected);
+}
+
+.month-label {
+  align-self: center;
+  display: block;
+  min-width: 30px;
+  padding: 0 0 4px;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 560;
+  line-height: 1;
+  text-align: center;
+}
+
+.month-column.is-selected .month-label {
+  border-bottom-color: var(--bar-selected);
+  color: var(--ink);
+  font-weight: 680;
+}
+
+.birds-panel {
+  display: grid;
+  grid-template-columns: minmax(200px, 0.38fr) minmax(0, 1.62fr);
+  gap: 28px;
+  min-width: 0;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.birds-panel-header {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+}
+
+.birds-panel h3 {
+  font-size: clamp(1.38rem, 2.1vw, 2.2rem);
+  line-height: 1.04;
+}
+
+.birds-panel-header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.94rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.birds-list {
+  display: grid;
+  min-width: 0;
+  border-top: 1px solid var(--line);
+}
+
+.bird-card {
+  display: grid;
+  grid-template-columns: 82px minmax(0, 1fr);
+  gap: 16px;
+  align-items: center;
+  min-width: 0;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--line);
+  background: transparent;
+}
+
+.bird-photo {
+  width: 82px;
+  height: 82px;
+  border-radius: 5px;
+  background: var(--wash);
+  object-fit: cover;
+}
+
+.bird-photo-fallback::before {
+  content: "";
+  display: block;
+  width: 38px;
+  height: 24px;
+  margin: 29px auto;
+  border-radius: 60% 60% 50% 50%;
+  background: var(--green);
+}
+
+.bird-copy {
+  min-width: 0;
+}
+
+.bird-name {
+  display: inline;
+  color: var(--ink);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration-color: rgba(23, 109, 124, 0.34);
+}
+
+.bird-name:hover {
+  color: #176d7c;
+  text-decoration-color: currentColor;
+}
+
+.bird-status,
+.bird-peak {
+  margin: 5px 0 0;
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 500;
+  line-height: 1.32;
+}
+
+.bird-status {
+  color: var(--green);
+  font-weight: 620;
+}
+
+.empty-state {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.source-panel {
+  grid-column: 1 / -1;
+  max-width: 980px;
+  color: var(--text);
+  font-size: 0.92rem;
+  font-weight: 500;
+}
+
+.source-panel summary {
+  width: fit-content;
+  cursor: pointer;
+  border-bottom: 1px solid currentColor;
+  color: var(--ink);
+  font-weight: 620;
+}
+
+.source-panel summary:focus-visible {
+  outline: 2px solid rgba(216, 154, 61, 0.68);
+  outline-offset: 4px;
+}
+
+.source-panel p {
+  margin: 12px 0 0;
+  max-width: 760px;
+  line-height: 1.5;
+}
+
+.loading,
+.load-error {
+  margin: 0;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.load-error {
+  color: #a34747;
+}
+
+@keyframes rise {
+  from {
+    transform: scaleY(0.08);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@media (max-width: 1320px) {
+  .page {
+    grid-template-columns: 1fr;
+    max-width: 960px;
+    padding: 30px 20px 40px;
+  }
+
+  .intro {
+    align-self: start;
+    max-width: 760px;
+  }
+
+  h1 {
+    max-width: 12ch;
+    font-size: clamp(3rem, 10vw, 6.2rem);
+  }
+
+  .chart-card {
+    max-width: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .chart-card {
+    padding: 18px;
+  }
+
+  .chart-title-row {
+    align-items: flex-start;
+  }
+
+  .play-button {
+    width: 42px;
+    height: 42px;
+  }
+
+  .chart-grid {
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 9px;
+  }
+
+  .bars {
+    gap: 5px;
+  }
+
+  .month-label {
+    min-width: auto;
+    padding-bottom: 4px;
+    font-size: 0.66rem;
+  }
+
+  .birds-panel {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .bird-card {
+    grid-template-columns: 74px minmax(0, 1fr);
+  }
+
+  .bird-photo {
+    width: 74px;
+    height: 74px;
+  }
+}
+
+@media (max-width: 460px) {
+  .page {
+    padding-inline: 14px;
+  }
+
+  .chart-card {
+    padding: 16px;
+  }
+
+  .chart-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .axis-labels {
+    display: none;
+  }
+
+  .bars {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    min-height: 278px;
+    gap: 3px;
+    padding-bottom: 34px;
+  }
+
+  .bars::before {
+    inset: 0 0 34px;
+  }
+
+  .month-column {
+    gap: 8px;
+  }
+
+  .month-label {
+    font-size: 0.56rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .month-bar {
+    animation: none;
+    transition: none;
+  }
+
+  .play-button {
+    transition: none;
+  }
+}

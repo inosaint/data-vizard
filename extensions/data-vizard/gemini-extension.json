@@ -1,6 +1,6 @@
 {
   "name": "data-vizard",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Guide data visualization projects from dataset intake to analysis, adaptive narration, critique, design, and HTML story output.",
   "contextFileName": "GEMINI.md"
 }

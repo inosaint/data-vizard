@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Changelog — Data Vizard</title>
+  <meta name="description" content="Release notes for Data Vizard — the agent workflow plugin for Codex, Claude Code, and Gemini CLI.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#f6f2ff">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Data Vizard">
+  <meta property="og:title" content="Changelog — Data Vizard">
+  <meta property="og:description" content="Release notes for Data Vizard — the agent workflow plugin for Codex, Claude Code, and Gemini CLI.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Changelog — Data Vizard">
+  <meta name="twitter:description" content="Release notes for Data Vizard — the agent workflow plugin for Codex, Claude Code, and Gemini CLI.">
+  <link rel="icon" href="plugins/data-vizard/assets/logo.png" type="image/png">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Data Vizard Changelog",
+    "description": "All notable changes to the Data Vizard agent workflow plugin.",
+    "about": {
+      "@type": "SoftwareApplication",
+      "name": "Data Vizard",
+      "softwareVersion": "0.1.5",
+      "downloadUrl": "https://www.npmjs.com/package/data-vizard"
+    }
+  }
+  </script>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f6f2ff;
+      --bg-2: #ffffff;
+      --ink: #1e1633;
+      --muted: #5f5872;
+      --line: #ded6f3;
+      --purple: #6c3df0;
+      --purple-deep: #4a1fb8;
+      --purple-soft: #eee7ff;
+      --shadow: 0 6px 14px rgba(73, 31, 184, 0.08);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 18% 14%, rgba(108, 61, 240, 0.14), transparent 22%),
+        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 56%, #fbfaff 100%);
+      color: var(--ink);
+      font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    a { color: var(--purple-deep); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .page {
+      width: min(760px, calc(100vw - 32px));
+      margin: 0 auto;
+      padding: 28px 0 64px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 48px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+    }
+
+    .brand img {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 16px;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .breadcrumb a { color: var(--muted); }
+    .breadcrumb a:hover { color: var(--purple-deep); text-decoration: none; }
+    .breadcrumb span { color: var(--ink); font-weight: 600; }
+
+    h1 {
+      margin: 0 0 6px;
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      text-wrap: balance;
+    }
+
+    .subtitle {
+      margin: 0 0 48px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .release {
+      margin-bottom: 40px;
+    }
+
+    .release-header {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      margin-bottom: 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .release-version {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .release-date {
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .release-tag {
+      display: inline-flex;
+      align-items: center;
+      padding: 2px 10px;
+      border-radius: 999px;
+      background: var(--purple-soft);
+      color: var(--purple-deep);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .release ul {
+      margin: 0;
+      padding: 0 0 0 1.2em;
+      display: grid;
+      gap: 8px;
+    }
+
+    .release li {
+      color: var(--ink);
+      line-height: 1.5;
+    }
+
+    code {
+      padding: 1px 5px;
+      border-radius: 5px;
+      background: var(--purple-soft);
+      color: var(--purple-deep);
+      font: 0.88em/1 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    }
+
+    .footer {
+      margin-top: 38px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .footer strong { color: var(--ink); }
+
+    .footer-links {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+    }
+
+    @media (max-width: 600px) {
+      .topbar { flex-direction: column; align-items: flex-start; gap: 10px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="brand" href="index.html" aria-label="Data Vizard home">
+        <img src="plugins/data-vizard/assets/logo.png" alt="Data Vizard logo">
+        <span>Data Vizard</span>
+      </a>
+    </header>
+
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Data Vizard</a>
+      <span aria-hidden="true">›</span>
+      <span>Changelog</span>
+    </nav>
+    <h1>Changelog</h1>
+    <p class="subtitle">All notable changes to Data Vizard.</p>
+
+    <section class="release">
+      <div class="release-header">
+        <h2 class="release-version">Unreleased</h2>
+        <span class="release-tag">In progress</span>
+      </div>
+      <ul>
+        <li>Added the <code>de-slop</code> skill across root, packaged plugin, and Gemini extension surfaces for repairing bad or misleading charts without changing the evidence.</li>
+        <li>Added Designer, Critic, and Data Vizard guardrails for image-option diversity, control honesty, record reachability, file-structure discipline, artifact signoff notes, and precise ledger statuses.</li>
+        <li>Added pre-build wireframe/fidelity planning and richer rendering decision gates for immersive, scene-led, spatial, animated, map-led, and data-art concepts.</li>
+      </ul>
+    </section>
+
+    <section class="release">
+      <div class="release-header">
+        <h2 class="release-version">0.1.4</h2>
+        <span class="release-date">2026-07-02</span>
+      </div>
+      <ul>
+        <li>Added the <code>critic</code> workflow skill across packaged plugin and Gemini extension surfaces.</li>
+        <li>Refreshed release and uninstall documentation so Codex, Claude Code, and Gemini CLI update paths stay aligned.</li>
+        <li>Updated npm verification examples and release metadata for the <code>0.1.4</code> publish.</li>
+      </ul>
+    </section>
+
+    <section class="release">
+      <div class="release-header">
+        <h2 class="release-version">0.1.3</h2>
+        <span class="release-date">2026-06-30</span>
+      </div>
+      <ul>
+        <li>Clarified npm install prerequisites for Codex CLI, Claude Code CLI, and Gemini CLI users.</li>
+        <li>Added Gemini CLI extension support with a <code>gemini-extension.json</code> manifest, bundled skills, and a <code>/data-vizard</code> command.</li>
+        <li>Taught the npm installer to stage and install the Gemini CLI extension when <code>gemini</code> is available.</li>
+        <li>Fixed generated Claude marketplace publisher metadata to use <code>inosaint</code>.</li>
+      </ul>
+    </section>
+
+    <section class="release">
+      <div class="release-header">
+        <h2 class="release-version">0.1.2</h2>
+        <span class="release-date">2026-06-30</span>
+      </div>
+      <ul>
+        <li>Pointed all Codex plugin-list image fields at square icon assets so the plugin directory does not render the wide banner in icon slots.</li>
+        <li>Kept <code>icon.png</code> and <code>logo.png</code> identical, with <code>logo-dark.png</code> as the dark-mode square variant.</li>
+        <li>Switched public publisher metadata to the GitHub identity <code>inosaint</code>.</li>
+        <li>Removed image embeds from the npm-facing README to avoid broken relative images on npm.</li>
+      </ul>
+    </section>
+
+    <section class="release">
+      <div class="release-header">
+        <h2 class="release-version">0.1.1</h2>
+        <span class="release-date">2026-06-30</span>
+      </div>
+      <ul>
+        <li>Added Codex plugin-directory visual assets with a consistent wizard-and-chart logo.</li>
+        <li>Wired <code>composerIcon</code>, <code>logo</code>, <code>logoDark</code>, and screenshot metadata into the Codex plugin manifest.</li>
+        <li>Made the npm installer bin executable for cleaner package execution.</li>
+        <li>Expanded the root and plugin READMEs with compatibility, privacy, verification, update, and release guidance.</li>
+        <li>Added a reproducible script for regenerating plugin visual assets.</li>
+      </ul>
+    </section>
+
+    <section class="release">
+      <div class="release-header">
+        <h2 class="release-version">0.1.0</h2>
+        <span class="release-date">2026-06-30</span>
+      </div>
+      <ul>
+        <li>Published the first npm installer for the Data Vizard agent workflow plugin.</li>
+        <li>Bundled Codex and Claude Code marketplace manifests.</li>
+        <li>Included five workflow skills: orchestrator, curator, analyst, narrator, and designer.</li>
+        <li>Added release guidance for npm install testing, Codex marketplace testing, and Claude Code compatibility checks.</li>
+      </ul>
+    </section>
+
+    <footer class="footer">
+      <div><strong>Data Vizard 0.1.5</strong> ships Codex, Claude Code, and Gemini surfaces together.</div>
+      <div class="footer-links"><a href="https://www.npmjs.com/package/data-vizard">npm package</a> <a href="faq.html">FAQ</a> <a href="changelog.html">Changelog</a></div>
+    </footer>
+  </main>
+</body>
+</html>

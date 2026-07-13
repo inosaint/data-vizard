@@ -1,8 +1,9 @@
-# FIFA 2026 World Cup group-stage data
+# FIFA 2026 World Cup data
 
 ## Source files
 
 - Raw source snapshot: `data/fifa-2026-world-cup/raw/matches.csv`
+- All available matches with inferred group labels: `data/fifa-2026-world-cup/curated/matches_all_with_groups.csv`
 - Group-stage match table: `data/fifa-2026-world-cup/curated/matches_group_stage.csv`
 - Group-stage match table with inferred groups: `data/fifa-2026-world-cup/curated/matches_group_stage_with_groups.csv`
 - Group-stage team summary: `data/fifa-2026-world-cup/curated/group_stage_team_summary.csv`
@@ -10,13 +11,13 @@
 
 ## Curator handoff
 
-The working dataset is filtered to group-stage matches only. The source file contained 73 match rows: 72 group-stage rows and 1 Round of 32 row. The Round of 32 row was excluded from the curated group-stage table.
+The updated working dataset contains 92 match rows: 72 group-stage rows, 16 Round of 32 rows, and 4 Round of 16 rows. The Round of 16 is partial in the provided file.
 
 ### Data profile
 
-- Granularity: one row per match in `matches_group_stage.csv`.
-- Coverage: June 11, 2026 through June 27, 2026.
-- Scope: 48 teams, 72 group-stage matches, 17 venue labels.
+- Granularity: one row per match.
+- Coverage: June 11, 2026 through July 5, 2026.
+- Scope: 48 teams, 92 available matches, 17 venue labels.
 - Gameweek coverage: 24 matches in each of gameweeks 1, 2, and 3.
 - Main fields: teams, score, venue, referee, formations, managers, captains, possession, shots, saves, cards, fouls, corners, crosses, interceptions, offsides.
 - Groups are inferred from the match graph because the source file has no explicit group column. Each connected component contains 4 teams and 6 matches, matching the group-stage structure.
@@ -24,10 +25,10 @@ The working dataset is filtered to group-stage matches only. The source file con
 ### Data quality notes
 
 - `notes` is blank for all 72 group-stage rows.
-- `home_offsides` and `away_offsides` are missing in 3 group-stage matches.
+- `home_offsides` and `away_offsides` are missing in 4 matches across the updated file.
 - Possession sometimes sums to 101 because values appear rounded to whole percentages.
 - Venue labels include both `Estadio BBVA, Guadalupe` and `Estadio BBVA Bancomer, Guadalupe`; this may need normalization before venue-level analysis.
-- This file can support descriptive analysis of the group stage, but not full-tournament claims.
+- The file can support descriptive analysis of the group stage, Round of 32, and the four available Round of 16 matches, but not full-tournament claims.
 
 ### Inferred groups
 
