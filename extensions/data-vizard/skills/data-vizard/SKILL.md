@@ -174,6 +174,8 @@ Update the ledger whenever a stage is completed:
 
 Record each skill boundary, files or references loaded, user decision gates, posture, evidence notes, critique notes, and outputs produced. Keep the ledger focused on progress, handoffs, decisions, caveats, and artifacts rather than token accounting.
 
+Apply the deletion test to every row before writing it: would removing this entry make it harder to reconstruct what decision was made and why? If not, do not write it. A row that only records that a stage ran — with no decision, caveat, or output worth preserving — should be omitted or collapsed into the previous row.
+
 Use ledger status precisely:
 
 - `Proposed`: options, plans, or direction briefs exist but the user has not chosen.

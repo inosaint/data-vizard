@@ -2,6 +2,22 @@
 
 Use this file as a living shortlist of public APIs and open-data catalogs that Data Curator can evaluate for future visualization projects. Add to it over time. Do not treat every source here as automatically recommended; check fit, licensing, schema quality, and stability for each brief.
 
+## Evaluation Rubric
+
+Before recommending any source from this list, check all five:
+
+| Criterion | Questions to ask |
+|---|---|
+| **Fit** | Does the data shape match what this brief actually needs? |
+| **License** | Is commercial or derivative use permitted? Attribution required? |
+| **Schema quality** | Are key fields consistently populated, typed, and documented? |
+| **Stability** | Is this API actively maintained? Are there known sunset or rate-limit risks? |
+| **Rate limits** | Can the project's data volume stay within free-tier limits? |
+
+## Sunset Tracking
+
+Public APIs change. If an entry in this file has a `⚠ Status:` note, treat it as uncertain until re-verified. When adding new sources, include a `Last verified:` line with the date checked. If a source goes dark or terms change, update the entry with a status note rather than silently removing it — the history is useful.
+
 ## Collection And Archive APIs
 
 - Metropolitan Museum of Art Collection API
