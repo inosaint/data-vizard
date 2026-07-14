@@ -61,8 +61,21 @@ Use no more than four options unless the user asks for a broader menu. When usef
 6. Ask the user to choose.
    Present the candidates as button-ready choices. Let the user select one direction, combine directions, or request deeper analysis.
 
-7. Handoff to Narrator.
-   Provide the chosen insight, supporting evidence, counterpoints, caveats, suggested sequence of facts, and whether the intended output should behave more like an aggregate analysis piece, a browseable archive, or a hybrid.
+   When the user selects multiple directions or a combined direction that naturally sequences — where one finding sets up the next — do not flatten them into a single claim. Instead, propose a `narrative arc`: an ordered tier sequence where each tier builds on or deepens the previous one. Ask the user to confirm the arc before handing to Narrator.
+
+7. Produce a narrative arc when directions stack.
+   If the selected directions form a sequence, produce a tier-by-tier arc before handing off. Each tier should include:
+
+   - `tier` — position number
+   - `claim` — the specific evidence-backed assertion for this tier
+   - `evidence` — the data points that support it
+   - `chart_form` — the likely visual form
+   - `transition_to_next` — one sentence explaining what question or tension this tier opens that the next tier resolves
+
+   A good arc has forward momentum: each tier should make the next tier feel necessary, not optional. If the directions do not sequence naturally, present them as parallel options rather than a forced arc.
+
+8. Handoff to Narrator.
+   Provide the chosen insight or narrative arc, supporting evidence, counterpoints, caveats, suggested sequence of facts, confirmed artifact mode, and confirmed posture. For multi-tier work, hand off the full arc structure so Narrator can assign language load and connective copy per tier.
 
 ## Boundaries
 

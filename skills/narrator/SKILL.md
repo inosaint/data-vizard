@@ -36,14 +36,33 @@ Pick the lightest output that does the job.
 - `minimal copy`: a title, tiny caption, or necessary caveat only.
 - `guided narrative`: concise title, subtitle, and annotation set.
 - `editorial narrative`: fuller narrative spine for explanatory work.
+- `narrative arc`: multi-tier story mode for when Analyst has produced a tier sequence. Each tier gets its own language load, claim copy, and connective transition to the next. See **Arc Mode** below.
 
 Default by posture:
 
 - `Explanatory` usually needs `guided narrative` or `editorial narrative`.
 - `Balanced` usually needs `minimal copy` or `guided narrative`.
 - `Data-art-led` usually needs `silent brief` or `minimal copy`.
+- When Analyst passes a confirmed `narrative_arc`, always use `narrative arc` mode regardless of default posture.
 
 For collection-like datasets with strong visual source material, preserve both a restrained utility path and a more atmospheric data-art path until the user or orchestrator chooses between them. Do not collapse to a product-style framing merely because browseability matters.
+
+## Arc Mode
+
+Use arc mode when Analyst has confirmed a multi-tier narrative arc — an ordered sequence of findings where each tier sets up the next.
+
+Arc mode produces a **section-by-section brief** rather than a single story spine. For each tier in the arc:
+
+1. **Assign a language load** — each tier may have a different load based on how much the visual can carry on its own at that point in the reading flow.
+2. **Write the tier claim** — a single, evidence-backed statement the reader should walk away with after seeing this tier's visual. No vague conclusions.
+3. **Write connective copy** — one or two sentences of transition prose that close the current tier and open the question the next tier answers. This is the copy between sections, not inside them. It should feel like an editorial hand guiding the reader forward, not a summary of what they just saw.
+4. **Assign the caveat** — if a caveat applies to only one tier, keep it there. If a caveat applies to the whole piece, surface it once in the header and do not repeat it.
+
+The last tier needs no transition — it should close with a takeaway that stands on its own.
+
+Arc mode does not mean more copy overall. The connective lines should be tight (one or two sentences). A tier with a strong visual may only need the connective line and nothing else. Do not fill every tier with a full editorial narrative just because multiple tiers exist.
+
+When handing off arc mode output to Designer, include per-tier language load and connective copy clearly labeled by tier number, so Designer can position them between sections.
 
 ## Workflow
 
@@ -58,8 +77,10 @@ For collection-like datasets with strong visual source material, preserve both a
 3. Decide the language load.
    Choose the lightest contract that still helps the audience understand the piece.
 
-4. Build the story spine only if needed.
-   Draft the opening question, key observation, supporting sequence, turning point, caveat, and takeaway only when the selected language load calls for it.
+4. Build the story spine or arc.
+   For single-direction work: draft the opening question, key observation, supporting sequence, turning point, caveat, and takeaway only when the selected language load calls for it.
+
+   For multi-tier arc work: follow Arc Mode. Do not flatten the arc into a single spine — each tier must retain its own claim and the connective copy that links it forward.
 
    For stories centered on one specific event, day, place, or threshold, make that event the narrative anchor. Do not split the opening across multiple competing labels, tooltips, or section titles that restate the same idea. Merge duplicate framing into one clear opening beat.
 
@@ -92,6 +113,9 @@ For collection-like datasets with strong visual source material, preserve both a
    - key claim or question, if needed
    - annotation priorities
    - caveats that must remain visible
+
+   For arc mode handoffs, add:
+   - `arc_tiers` — ordered list of tiers, each with `tier`, `claim`, `language_load`, `visible_copy`, and `transition_to_next` (empty string for the last tier)
 
    `visible_text_inventory` should be a flat list of every visible text surface the current brief permits, such as title, caption, note trigger, tooltip label, or detail label. If a visible text surface is not named in the inventory, Designer should treat it as unauthorized by default.
 
