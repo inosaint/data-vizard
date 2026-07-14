@@ -21,7 +21,7 @@ When the user has not supplied enough context, ask exactly one focused decision 
 
 ## Stage Transition Commentary
 
-After the user makes a decision at any stage boundary, provide a brief transition commentary before handing to the next skill. State what the previous skill produced, what the user decided, and what is being passed forward. Keep it to 2–4 lines. This keeps the user oriented as work moves between skills and makes the orchestration visible without exposing internal critique notes.
+After the user makes a decision at any stage boundary, provide a brief transition commentary and immediately invoke the next skill in the same response. Do not pause and wait for the user between stages — stage transitions are orchestrator-driven. The user only intervenes at explicit decision gates. State what the previous skill produced, what the user decided, and what is being passed forward, then continue. Keep the commentary to 2–4 lines.
 
 ## Button-Ready Choices
 
