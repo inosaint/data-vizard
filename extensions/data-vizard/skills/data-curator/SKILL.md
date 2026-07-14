@@ -47,7 +47,10 @@ Use no more than four options unless the user asks for a broader menu. Include `
 5. Report data fitness.
    Summarize what the data can support, what it cannot support, and what claims would be risky.
 
-6. Propose cleaning and shaping actions.
+6. Ask about narrative posture and analytical direction.
+   Based on what the data can support, present posture options and 2–3 concrete analytical directions as button-ready choices. Do not ask posture and direction as separate questions — combine them into one interaction so the user makes one decision that unblocks both. Let the data shape which postures are realistic: aggregate-structured data suggests `Explanatory` or `Balanced`; record-level or collection data suggests `Balanced explorer` or `Data-art-led`. Wait for the user to decide before proceeding to cleaning and shaping.
+
+7. Propose cleaning and shaping actions.
    Suggest transformations such as type fixes, normalization, pivoting, aggregation, deduplication, derived fields, and joins. Use button-ready choices for actions that affect meaning.
 
    For API sources, also consider extraction and shaping actions such as:
@@ -57,11 +60,11 @@ Use no more than four options unless the user asks for a broader menu. Include `
    - caching raw responses before aggregation
    - separating entity tables, relationship tables, and display-ready summaries
 
-7. Supplement if useful.
+8. Supplement if useful.
    If the analysis would be weak without context, propose enrichment datasets. Explain why each source helps and how it would join.
 
-8. Produce handoff notes.
-   Give Data Analyst a concise data dictionary, transformation log, acquisition notes, caveats, recommended analytical questions, and the likely artifact mode:
+9. Produce handoff notes.
+   Give Data Analyst a concise data dictionary, transformation log, acquisition notes, caveats, confirmed posture, confirmed analytical direction, and the likely artifact mode:
    - `aggregate analysis`
    - `record-by-record exploration`
    - `hybrid`
