@@ -1,0 +1,24 @@
+book_title,author,publication_year,genre,Retain,Condense,Reorder,Omit,Merge,total,retain_pct,omit_pct,cut_rate
+Pride and Prejudice,Jane Austen,1813,Romance,190,286,178,125,92,871,21.8,14.4,47.2
+Frankenstein,Mary Shelley,1818,Gothic_SciFi,168,244,182,150,95,839,20.0,17.9,47.0
+A Christmas Carol,Charles Dickens,1843,Drama,278,216,141,104,81,820,33.9,12.7,39.0
+The Count of Monte Cristo,Alexandre Dumas,1844,Adventure,174,287,182,134,73,850,20.5,15.8,49.5
+Moby Dick,Herman Melville,1851,Adventure,152,268,181,200,83,884,17.2,22.6,52.9
+A Tale of Two Cities,Charles Dickens,1859,Historical,209,270,156,147,81,863,24.2,17.0,48.3
+Great Expectations,Charles Dickens,1861,Drama,183,273,173,151,75,855,21.4,17.7,49.6
+Alice's Adventures in Wonderland,Lewis Carroll,1865,Fantasy,42,80,44,41,16,223,18.8,18.4,54.3
+Crime and Punishment,Fyodor Dostoevsky,1866,Psychological,214,220,175,134,105,848,25.2,15.8,41.7
+Little Women,Louisa May Alcott,1868,Drama,206,279,158,132,79,854,24.1,15.5,48.1
+War and Peace,Leo Tolstoy,1869,Historical,212,295,168,127,91,893,23.7,14.2,47.3
+The Adventures of Tom Sawyer,Mark Twain,1876,Adventure,225,204,171,132,96,828,27.2,15.9,40.6
+Anna Karenina,Leo Tolstoy,1877,Romance,208,268,155,149,76,856,24.3,17.4,48.7
+Treasure Island,Robert Louis Stevenson,1883,Adventure,184,291,151,159,72,857,21.5,18.6,52.5
+Adventures of Huckleberry Finn,Mark Twain,1884,Adventure,211,236,174,152,81,854,24.7,17.8,45.4
+The Strange Case of Dr. Jekyll and Mr. Hyde,Robert Louis Stevenson,1886,Horror,106,187,83,105,49,530,20.0,19.8,55.1
+The Picture of Dorian Gray,Oscar Wilde,1890,Gothic,212,205,199,130,103,849,25.0,15.3,39.5
+The Adventures of Sherlock Holmes,Arthur Conan Doyle,1892,Mystery,204,264,182,125,79,854,23.9,14.6,45.6
+The Jungle Book,Rudyard Kipling,1894,Adventure,219,279,159,116,87,860,25.5,13.5,45.9
+The Time Machine,H.G. Wells,1895,SciFi,177,211,219,129,80,816,21.7,15.8,41.7
+Dracula,Bram Stoker,1897,Horror,184,247,193,127,103,854,21.5,14.9,43.8
+The Wonderful Wizard of Oz,L. Frank Baum,1900,Fantasy,134,241,140,111,80,706,19.0,15.7,49.9
+Peter Pan,J.M. Barrie,1911,Fantasy,178,274,177,119,88,836,21.3,14.2,47.0

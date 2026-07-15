@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What Makes the Cut — Literary Adaptation Patterns</title>
+  <meta name="description" content="Across 23 classic novels, adaptation has a clear grammar. Some books get compressed harder than others. Some scenes survive; others don't.">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <p class="kicker">Literary Adaptation · Project Gutenberg Dataset</p>
+    <h1>What Makes<br>the Cut</h1>
+    <p class="deck">Across 23 classic novels, adaptation has a clear grammar. Some books survive nearly intact. Others are gutted. And the type of scene matters as much as the book it comes from.</p>
+    <p class="caveat">These labels are model-recommended adaptation strategies from an NLP research dataset, not records of what any specific film production actually did.</p>
+  </header>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-swatch" style="background:#3d6b4f"></div>Retain</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#c17f3a"></div>Condense</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#4a6fa5"></div>Reorder</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#a84c3a"></div>Omit</div>
+    <div class="legend-item"><div class="legend-swatch" style="background:#8a8a8a"></div>Merge</div>
+  </div>
+
+  <!-- Tier 1: Book spectrum -->
+  <section>
+    <p class="section-label">Part One</p>
+    <h2>The Spectrum</h2>
+    <p class="section-deck">23 novels, ranked by how much of their text a screenplay adaptation would keep unchanged. Each bar shows the full fate of the book's excerpts.</p>
+
+    <div id="book-chart" class="chart"></div>
+
+    <div class="annotation">
+      <strong>A Christmas Carol</strong> sits at one extreme — 34% of its excerpts retained, the highest in the set. It is short, tightly structured, and its scenes carry weight individually. At the other end, <strong>Moby Dick</strong> loses more than any other: 23% omitted outright, only 17% kept. Its pages of cetology and digression have no equivalent in film time.
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- Tier 2: What survives -->
+  <section>
+    <p class="section-label">Part Two</p>
+    <h2>What Survives the Edit</h2>
+    <p class="section-deck">Across all 23 books, some types of scenes are far more likely to survive than others. The pattern reveals what film adaptation is actually doing to literary text.</p>
+
+    <div id="event-chart" class="chart"></div>
+
+    <div class="annotation omit">
+      <strong>Revelations and confrontations</strong> are the most preserved scene types — plot pivots that carry story forward survive. <strong>Dialogue</strong> is the most compressed: 38% condensed, only 14% kept intact. Conversations get collapsed. <strong>Romance and conflict scenes</strong> face the highest omit rates — emotional texture is what adaptation sacrifices first.
+    </div>
+  </section>
+
+  <footer>
+    <p>Source: <a href="https://www.kaggle.com/datasets" target="_blank" rel="noopener">Gutenberg Literary Film Adaptation Dataset</a> · 18,500 excerpts across 23 novels · Labels are model-recommended adaptation strategies for NLP research, not verified film records.</p>
+    <p style="margin-top:6px">Books drawn from <a href="https://www.gutenberg.org/" target="_blank" rel="noopener">Project Gutenberg</a> public domain works, 1813–1911.</p>
+  </footer>
+
+  <div class="tooltip" id="tooltip"></div>
+  <script src="script.js"></script>
+</body>
+</html>
