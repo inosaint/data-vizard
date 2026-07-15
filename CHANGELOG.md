@@ -2,6 +2,17 @@
 
 All notable changes to Data Vizard will be documented here.
 
+## Unreleased
+
+- Tightened orchestrator-to-curator handoff: orchestrator now passes dataset directly to Curator without asking posture or direction first.
+- Curator now asks posture and analytical direction as one combined interaction after reporting data fitness, informed by what the data can actually support.
+- Added Stage Transition Commentary to orchestrator: after each user decision, the orchestrator briefly states what the previous skill produced, what was decided, and what goes forward.
+- Added banned words/phrases operational checklist to Narrator's anti-AI-tropes reference, with reason and alternative columns.
+- Applied deletion test to project ledger guidance in orchestrator — rows with no decision or caveat worth preserving should be omitted.
+- Added evaluation rubric and sunset tracking conventions to data-curator's open data sources reference.
+- Added `RELEASE.md` with step-by-step release checklist covering version refs, doc review across all surfaces, and npm publish smoke test.
+- Planned `data-vizard uninstall` CLI subcommand (not yet implemented).
+
 ## 0.1.5 - 2026-07-13
 
 - Added the `de-slop` skill across root, packaged plugin, and Gemini extension surfaces for repairing bad or misleading charts without changing the evidence.

@@ -19,6 +19,10 @@ Do not make major project decisions silently. Ask the user before choosing datas
 
 When the user has not supplied enough context, ask exactly one focused decision question and wait. If more than one decision is needed, ask the highest-leverage or most blocking question first and postpone the rest until after the user answers. If a decision can be postponed, continue with a clearly labeled assumption instead of stacking multiple questions.
 
+## Stage Transition Commentary
+
+After the user makes a decision at any stage boundary, provide a brief transition commentary and immediately invoke the next skill in the same response. Do not pause and wait for the user between stages — stage transitions are orchestrator-driven. The user only intervenes at explicit decision gates. State what the previous skill produced, what the user decided, and what is being passed forward, then continue. Keep the commentary to 2–4 lines.
+
 ## Button-Ready Choices
 
 Present one decision gate at a time in a strict, compact choice format so Codex surfaces can turn choices into buttons when supported.
@@ -58,17 +62,10 @@ Do not let `browseable`, `searchable`, `filterable`, `library`, or `explorer` si
 The role sequence is still explicit, but the weight of each stage changes by posture. Do not skip Curator or Analyst for real data work. Narrator may return a silent or minimal brief. Critic is mandatory before final signoff and should also review each major stage before presentation.
 
 1. Establish the project brief.
-   Ask for the single missing detail that most affects the next step, using button-ready choices where possible. Prefer topic or dataset source first; after that, prefer narrative posture before audience, constraints, or artifact format if posture will change the role outputs.
-
-   Store project-specific product context in `outcome/<project-name>/PRODUCT.md`, not in the repository root. This file should capture the audience, purpose, personality, anti-references, design principles, accessibility goals, narrative posture, intent brief, and default approach to avoid for that one visualization project.
-
-   For collection-led or archive-style projects, the brief should also name:
-   - the aesthetic family to explore first
-   - the accent color or color temperature to bias toward or avoid
-   - whether the first screen should feel more `utility`, `editorial`, `studio`, or `hybrid`
+   Ask only for what is missing to start Curator. If a dataset or topic is already provided, proceed directly to step 2 — do not ask about posture, audience, or direction first. Those questions belong to Curator, who can ask them after profiling the data. If neither a dataset nor a topic is provided, ask for one and wait.
 
 2. Curate the data.
-   Use Data Curator to find, inspect, clean, reshape, or supplement data. Ask the user to approve external dataset choices and enrichment assumptions unless the user has explicitly delegated the source choice; delegated choices still require a Curator handoff note.
+   Hand the dataset or topic to Data Curator immediately. Curator profiles the data, reports what it can support, and asks the user about narrative posture and analytical direction before producing a handoff. Do not ask posture or direction before Curator has seen the data.
 
 3. Critique the curation handoff.
    Use Critic to review the Curator output before presenting the data readout or downstream implications. Critique should check data fitness, caveat visibility, transformation discipline, and whether the curation summary is overstating what the file can support. Revise the curation readout before showing it to the user.
