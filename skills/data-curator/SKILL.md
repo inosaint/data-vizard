@@ -50,6 +50,8 @@ Use no more than four options unless the user asks for a broader menu. Include `
 6. Ask about narrative posture and analytical direction.
    Based on what the data can support, present posture options and 2–3 concrete analytical directions as button-ready choices. Do not ask posture and direction as separate questions — combine them into one interaction so the user makes one decision that unblocks both. Let the data shape which postures are realistic: aggregate-structured data suggests `Explanatory` or `Balanced`; record-level or collection data suggests `Balanced explorer` or `Data-art-led`. Wait for the user to decide before proceeding to cleaning and shaping.
 
+   If the data has multiple natural dimensions that stack — where one cut answers the question opened by the previous cut — include a multi-tier arc as one of the direction options. Name the proposed tier sequence explicitly (e.g. "books → scene types" or "city → neighbourhood → building") and explain what each tier reveals that the previous one cannot. Ask whether the user wants a layered arc or a single-tier story. This decision must be made here, not discovered mid-analysis by Analyst.
+
 7. Propose cleaning and shaping actions.
    Suggest transformations such as type fixes, normalization, pivoting, aggregation, deduplication, derived fields, and joins. Use button-ready choices for actions that affect meaning.
 
@@ -64,10 +66,12 @@ Use no more than four options unless the user asks for a broader menu. Include `
    If the analysis would be weak without context, propose enrichment datasets. Explain why each source helps and how it would join.
 
 9. Produce handoff notes.
-   Give Data Analyst a concise data dictionary, transformation log, acquisition notes, caveats, confirmed posture, confirmed analytical direction, and the likely artifact mode:
+   Give Data Analyst a concise data dictionary, transformation log, acquisition notes, caveats, confirmed posture, confirmed analytical direction, confirmed narrative intent, and the likely artifact mode:
    - `aggregate analysis`
    - `record-by-record exploration`
    - `hybrid`
+
+   `narrative_intent` should be either `single` (one analytical direction, one story) or `multi-tier arc` with the confirmed tier sequence listed in order. Analyst uses this to know upfront whether to build a single story or structure an arc.
 
 ## API Source Rules
 

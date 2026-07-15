@@ -58,13 +58,13 @@ Use no more than four options unless the user asks for a broader menu. When usef
    - archive-style navigation
    - guided discovery instead of one top-line aggregate claim
 
-6. Ask the user to choose.
-   Present the candidates as button-ready choices. Let the user select one direction, combine directions, or request deeper analysis.
+6. Ask the user to choose a single direction, or receive the arc intent from Curator.
+   If Curator's handoff includes `narrative_intent: single`, present story candidates as button-ready choices and wait for the user to select one.
 
-   When the user selects multiple directions or a combined direction that naturally sequences — where one finding sets up the next — do not flatten them into a single claim. Instead, propose a `narrative arc`: an ordered tier sequence where each tier builds on or deepens the previous one. Ask the user to confirm the arc before handing to Narrator.
+   If Curator's handoff includes `narrative_intent: multi-tier arc` with a confirmed tier sequence, do not re-propose directions. The decision is already made. Proceed to step 7 to structure the arc.
 
-7. Produce a narrative arc when directions stack.
-   If the selected directions form a sequence, produce a tier-by-tier arc before handing off. Each tier should include:
+7. Structure the arc when intent is multi-tier.
+   Using the tier sequence confirmed by Curator as the frame, build out each tier with evidence from the data. For each tier produce:
 
    - `tier` — position number
    - `claim` — the specific evidence-backed assertion for this tier
@@ -72,10 +72,10 @@ Use no more than four options unless the user asks for a broader menu. When usef
    - `chart_form` — the likely visual form
    - `transition_to_next` — one sentence explaining what question or tension this tier opens that the next tier resolves
 
-   A good arc has forward momentum: each tier should make the next tier feel necessary, not optional. If the directions do not sequence naturally, present them as parallel options rather than a forced arc.
+   A good arc has forward momentum: each tier should make the next tier feel necessary, not optional. Confirm the structured arc with the user before handing to Narrator. If the evidence does not support a proposed tier, say so and ask whether to drop that tier or replace it.
 
 8. Handoff to Narrator.
-   Provide the chosen insight or narrative arc, supporting evidence, counterpoints, caveats, suggested sequence of facts, confirmed artifact mode, and confirmed posture. For multi-tier work, hand off the full arc structure so Narrator can assign language load and connective copy per tier.
+   Provide the chosen insight or confirmed arc, supporting evidence, counterpoints, caveats, suggested sequence of facts, confirmed artifact mode, and confirmed posture. For multi-tier work, hand off the full arc structure so Narrator can assign language load and connective copy per tier.
 
 ## Boundaries
 
